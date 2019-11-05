@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.users.dao.UserDao;
-import com.users.exceptions.ImpossibleToAddUserException;
+import com.users.exceptions.CanNotAddUserException;
 import com.users.exceptions.UserNotFoundException;
 import com.users.model.User;
 import com.users.tools.PasswordEncryptor;
@@ -57,7 +57,7 @@ public class UserController {
 		
 		User newUser = userDao.save(user);
 		
-		if(newUser == null) throw new ImpossibleToAddUserException("Impossible d'ajouter cet utilisateur");
+		if(newUser == null) throw new CanNotAddUserException("Impossible d'ajouter cet utilisateur");
 		
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
