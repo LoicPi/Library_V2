@@ -10,7 +10,7 @@ import com.books.model.BookType;
 
 public interface BookDao extends JpaRepository<Book, Integer> {
 	
-	Book findBookByName (String name);
+	List<Book> findBooksByName (String name);
 	List<Book> findBookByAuthor(Author author);
 	Book findBookById(Integer id);
 	List<Book> findBookByType(BookType bookType);
