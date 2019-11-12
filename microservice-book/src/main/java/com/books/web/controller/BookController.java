@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.books.dao.AuthorDao;
 import com.books.dao.BookDao;
-import com.books.dao.BookTypeDao;
-import com.books.dao.BorrowingDao;
 import com.books.exceptions.BookNotFoundException;
 import com.books.exceptions.CanNotAddBookException;
 import com.books.model.Book;
@@ -41,7 +38,7 @@ public class BookController {
 		
 		List<Book> books = bookDao.findAll();
 		
-		if( books.isEmpty() ) throw new BookNotFoundException("Aucun livre ");
+		if( books.isEmpty() ) throw new BookNotFoundException("Aucun livre n'a été retrouvé.");
 		
 		log.info("Récupération de la liste des livres");
 
@@ -70,7 +67,7 @@ public class BookController {
 	 * @param id Id of book
 	 * @return book
 	 */
-	@GetMapping("/Livres/{id}/VueLivre")
+	@GetMapping("/livres/{id}/vueLivre")
 	public Book getBook(@PathVariable int id){
 		
 		Optional<Book> book = bookDao.findById(id);
