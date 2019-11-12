@@ -30,7 +30,7 @@ public class AuthorController {
 	private AuthorDao authorDao;
 	
 	/**
-	 * Funtion to get a list of authors
+	 * Function to get a list of authors
 	 * @return list of authors
 	 */
 	@GetMapping("/auteurs")
