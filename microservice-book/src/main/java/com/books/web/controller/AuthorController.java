@@ -29,6 +29,10 @@ public class AuthorController {
 	@Autowired
 	private AuthorDao authorDao;
 	
+	/**
+	 * Funtion to get a list of authors
+	 * @return list of authors
+	 */
 	@GetMapping("/auteurs")
 	public List<Author> listAuthors() {
 		
@@ -41,6 +45,11 @@ public class AuthorController {
 		return authors;
 	}
 	
+	/**
+	 * Function to add a author in db
+	 * @param author Author to save
+	 * @return ResponseEntity
+	 */
 	@PostMapping("/auteurs/add-authors")
 	public ResponseEntity<Author> addAuthor(@Valid @RequestBody Author author) {
 		
@@ -54,6 +63,11 @@ public class AuthorController {
 
 	}
 	
+	/**
+	 * Function to see a view of author
+	 * @param id Id of the author
+	 * @return author
+	 */
 	@GetMapping("/auteurs/{id}/vueauteur")
 	public Author getAuthor(@PathVariable int id){
 		
