@@ -20,7 +20,6 @@ import com.books.dao.BookTypeDao;
 import com.books.exceptions.BookTypeNotFoundException;
 import com.books.exceptions.CanNotAddBookTypeException;
 import com.books.model.BookType;
-import com.netflix.discovery.converters.Auto;
 
 @RestController
 public class BookTypeController {
