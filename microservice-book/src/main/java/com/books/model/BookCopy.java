@@ -32,8 +32,8 @@ public class BookCopy {
 	@JoinColumn(name="book_id")
 	private Book book;
 	
-	@OneToMany(mappedBy = "booksCopies")
-	private Set<BookCopy> booksCopies;
+	@OneToMany(mappedBy = "bookCopy")
+	private Set<Borrowing> borrowings;
 	
 	public BookCopy() {
 		
@@ -41,12 +41,12 @@ public class BookCopy {
 
 	public BookCopy(Integer id,
 			@Size(max = 17, min = 17, message = "L'ISBN doit contenir entre 17 charactères sous la forme XXX-X-XXXX-XXXX-X.") @NotEmpty(message = "Merci de rentrer un prénom") String isbn,
-			Book book, Set<BookCopy> booksCopies) {
+			Book book, Set<Borrowing> borrowings) {
 		super();
 		this.id = id;
 		this.isbn = isbn;
 		this.book = book;
-		this.booksCopies = booksCopies;
+		this.borrowings = borrowings;
 	}
 
 	public Integer getId() {
@@ -73,12 +73,12 @@ public class BookCopy {
 		this.book = book;
 	}
 
-	public Set<BookCopy> getBooksCopies() {
-		return booksCopies;
+	public Set<Borrowing> getBorrowings() {
+		return borrowings;
 	}
 
-	public void setBooksCopies(Set<BookCopy> booksCopies) {
-		this.booksCopies = booksCopies;
+	public void setBorrowings(Set<Borrowing> borrowings) {
+		this.borrowings = borrowings;
 	}
 
 	@Override

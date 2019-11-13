@@ -26,7 +26,7 @@ public class BookType {
     @NotEmpty( message = "Merci de rentrer un type de livre" )
 	private String type;
 	
-	@OneToMany(mappedBy = "booksTypes")
+	@OneToMany(mappedBy = "bookType")
 	private Set<Book> books;
 	
 	public BookType() {
