@@ -33,8 +33,8 @@ public class BookTypeController {
 	 * Function to get a list of book type
 	 * @return a list of book type
 	 */
-	@GetMapping("/typedelivre")
-	public List<BookType> listBookType() {
+	@GetMapping("/categories")
+	public List<BookType> listBooksTypes() {
 		
 		List<BookType> booksTypes = bookTypeDao.findAll();
 		
@@ -50,7 +50,7 @@ public class BookTypeController {
 	 * @param bookType BookType save in db
 	 * @return ResponseEntity
 	 */
-	@PostMapping("/typedelivre/add-booktype")
+	@PostMapping("/categories/add-booktype")
 	public ResponseEntity<BookType> addBookType(@Valid @RequestBody BookType bookType) {
 		
 		BookType newBookType = bookTypeDao.save(bookType);
@@ -67,7 +67,7 @@ public class BookTypeController {
 	 * @param id Id of the BookType
 	 * @return bookType
 	 */
-	@GetMapping("/typedelivre/{id}")
+	@GetMapping("/categories/{id}/vuecategorie")
 	public BookType getBookType(@PathVariable int id) {
 		
 		Optional<BookType> bookType = bookTypeDao.findById(id);

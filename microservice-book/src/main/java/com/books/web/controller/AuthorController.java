@@ -50,7 +50,7 @@ public class AuthorController {
 	 * @param author Author to save
 	 * @return ResponseEntity
 	 */
-	@PostMapping("/auteurs/add-authors")
+	@PostMapping("/auteurs/add-author")
 	public ResponseEntity<Author> addAuthor(@Valid @RequestBody Author author) {
 		
 		Author newAuthor = authorDao.save(author);

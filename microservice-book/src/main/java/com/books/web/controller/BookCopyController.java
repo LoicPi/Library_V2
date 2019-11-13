@@ -28,7 +28,7 @@ public class BookCopyController {
 	private BookCopyDao bookCopyDao;
 	
 	@GetMapping("/exemplaires")
-	public List<BookCopy> listBookCopy() {
+	public List<BookCopy> listBooksCopies() {
 		
 		List<BookCopy> booksCopies = bookCopyDao.findAll();
 		
@@ -39,7 +39,7 @@ public class BookCopyController {
 		return booksCopies;
 	}
 
-	@PostMapping("livres/{id}/add-bookcopy")
+	@PostMapping("exemplaires/add-bookcopy")
 	public ResponseEntity<BookCopy> addBookCopy(@Valid @RequestBody BookCopy bookCopy) {
 		
 		BookCopy newBookCopy = bookCopyDao.save(bookCopy);
