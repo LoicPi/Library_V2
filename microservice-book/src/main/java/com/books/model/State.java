@@ -2,8 +2,15 @@ package com.books.model;
 
 public enum State {
 	
-	Prêt_En_Cours,
-	Prêt_En_Retard,
-	Prêt_Terminé,
-	Prêt_Renouvelé;
+	EnCours("Prêt en cours"),
+	EnRetard("Prêt en retard"),
+	Termine("Prêt terminé"),
+	Renouvele("Prêt renouvelé");
+	
+	public String stateName;
+
+	private State(String stateName) {
+		this.stateName = stateName;
+	}
+	
 }
