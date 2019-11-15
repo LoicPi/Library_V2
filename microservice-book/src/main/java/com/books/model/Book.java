@@ -40,10 +40,10 @@ public class Book {
     @JoinColumn(name="bookType_id")
 	private BookType bookType;
     
-    @OneToMany(mappedBy = "books")
+    @OneToMany(mappedBy = "book")
     private Set<BookCopy> booksCopies;
     
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "books")
     private Set<Author> authors;   
     
     public Book() {

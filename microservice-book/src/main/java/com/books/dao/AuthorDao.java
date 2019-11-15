@@ -6,6 +6,6 @@ import com.books.model.Author;
 
 public interface AuthorDao extends JpaRepository<Author, Integer> {
 	
-	Author findByName (String name);
+	Author findByLastName (String lastname);
 
 }
