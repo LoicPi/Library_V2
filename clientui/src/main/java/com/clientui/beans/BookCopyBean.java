@@ -1,7 +1,5 @@
 package com.clientui.beans;
 
-import java.util.Set;
-
 public class BookCopyBean {
 
 	private Integer id;
