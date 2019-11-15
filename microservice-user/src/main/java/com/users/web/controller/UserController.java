@@ -46,7 +46,7 @@ public class UserController {
 	 * Function to have the list of users
 	 * @return list of users
 	 */
-	@GetMapping("/Comptes")
+	@GetMapping("/comptes")
 	public List<User> listUsers() {
 		
 		List<User> users = userDao.findAll();
@@ -63,7 +63,7 @@ public class UserController {
 	 * @param user User who save 
 	 * @return ResponseEntity
 	 */
-	@PostMapping(value = "/Compte/add-user")
+	@PostMapping(value = "/compte/add-user")
 	public ResponseEntity<User> addUser(@Valid @RequestBody User user, BindingResult result) {
 		
 		user.setPassword(PasswordEncryptor.hashPassword(user.getPassword()));		
@@ -82,7 +82,7 @@ public class UserController {
 	 * @param id id of the user
 	 * @return user
 	 */
-	@GetMapping("/Compte/{id}/MonCompte")
+	@GetMapping("/compte/{id}/monCompte")
 	public User getUser(@PathVariable int id){
 		
 		Optional<User> user = userDao.findById(id);
@@ -103,7 +103,7 @@ public class UserController {
 	@PostMapping("/log-user")
 	public ResponseEntity<User> logUser(@RequestParam String emailLog, @RequestParam String passwordLogg){
 		
-		User userLogged = userDao.findByEmail(emailLog);
+		User userLogged = userDao.findByemail(emailLog);
 		
 		String passwordLoggEncryptor = PasswordEncryptor.hashPassword(passwordLogg);
 		
@@ -120,7 +120,7 @@ public class UserController {
 	 * @param updateUser the dto of user
 	 * @return ResponseEntity
 	 */
-	@PutMapping("/Compte/{id}/update-user")
+	@PutMapping("/compte/{id}/update-user")
 	public ResponseEntity<User> updateUser(@PathVariable int id, @Valid @RequestBody UpdateUser updateUser) {
 		
 		Optional<User> user = userDao.findById(id);
@@ -146,7 +146,7 @@ public class UserController {
 	 * Function to delete a user's account
 	 * @param id id of the delete-user
 	 */
-	@DeleteMapping("/Compte/{id}/delete-user")
+	@DeleteMapping("/compte/{id}/delete-user")
 	public Map<String, Boolean> deleteUser (@PathVariable int id) {
 		
 		Optional<User> user = userDao.findById(id);
@@ -171,7 +171,7 @@ public class UserController {
 	 * @param updatePasswordUser the dto of updated password
 	 * @return ResponseEntity
 	 */
-	@PutMapping("/Compte/{id}/update-password")
+	@PutMapping("/compte/{id}/update-password")
 	public ResponseEntity<User> updatePassword(@PathVariable int id, @Valid @RequestBody UpdatePasswordUser updatePasswordUser){
 		
 		Optional<User> user = userDao.findById(id);
