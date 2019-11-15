@@ -29,9 +29,7 @@ import com.users.exceptions.CanNotAddUserException;
 import com.users.exceptions.PasswordDoesNotMatchException;
 import com.users.exceptions.UserNotFoundException;
 import com.users.model.User;
-import com.users.tools.ErrorResult;
 import com.users.tools.PasswordEncryptor;
-import com.users.validator.UserValidator;
 
 @RestController
 public class UserController {
@@ -41,8 +39,8 @@ public class UserController {
 	@Autowired
 	private UserDao userDao;
 	
-	@Autowired
-	private UserValidator userValidator;
+//	@Autowired
+//	private UserValidator userValidator;
 		
 	/**
 	 * Function to have the list of users
