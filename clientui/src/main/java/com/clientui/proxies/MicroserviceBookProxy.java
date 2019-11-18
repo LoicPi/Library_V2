@@ -14,8 +14,9 @@ import com.clientui.beans.AuthorBean;
 import com.clientui.beans.BookBean;
 import com.clientui.beans.BookCopyBean;
 import com.clientui.beans.BookTypeBean;
+import com.clientui.configuration.FeignConfig;
 
-@FeignClient(name = "zuul-server")
+@FeignClient(name = "zuul-server", contextId="booksProxy", configuration=FeignConfig.class)
 public interface MicroserviceBookProxy {
 	
 	@GetMapping("/microservice-books/auteurs")

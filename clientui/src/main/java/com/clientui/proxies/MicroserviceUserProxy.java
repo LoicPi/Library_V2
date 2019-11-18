@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.clientui.beans.UpdatePasswordBean;
 import com.clientui.beans.UserBean;
 import com.clientui.beans.UserUpdateBean;
+import com.clientui.configuration.FeignConfig;
 
-@FeignClient(name = "zuul-server")
+@FeignClient(name = "zuul-server", contextId="usersProxy", configuration= FeignConfig.class )
 public interface MicroserviceUserProxy {
 	
 	@GetMapping(value = "/microservice-users/Comptes")
