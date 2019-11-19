@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Accueil Bibliothèque</title>
+		<th:block th:include="fragments/general.html :: headerfiles">
+        </th:block>
+	</head>
+	<body>
+		<header th:insert="fragments/general.html :: header"></header>
+		
+		<div class="container">
+			<h3 class="text-center">Bienvenue sur le site de la bibliothèque de votre ville.</h3> 
+			<div class="center">
+				<img th:src="@{/images/livre-illustration.jpg}"/>
+			</div>
+		</div>
+
+		<div th:replace="fragments/general.html :: footer"></div>
+	</body>
+</html>
