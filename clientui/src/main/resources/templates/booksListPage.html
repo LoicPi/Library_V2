@@ -1,39 +1,37 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout.html}">
 	<head>
 		<meta charset="UTF-8">
-		<title>Livres</title>
-		<th:block th:include="fragments/general.html :: headerfiles">
-        </th:block>
-	</head>
-	<body>
-		<header th:insert="fragments/general.html :: header"></header>
-		
-		<div class="col-md-8 mx-auto">
-   			<div class="card border-secondary">
-   				<div class="card-header text-center">
-     				<h3>Liste des livres</h3>
-     			</div>
-     			<div class="card-body mx-auto">
-     				<div th:each="book: ${books}" class="card mb-3" style="max-width: 540px;">
-  						<div class="row no-gutters">
-      							<img class="img-fluid col-md-4" th:src="@{/images/livre-illustration.jpg}"/>
-    						<div class="col-md-8">
-      							<div class="card-body">
-        							<h5 th:text="${book.name}" class="card-title"></h5>
-        							<div th:each="authors: ${authors}">
-        								<p class="card-text"><small th:text="${authors.firstName}"></small></p>
-        							</div>
-<!--         							<p class="card-text"><small th:text="${book.bookType}"></small></p> -->
-        							<a th:href="@{/livres/__${book.id}__/vuelivre}" class="btn btn-info btn-sm">Voir le détail</a>
-      							</div>
-    						</div>
-  						</div>
+ 		<title>Livres</title>
+ 	</head>
+ 	<body>
+ 		<section layout:fragment="content">		
+			<div class="col-md-8 mx-auto">
+   				<div class="card border-secondary">
+   					<div class="card-header text-center">
+     					<h3>Liste des livres</h3>
+	     			</div>
+    	 			<div class="card-body mx-auto">
+     					<div th:each="book: ${books}" class="card mb-3" style="max-width: 540px;">
+  							<div class="row no-gutters">
+      								<img class="img-fluid col-md-4" th:src="@{/images/livre-illustration.jpg}"/>
+    							<div class="col-md-8">
+      								<div class="card-body">
+        								<h5 th:text="${book.name}" class="card-title"></h5>
+        								<div th:each="authorBean: ${book.authorsBean}">
+        									<p class="card-text"><small th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName}"></small></p>
+	        							</div>
+<!--	         							<p class="card-text"><small th:text="${book.bookType}"></small></p> -->
+        								<a th:href="@{/livres/__${book.id}__/vuelivre}" class="btn btn-info btn-sm">Voir le détail</a>
+      								</div>
+    							</div>
+  							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		
-		<div th:replace="fragments/general.html :: footer"></div>
-	</body>
+		</section>
+	 </body>
 </html>

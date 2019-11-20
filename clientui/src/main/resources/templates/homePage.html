@@ -1,21 +1,20 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout.html}">
 	<head>
 		<meta charset="UTF-8">
 		<title>Accueil Bibliothèque</title>
-		<th:block th:include="fragments/general.html :: headerfiles">
-        </th:block>
 	</head>
 	<body>
-		<header th:insert="fragments/general.html :: header"></header>
-		
-		<div class="container"> 
-			<div class="text-center">
-				<img th:src="@{/images/livre-illustration.jpg}"/>
+		<section layout:fragment="content">	
+			<div class="container"> 
+				<div class="text-center">
+					<img th:src="@{/images/livre-illustration.jpg}"/>
+				</div>
+				<hr>
+				<h3 class="text-center">Bienvenue sur le site de la bibliothèque de la ville de .</h3>
 			</div>
-			<h3 class="text-center">Bienvenue sur le site de la bibliothèque de la ville de .</h3>
-		</div>
-
-		<div th:replace="fragments/general.html :: footer"></div>
+		</section>
 	</body>
 </html>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+		<meta charset="UTF-8"/>
+		<link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+		<link href="../static/css/all.css" rel="stylesheet" th:href="@{/css/all.css}">
+		<link href="../static/css/stylesheet.css" rel="stylesheet" th:href="@{/css/stylesheet.css}">
+	</head>
+
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  				<a class="navbar-brand" href="#">
+  					<i class="fas fa-book"></i>
+    				Bibliothèque
+    			</a>
+  				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    				<span class="navbar-toggler-icon"></span>
+  				</button>
+  				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+   					<ul class="navbar-nav mr-auto">
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/Accueil}">Accueil</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/livres}">Livre</a>
+     	 				</li>
+     	 				<li class="nav-item">
+            				<a class="nav-link" href="" data-target="#myModal" data-toggle="modal">Info</a>
+        				</li>
+        			</ul>
+        			<ul class="nav navbar-nav navbar-right">
+      					<li class="nav-item dropdown">
+        					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          					Mon Compte
+        					</a>
+        					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          						<a class="dropdown-item" href="#">Se connecter</a>
+          						<a class="dropdown-item" href="#">Se déconnecter</a>
+        					</div>
+      					</li>
+    				</ul>
+ 				</div>
+ 			</nav>
+ 		</header>
+ 		
+ 		<section layout:fragment="content">
+ 		</section>
+ 		
+  		<footer class="footer">
+  			<div class="container">
+  				<ul class="list-unstyled list-inline text-center">
+    				<li class="list-inline-item">
+    					<a class="btn-floating btn-fb mx-1">
+    						<i class="fab fa-facebook-f"> </i>
+    					</a>
+    				</li>
+      				<li class="list-inline-item">
+        				<a class="btn-floating btn-tw mx-1">
+        					<i class="fab fa-twitter"> </i>
+        				</a>
+      				</li>
+      			</ul>
+ 			</div>
+			<div class="footer-copyright text-center py-3">
+  				©2019 Copyright : Ville
+  			</div>
+  			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+			<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    		<script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>		
+ 		</footer>
+	</body>
+</html>

@@ -1,52 +1,51 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout.html}">
 	<head>
 		<meta charset="UTF-8">
-		<title th:text="${book.name}"></title>
-		<th:block th:include="fragments/general.html :: headerfiles">
-        </th:block>
+ 		<title th:text="${book.name}"></title>
 	</head>
 	<body>
-		<header th:insert="fragments/general.html :: header"></header>
-		
-		<div class="row">
-   	 		<div class="col-12 text-center">
-      			<img th:src="@{/images/livre-illustration.jpg}"/>
-      		</div>
-    		<div class="col-12 row">
-    			<div class="col-12 text-center">
-    				<h3 th:text="${book.name}" class="card-title"></h3>
-    			</div>
-   				<div th:each="authors: ${authors}" class="col-md-6 col-12">
-   					<h4>Auteur :</h4>
-       				<h4 th:text="${authors.firstName}"></h4>
-       			</div>
-   				<div class="card col-md-6 col-12">
-  					<div class="card-header text-center">
-    					<ul class="nav nav-tabs card-header-tabs"id="details-list" role="tablist">
-      						<li class="nav-item">
-        						<a class="nav-link active" href="#description" role="tab" aria-controls="description" aria-selected="true">Résumé</a>
-      						</li>
-      						<li class="nav-item">
-        						<a class="nav-link"  href="#bookCopy" role="tab" aria-controls="bookCopy" aria-selected="false">Exemplaires</a>
-      						</li>
-      					</ul>
-      					</div>
-      					<div class="card-body">
-      						<div class="tab-pane active" id="description" role="tabpanel">
-      							<p class="card-text"><small th:text="${book.description}"></small></p>
+		<section layout:fragment="content">			
+			<div class="row">
+   		 		<div class="col-12 text-center">
+      				<img class="img-fluid" th:src="@{/images/livre-illustration.jpg}"/>
+      			</div>
+    			<div class="col-12 row">
+	    			<div class="col-12 text-center">
+    					<h3 th:text="${book.name}"></h3>
+    				</div>
+   					<div class="col-md-6 col-12">
+   						<h4>Auteur :</h4>
+       					<h4 th:each="authorBean: ${book.authorsBean}" th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName}"></h4>
+	       			</div>
+   					<div class="card col-md-6 col-12">
+  						
+    						<ul class="nav nav-tabs card-header-tabs" id="details-list" role="tablist">
+      							<li class="nav-item">
+        							<a class="nav-link active" href="#description" id="description-tab" role="tab" aria-controls="description" aria-selected="true">Résumé</a>
+      							</li>
+      							<li class="nav-item">
+	        						<a class="nav-link"  href="#bookCopy" id="bookCopy-tab" role="tab" aria-controls="bookCopy" aria-selected="false">Exemplaires</a>
+    	  						</li>
+      						</ul>
+	
+    	  					<div class="tab-content">
+      							<div class="tab-pane active" id="description" role="tabpanel" arial-labelledby="description-tab">
+      								<p class="card-text"><small th:text="${book.description}"></small></p>
+      							</div>
+      							<div class="tab-pane" id="bookCopy" role="tabpanel" aria-labelledby="bookCopy-tab">
+      								<p class="card-text"><small th:text="${book.description}"></small></p>
+      								<p th:each="bookCopyBean: ${book.booksCopiesBean}" class="card-text">
+	      								Exemplaire n°<small th:text="${bookCopyBean.id}"></small>
+    	  							</p>
+      							</div>
       						</div>
-      						<div class="tab-pane" id="bookCopy" role="tabpanel" aria-labelledby="bookCopy-tab">
-      							<p th:each="bookCopies: ${bookCopies}" class="card-text">
-      								Exemplaire n°<small th:text="${bookCopies.id}"></small>
-      							</p>
-      						</div>
       					</div>
-      				</div>
+	    			</div>
     			</div>
     		</div>
-    	</div>
-    			
-		<div th:replace="fragments/general.html :: footer"></div>
+		</section>
 	</body>
 </html>

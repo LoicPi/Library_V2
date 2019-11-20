@@ -2,6 +2,8 @@ package com.clientui.beans;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class BookBean {
 
 	private Integer id;
@@ -14,8 +16,10 @@ public class BookBean {
 	
 	private BookTypeBean bookTypeBean;
 	
+	@JsonProperty("bookCopies")
 	private Set<BookCopyBean> booksCopiesBean;
 	
+	@JsonProperty("authors")
 	private Set<AuthorBean> authorsBean;
 	
 	public BookBean() {
