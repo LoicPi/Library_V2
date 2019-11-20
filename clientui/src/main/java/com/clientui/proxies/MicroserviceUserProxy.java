@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import com.clientui.beans.UserUpdateBean;
 import com.clientui.configuration.FeignConfig;
 
 @FeignClient(name = "zuul-server", contextId="usersProxy", configuration= FeignConfig.class )
+@RibbonClient(name = "microservice-users")
 public interface MicroserviceUserProxy {
 	
 	@GetMapping(value = "/microservice-users/Comptes")

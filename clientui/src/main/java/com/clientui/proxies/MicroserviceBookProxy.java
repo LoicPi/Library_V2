@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import com.clientui.beans.BookTypeBean;
 import com.clientui.configuration.FeignConfig;
 
 @FeignClient(name = "zuul-server", contextId="booksProxy", configuration=FeignConfig.class)
+@RibbonClient(name = "microservice-books")
 public interface MicroserviceBookProxy {
 	
 	@GetMapping("/microservice-books/auteurs")
@@ -26,7 +28,7 @@ public interface MicroserviceBookProxy {
 	AuthorBean addAuthor(@Valid @RequestBody AuthorBean authorBean);
 	
 	@GetMapping("/microservice-books/auteurs/{id}/vueauteur")
-	AuthorBean getAuthor(@PathVariable int id);
+	AuthorBean getAuthor(@PathVariable("id") int id);
 	
 	@GetMapping( "/microservice-books/livres")
 	List<BookBean> listBooks();
@@ -35,7 +37,7 @@ public interface MicroserviceBookProxy {
 	BookBean addBook(@Valid @RequestBody BookBean bookBean);
 	
 	@GetMapping("/microservice-books/livres/{id}/vueLivre")
-	BookBean getBook(@PathVariable int id);
+	BookBean getBook(@PathVariable("id") int id);
 	
 	@GetMapping("/microservice-books/exemplaires")
 	List<BookCopyBean> listBooksCopies();
@@ -50,5 +52,5 @@ public interface MicroserviceBookProxy {
 	BookTypeBean addBookType(@Valid @RequestBody BookTypeBean bookTypeBean);
 	
 	@GetMapping("/microservice-books/categories/{id}/vuecategorie")
-	BookTypeBean getBookType(@PathVariable int id);
+	BookTypeBean getBookType(@PathVariable("id") int id);
 }
