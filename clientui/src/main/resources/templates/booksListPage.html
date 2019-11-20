@@ -14,20 +14,18 @@
    				<div class="card-header text-center">
      				<h3>Liste des livres</h3>
      			</div>
-     			<div class="card-body">
+     			<div class="card-body mx-auto">
      				<div th:each="book: ${books}" class="card mb-3" style="max-width: 540px;">
   						<div class="row no-gutters">
-   	 						<div class="col-md-4">
-      
-    						</div>
+      							<img class="img-fluid col-md-4" th:src="@{/images/livre-illustration.jpg}"/>
     						<div class="col-md-8">
       							<div class="card-body">
         							<h5 th:text="${book.name}" class="card-title"></h5>
         							<div th:each="authors: ${authors}">
-        								<p class="card-text"><small th:text="${authors.firstName}" class="text-muted"></small></p>
+        								<p class="card-text"><small th:text="${authors.firstName}"></small></p>
         							</div>
-<!--         							<p class="card-text"><small th:text="${book.bookType}" class="text-muted"></small></p> -->
-        							<a th:href="@{/livres/{id} (id=${book.id})/vuelivre}" class="btn btn-info">Voir le détail</a>
+<!--         							<p class="card-text"><small th:text="${book.bookType}"></small></p> -->
+        							<a th:href="@{/livres/__${book.id}__/vuelivre}" class="btn btn-info btn-sm">Voir le détail</a>
       							</div>
     						</div>
   						</div>
