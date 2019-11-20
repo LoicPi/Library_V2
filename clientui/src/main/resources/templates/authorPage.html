@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout.html}">
+	<head>
+		<meta charset="UTF-8">
+		<title th:text="${author.lastName} + ' ' + ${author.firstName}"></title>
+	</head>
+	<body>
+		<section layout:fragment="content">
+			<div class="row col-10 mx-auto">
+   		 		<div class="col-12 text-center">
+      				<img class="img-fluid" th:src="@{/images/livre-illustration.jpg}"/>
+      			</div>
+	      		<div class="col-12 text-center">
+    				<h3 th:text="${author.firstName + author.lastName}"></h3>
+    			</div>
+				<div>
+					<h4 class="col-12 col-md-4 text-center text-md-left">Informations sur l'auteur</h4>
+					<hr>
+					<span th:text="${author.description}"></span>
+				</div>
+				<div th:each="book: ${books}" class="list-group">
+					<a th:href="@{/livres/__${book.id}__/vuelivre}" th:text="${book.name}"  class="list-group-item list-group-item-action"></a>
+				</div>
+			</div>
+		</section>
+	</body>
+</html>
