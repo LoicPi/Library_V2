@@ -12,7 +12,7 @@
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   				<a class="navbar-brand" href="#">
-  					<i class="fas fa-book"></i>
+  					<i class="fas fa-book-reader"></i> 
     				Bibliothèque
     			</a>
   				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,24 +21,25 @@
   				<div class="collapse navbar-collapse" id="navbarSupportedContent">
    					<ul class="navbar-nav mr-auto">
       					<li class="nav-item">
-        					<a class="nav-link" th:href="@{/Accueil}">Accueil</a>
+        					<a class="nav-link" th:href="@{/accueil}"><i class="fas fa-home"></i> Accueil</a>
       					</li>
       					<li class="nav-item">
-        					<a class="nav-link" th:href="@{/livres}">Livre</a>
+        					<a class="nav-link" th:href="@{/livres}"><i class="fas fa-book"></i> Livre</a>
      	 				</li>
      	 				<li class="nav-item">
-            				<a class="nav-link" href="" data-target="#myModal" data-toggle="modal">Info</a>
+            				<a class="nav-link" href="" data-target="#myModal" data-toggle="modal"><i class="fas fa-info-circle"></i> Info</a>
         				</li>
         			</ul>
         			<ul class="nav navbar-nav navbar-right">
       					<li class="nav-item dropdown">
-        					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          					Mon Compte
-        					</a>
-        					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          						<a class="dropdown-item" href="#">Se connecter</a>
-          						<a class="dropdown-item" href="#">Se déconnecter</a>
-        					</div>
+      						<a class="nav-link" th:href="@{/compte/connexion}"><i class="fas fa-sign-in-alt"></i> Se connecter</a>
+<!--         					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+<!--           					<i class="fas fa-user-circle"></i> Mon Compte -->
+<!--         					</a> -->
+<!--         					<div class="dropdown-menu" aria-labelledby="navbarDropdown"> -->
+<!--           						<a class="dropdown-item" href="@{/compte/connexion}">Se connecter</a> -->
+<!--           						<a class="dropdown-item" href="#">Se déconnecter</a> -->
+<!--         					</div> -->
       					</li>
     				</ul>
  				</div>
@@ -53,12 +54,12 @@
   				<ul class="list-unstyled list-inline text-center">
     				<li class="list-inline-item">
     					<a class="btn-floating btn-fb mx-1">
-    						<i class="fab fa-facebook-f"> </i>
+    						<i class="fab fa-facebook"></i>
     					</a>
     				</li>
       				<li class="list-inline-item">
         				<a class="btn-floating btn-tw mx-1">
-        					<i class="fab fa-twitter"> </i>
+        					<i class="fab fa-twitter-square"></i>
         				</a>
       				</li>
       			</ul>

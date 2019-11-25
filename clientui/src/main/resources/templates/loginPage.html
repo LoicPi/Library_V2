@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout.html}">
+	<head>
+		<meta charset="UTF-8">
+		<title>Connexion</title>
+	</head>
+	<body>
+		<section layout:fragment="content">
+			<div class="col-md-6 mx-auto">
+   				<div class="card border-secondary">
+   					<div class="card-header text-center">
+     					<h3>Connexion</h3>
+    				</div>
+    				<div class="card-body">
+						<form th:action="@{/compte/log-user}" th:object="${userLogBean}"method="post">
+  							<div class="form-group">
+    							<label for="email">Adresse email <span class="requis">*</span></label>
+    							<input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="exemple@email.com">
+			  				</div>
+		  					<div class="form-group">
+    							<label for="password">Mot de Passe <span class="requis">*</span></label>
+    							<input type="password" class="form-control" name="password" placeholder="Mot de Passe">
+  							</div>
+  							<div class="row justify-content-around">
+  								<input type="submit" class="btn btn-success btn-sm" id="submit" name="submit" value="Connexion">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>	
+		</section>
+	</body>
+</html>

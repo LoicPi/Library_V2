@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.clientui.beans.UpdatePasswordBean;
 import com.clientui.beans.UserBean;
+import com.clientui.beans.UserLogBean;
 import com.clientui.beans.UserUpdateBean;
 import com.clientui.exceptions.CanNotAddUserException;
 import com.clientui.exceptions.PasswordDoesNotMatchException;
@@ -46,7 +47,7 @@ public class ClientUserController {
 		try {
 			UserBean userAdd = UsersProxy.addUser(user);
 			session.setAttribute("id", userAdd.getId());
-			return "redirect:/Compte/" + userAdd.getId() + "/MonCompte";
+			return "redirect:/compte/" + userAdd.getId() + "/moncompte";
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (e instanceof CanNotAddUserException) {
@@ -63,30 +64,30 @@ public class ClientUserController {
 		Integer idSession = (Integer) session.getAttribute("id");
 		
 		if (session.getAttribute("id") != null ) {
-			return "redirect:/Compte/" + idSession + "/MonCompte";
+			return "redirect:/compte/" + idSession + "/monCompte";
 		} else {
-			UserBean user = new UserBean();
+			UserLogBean user = new UserLogBean();
 			model.addAttribute("user", user);
 			return "loginPage";
 		}
 	}
 	
 	@RequestMapping("/compte/log-user")
-	public String logUser(@Valid @ModelAttribute("user") UserBean user, Model model, HttpServletRequest request ) {
+	public String logUser(@Valid @ModelAttribute("user") UserLogBean user, Model model, HttpServletRequest request ) {
 		
 		HttpSession session = request.getSession();
 		
-		try {
+//		try {
 			UserBean userLogged = UsersProxy.logUser(user.getEmail(), user.getPassword());
 			session.setAttribute("id", userLogged.getId());
-			return "redirect:/Compte/" + userLogged.getId() + "/MonCompte";
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (e instanceof PasswordDoesNotMatchException) {
-				model.addAttribute("errorMessage", "Le mot de passe ou l'adresse mail ne correspondent pas.");
-			}
-			return "loginPage";
-		}
+			return "redirect:/compte/" + userLogged.getId() + "/moncompte";
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			if (e instanceof PasswordDoesNotMatchException) {
+//				model.addAttribute("errorMessage", "Le mot de passe ou l'adresse mail ne correspondent pas.");
+//			}
+//			return "loginPage";
+//		}
 	}
 	
 	@RequestMapping("/compte/{id}/maj")
@@ -96,7 +97,7 @@ public class ClientUserController {
 		Integer idSession = (Integer) session.getAttribute("id");
 		
 		if (session.getAttribute("id") == null || id != idSession ) {
-			return "redirect:/Accueil";
+			return "redirect:/accueil";
 		} else {
 			UserUpdateBean userUpdate = new UserUpdateBean();
 			
@@ -121,11 +122,11 @@ public class ClientUserController {
 		Integer idSession = (Integer) session.getAttribute("id");
 		
 		if (session.getAttribute("id") == null || id != idSession ) {
-			return "redirect:/Accueil";
+			return "redirect:/accueil";
 		} else {
 			try {
 				UserBean user = UsersProxy.updateUser(id, updateUser);
-				return "redirect:/Compte/" + user.getId() + "/MonCompte";
+				return "redirect:/compte/" + user.getId() + "/moncompte";
 			} catch (Exception e) {
 				e.printStackTrace();
 				if (e instanceof UserNotFoundException) {
@@ -136,14 +137,14 @@ public class ClientUserController {
 		}
 	}
 	
-	@RequestMapping("/compte/{id}/mon_compte")
+	@RequestMapping("/compte/{id}/moncompte")
 	public String accountPage (@PathVariable("id") int id, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
 		Integer idSession = (Integer) session.getAttribute("id");
 		
 		if (session.getAttribute("id") == null || id != idSession ) {
-			return "redirect:/Accueil";
+			return "redirect:/accueil";
 		} else {
 			UserBean user = UsersProxy.getUser(id);
 			model.addAttribute("user", user);
@@ -158,21 +159,21 @@ public class ClientUserController {
 		Integer idSession = (Integer) session.getAttribute("id");
 		
 		if (session.getAttribute("id") == null || id != idSession ) {
-			return "redirect:/Accueil";
+			return "redirect:/accueil";
 		} else {
 			session.invalidate();
-			return "redirect:/Compte/Connexion";
+			return "redirect:/compte/connexion";
 		}
 	}
 	
-	@RequestMapping("compte/{id}/maj_mdp")
+	@RequestMapping("compte/{id}/majmdp")
 	public String updatePasswordPage (@PathVariable("id") int id, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
 		Integer idSession = (Integer) session.getAttribute("id");
 		
 		if (session.getAttribute("id") == null || id != idSession) {
-			return "redirect:/Accueil";
+			return "redirect:/accueil";
 		} else {
 			UserBean user = UsersProxy.getUser(id);
 			model.addAttribute("user", user);
@@ -190,11 +191,11 @@ public class ClientUserController {
 		Integer idSession = (Integer) session.getAttribute("id");
 		
 		if (session.getAttribute("id") == null || id != idSession ) {
-			return "redirect:/Accueil";
+			return "redirect:/accueil";
 		} else {
 			try {
 				UserBean user = UsersProxy.updatePassword(id, updatePassword);
-				return "redirect:/Compte/" + user.getId() + "/MonCompte";
+				return "redirect:/compte/" + user.getId() + "/moncompte";
 			} catch (Exception e) {
 				e.printStackTrace();
 				if (e instanceof UserNotFoundException) {
