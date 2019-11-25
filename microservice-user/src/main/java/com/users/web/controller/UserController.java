@@ -82,7 +82,7 @@ public class UserController {
 	 * @param id id of the user
 	 * @return user
 	 */
-	@GetMapping("/compte/{id}/monCompte")
+	@GetMapping("/compte/{id}/moncompte")
 	public User getUser(@PathVariable int id){
 		
 		Optional<User> user = userDao.findById(id);
@@ -100,18 +100,16 @@ public class UserController {
 	 * @param passwordLogg password implements to log
 	 * @return ResponseEntity
 	 */
-	@PostMapping("/log-user")
-	public ResponseEntity<User> logUser(@RequestParam String emailLog, @RequestParam String passwordLogg){
+	@PostMapping("/compte/log-user")
+	public ResponseEntity<User> logUser(@RequestParam String email, @RequestParam String password){
 		
-		User userLogged = userDao.findByemail(emailLog);
+		User userLogged = userDao.findByEmail(email);
 		
-		String passwordLoggEncryptor = PasswordEncryptor.hashPassword(passwordLogg);
+		if(!PasswordEncryptor.checkPassword(password, userLogged.getPassword())) throw new PasswordDoesNotMatchException("Les mots de passes ne correspondent pas");
 		
-		if(!PasswordEncryptor.checkPassword(passwordLoggEncryptor, userLogged.getPassword())) throw new PasswordDoesNotMatchException("Les mots de passes ne correspondent pas");
+		log.info("Connexion au compte utilisateur n°" + userLogged.getId());
 		
-		log.info("Conneion au compte utilisateur n°" + userLogged.getId());
-		
-		return new ResponseEntity<User>(userLogged, HttpStatus.FOUND);
+		return new ResponseEntity<User>(userLogged, HttpStatus.OK);
 	}
 	
 	/**
