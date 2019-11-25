@@ -15,13 +15,17 @@
 	      		<div class="col-12 text-center">
     				<h3 th:text="${author.firstName + author.lastName}"></h3>
     			</div>
-				<div>
+				<div class="col-12 info">
 					<h4 class="col-12 col-md-4 text-center text-md-left">Informations sur l'auteur</h4>
 					<hr>
 					<span th:text="${author.description}"></span>
 				</div>
-				<div th:each="book: ${books}" class="list-group">
-					<a th:href="@{/livres/__${book.id}__/vuelivre}" th:text="${book.name}"  class="list-group-item list-group-item-action"></a>
+				<div class="col-12">
+					<h4 class="col-12 col-md-4 text-center text-md-left">Livres à la bibliothèque :</h4>
+					<hr>
+					<div th:each="book: ${author.books}" class="list-group">
+						<a th:href="@{/livres/__${book.id}__/vuelivre}" th:text="${book.name}"  class="list-group-item list-group-item-action"></a>
+					</div>
 				</div>
 			</div>
 		</section>
