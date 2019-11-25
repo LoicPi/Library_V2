@@ -23,10 +23,10 @@ public class BookCopy {
 	@Column(name = "id")
 	private Integer id;
 	
-	@Column(name="isbn")
-	@Size( max = 17, min = 17, message = "L'ISBN doit contenir entre 17 charactères sous la forme XXX-X-XXXX-XXXX-X." )
+	@Column(name="ean")
+	@Size( max = 17, min = 17, message = "L'EAN doit contenir 17 charactères sous la forme XXX-X-XXXX-XXXX-X." )
     @NotEmpty( message = "Merci de rentrer un prénom" )
-	private String isbn;
+	private String ean;
 	
 	@ManyToOne
 	@JoinColumn(name="book_id")
@@ -40,11 +40,11 @@ public class BookCopy {
 	}
 
 	public BookCopy(Integer id,
-			@Size(max = 17, min = 17, message = "L'ISBN doit contenir entre 17 charactères sous la forme XXX-X-XXXX-XXXX-X.") @NotEmpty(message = "Merci de rentrer un prénom") String isbn,
+			@Size(max = 17, min = 17, message = "L'EAN doit contenir 17 charactères sous la forme XXX-X-XXXX-XXXX-X.") @NotEmpty(message = "Merci de rentrer un prénom") String ean,
 			Book book, Set<Borrowing> borrowings) {
 		super();
 		this.id = id;
-		this.isbn = isbn;
+		this.ean = ean;
 		this.book = book;
 		this.borrowings = borrowings;
 	}
@@ -57,12 +57,12 @@ public class BookCopy {
 		this.id = id;
 	}
 
-	public String getIsbn() {
-		return isbn;
+	public String getEan() {
+		return ean;
 	}
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+	public void setEan(String ean) {
+		this.ean = ean;
 	}
 
 	public Book getBook() {
@@ -83,6 +83,6 @@ public class BookCopy {
 
 	@Override
 	public String toString() {
-		return "BookCopy [id=" + id + ", isbn=" + isbn + "]";
+		return "BookCopy [id=" + id + ", ean=" + ean + "]";
 	}
 }

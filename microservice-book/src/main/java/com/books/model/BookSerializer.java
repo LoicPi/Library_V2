@@ -27,7 +27,7 @@ public class BookSerializer extends StdSerializer<Book> {
         for(BookCopy bookCopies : book.getBooksCopies()) {
         	jgen.writeStartObject();
         	jgen.writeNumberField("id", bookCopies.getId());
-        	jgen.writeStringField("isbn", bookCopies.getIsbn());
+        	jgen.writeStringField("ean", bookCopies.getEan());
         	for(Borrowing borrowings : bookCopies.getBorrowings()) {
         		jgen.writeStringField("state", borrowings.getState().stateName);
         		jgen.writeEndObject();

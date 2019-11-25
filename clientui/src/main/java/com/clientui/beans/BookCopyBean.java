@@ -4,7 +4,7 @@ public class BookCopyBean {
 
 	private Integer id;
 	
-	private String isbn;
+	private String ean;
 	
 	private BookBean bookbean;
 	
@@ -20,12 +20,12 @@ public class BookCopyBean {
 		this.id = id;
 	}
 
-	public String getIsbn() {
-		return isbn;
+	public String getEan() {
+		return ean;
 	}
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+	public void setIsbn(String ean) {
+		this.ean = ean;
 	}
 
 	public BookBean getBookbean() {
@@ -38,6 +38,6 @@ public class BookCopyBean {
 
 	@Override
 	public String toString() {
-		return "BookCopyBean [id=" + id + ", isbn=" + isbn + ", bookbean=" + bookbean + "]";
+		return "BookCopyBean [id=" + id + ", ean=" + ean + "]";
 	}
 }
