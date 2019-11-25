@@ -28,10 +28,13 @@ public class BookSerializer extends StdSerializer<Book> {
         	jgen.writeStartObject();
         	jgen.writeNumberField("id", bookCopies.getId());
         	jgen.writeStringField("ean", bookCopies.getEan());
+        	jgen.writeArrayFieldStart("borrowings");
         	for(Borrowing borrowings : bookCopies.getBorrowings()) {
+        		jgen.writeStartObject();
         		jgen.writeStringField("state", borrowings.getState().stateName);
         		jgen.writeEndObject();
         	}
+        	jgen.writeEndArray();
         	jgen.writeEndObject();
         }
         jgen.writeEndArray();
