@@ -14,7 +14,7 @@
      					<h3>Connexion</h3>
     				</div>
     				<div class="card-body">
-						<form th:action="@{/compte/log-user}" th:object="${userLogBean}"method="post">
+						<form th:action="@{/compte/log-user}" th:object="${user}"method="post">
   							<div class="form-group">
     							<label for="email">Adresse email <span class="requis">*</span></label>
     							<input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="exemple@email.com">

@@ -8,49 +8,51 @@
 	</head>
 	<body>
 		<section layout:fragment="content">
-			<div class="row col-10 mx-auto card border-secondary userinfo">
-   				<div class="card-header text-center">
-					<h3>Mes Informations</h3>
-					<a th:href="@{/compte/__${user.id}__/maj}" class="btn btn-info btn-sm" role="button">Modifier vos informations</a>
-				</div>
-				<div class="card-body mx-auto col-8">
-					<form class="form-horizontal" role="form">
-						<div class="form-group row justify-content-center">
-							<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Nom : </label>
-							<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.lastName}"></label>
-						</div>
-						<div class="form-group row justify-content-center">
-							<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Prénom :</label>
-							<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.firstName}"></label>
-						</div>
-						<div class="form-group row justify-content-center">
-							<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">E-mail :</label>
-							<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.email}"></label>
-						</div>
-						<div class="form-group row justify-content-center">
-							<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Téléphone :</label>
-							<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.phoneNumber}"></label>
-						</div>
-						<div class="form-group row justify-content-center">
-							<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">N° de carte :</label>
-							<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.cardNumber}"></label>
-						</div>
-						<div class="form-group row justify-content-center">
-							<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Date d'inscription :</label>
-							<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.dateRegistration}"></label>
-						</div>
-						<div class="form-group row justify-content-center">
-							<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Mot de Passe :</label>
-							<label class="col-md-6 col-10 col-form-label form-control-label border">
-        						<a class="btn btn-info btn-sm col-6" th:href="@{/compte/__${user.id}__/majmdp}" role="button">Modifier</a>
-							</label>
-						</div>
-      				</form>
+			<div class="col-10 mx-auto">
+				<div class="card border-secondary mx-auto">
+   					<div class="card-header text-center">
+						<h3>Mes Informations</h3>
+						<a th:href="@{/compte/__${user.id}__/maj}" class="btn btn-info btn-sm" role="button">Modifier vos informations</a>
+					</div>
+					<div class="card-body mx-auto col-8">
+						<form class="form-horizontal" role="form">
+							<div class="form-group row justify-content-center">
+								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Nom : </label>
+								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.lastName}"></label>
+							</div>
+							<div class="form-group row justify-content-center">
+								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Prénom :</label>
+								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.firstName}"></label>
+							</div>
+							<div class="form-group row justify-content-center">
+								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">E-mail :</label>
+								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.email}"></label>
+							</div>
+							<div class="form-group row justify-content-center">
+								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Téléphone :</label>
+								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.phoneNumber}"></label>
+							</div>
+							<div class="form-group row justify-content-center">
+								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">N° de carte :</label>
+								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.cardNumber}"></label>
+							</div>
+							<div class="form-group row justify-content-center">
+								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Date d'inscription :</label>
+								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.dateRegistration}"></label>
+							</div>
+<!-- 							<div class="form-group row justify-content-center"> -->
+<!-- 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Mot de Passe :</label> -->
+<!-- 								<label class="col-md-6 col-10 col-form-label form-control-label border"> -->
+<!--         							<a class="btn btn-info btn-sm col-6" th:href="@{/compte/__${user.id}__/majmdp}" role="button">Modifier</a> -->
+<!-- 								</label> -->
+<!-- 							</div> -->
+      					</form>
+      				</div>
       			</div>
       		</div>
-      		<div class="row col-10 mx-auto card border-secondary">
-      			<div class="card-header text-center">
-      				<h3>Mes réservations</h4>
+      		<div class="card border-secondary mx-auto">
+   				<div class="card-header text-center">
+      				<h3>Mes réservations</h3>
       			</div>
       			<div class="list-group">
       			</div>
