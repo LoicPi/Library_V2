@@ -24,8 +24,8 @@ public class BookCopy {
 	private Integer id;
 	
 	@Column(name="ean")
-	@Size( max = 17, min = 17, message = "L'EAN doit contenir 17 charactères sous la forme XXX-X-XXXX-XXXX-X." )
-    @NotEmpty( message = "Merci de rentrer un prénom" )
+	@Size( max = 13, min = 13, message = "L'EAN doit contenir 13 charactères.")
+    @NotEmpty( message = "Merci de rentrer le numéro EAN" )
 	private String ean;
 	
 	@ManyToOne
@@ -40,7 +40,7 @@ public class BookCopy {
 	}
 
 	public BookCopy(Integer id,
-			@Size(max = 17, min = 17, message = "L'EAN doit contenir 17 charactères sous la forme XXX-X-XXXX-XXXX-X.") @NotEmpty(message = "Merci de rentrer un prénom") String ean,
+			String ean,
 			Book book, Set<Borrowing> borrowings) {
 		super();
 		this.id = id;
