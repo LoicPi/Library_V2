@@ -17,7 +17,7 @@ public class ClientHomeController {
 	@Autowired
 	private MicroserviceUserProxy UsersProxy;
 	
-	@RequestMapping("/Accueil")
+	@RequestMapping("/accueil")
 	public String homePage(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
