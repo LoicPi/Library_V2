@@ -12,39 +12,58 @@
    		 		<div class="col-12 text-center">
       				<img class="img-fluid" th:src="@{/images/livre-illustration.jpg}"/>
       			</div>
-    			<div class="col-12 row">
+    			<!--  <div class="col-12 row">-->
 	    			<div class="col-12 text-center">
     					<h3 th:text="${book.name}"></h3>
     				</div>
-   					<div class="col-md-6 col-12">
-   						<h4>Auteur :</h4>
-       					<h4 th:each="authorBean: ${book.authorsBean}" th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName}"></h4>
+   					<div class="col-12 text center">
+   						<h4>Auteur : <span th:ref="@{/auteur/__${authorBean.id}__/vueauteur}"><span th:each="authorBean: ${book.authorsBean}" th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName}"></span></span></h4>       					
 	       			</div>
-   					<div class="card col-md-6 col-12">
-  						
-    						<ul class="nav nav-tabs card-header-tabs" id="details-list" role="tablist">
-      							<li class="nav-item">
-        							<a class="nav-link active" href="#description" id="description-tab" role="tab" aria-controls="description" aria-selected="true">Résumé</a>
-      							</li>
-      							<li class="nav-item">
-	        						<a class="nav-link"  href="#bookCopy" id="bookCopy-tab" role="tab" aria-controls="bookCopy" aria-selected="false">Exemplaires</a>
-    	  						</li>
-      						</ul>
+   					<div class="col-10">
+  						<h4>Exemplaires</h4>
+  						<hr>
+  						<table class="table table-striped">
+  							<thead>
+  								<tr>
+  									<th>N°</th>
+  									<th>EAN</th>
+  									<th>Disponibilité</th>
+  								</tr>
+  							</thead>
+  							<tbody th:each="bookCopyBean: ${book.booksCopiesBean}">
+  								<tr>
+  									<td th:text="${bookCopyBean.id}"></td>
+  									<td th:text="${bookCopyBean.ean}"></td>
+  									<td><span th:if="${bookCopyBean.borrowed}">Prêt en cours</span>
+  										<span th:unless="${bookCopyBean.borrowed}">Disponible</span>
+  									</td>
+  								</tr>  							
+  							</tbody>
+  						</table>
+  							
+<!--     						<ul class="nav nav-tabs card-header-tabs" id="details-list" role="tablist"> -->
+<!--       							<li class="nav-item"> -->
+<!--         							<a class="nav-link active" href="#description" id="description-tab" role="tab" aria-controls="description" aria-selected="true">Résumé</a> -->
+<!--       							</li> -->
+<!--       							<li class="nav-item"> -->
+<!-- 	        						<a class="nav-link"  href="#bookCopy" id="bookCopy-tab" role="tab" aria-controls="bookCopy" aria-selected="false">Exemplaires</a> -->
+<!--     	  						</li> -->
+<!--       						</ul> -->
 	
-    	  					<div class="tab-content">
-      							<div class="tab-pane active" id="description" role="tabpanel" arial-labelledby="description-tab">
-      								<p class="card-text"><small th:text="${book.description}"></small></p>
-      							</div>
-      							<div class="tab-pane" id="bookCopy" role="tabpanel" aria-labelledby="bookCopy-tab">
-      								<p class="card-text"><small th:text="${book.description}"></small></p>
-      								<p th:each="bookCopyBean: ${book.booksCopiesBean}" class="card-text">
-	      								Exemplaire n°<small th:text="${bookCopyBean.id}"></small>
-    	  							</p>
-      							</div>
-      						</div>
-      					</div>
+<!--     	  					<div class="tab-content"> -->
+<!--       							<div class="tab-pane active" id="description" role="tabpanel" arial-labelledby="description-tab"> -->
+<!--       								<p class="card-text"><small th:text="${book.description}"></small></p> -->
+<!--       							</div> -->
+<!--       							<div class="tab-pane" id="bookCopy" role="tabpanel" aria-labelledby="bookCopy-tab"> -->
+<!--       								<p class="card-text"><small th:text="${book.description}"></small></p> -->
+<!--       								<p th:each="bookCopyBean: ${book.booksCopiesBean}" class="card-text"> -->
+<!-- 	      								Exemplaire n°<small th:text="${bookCopyBean.id}"></small> -->
+<!--     	  							</p> -->
+<!--       							</div> -->
+<!--       						</div> -->
+      					
 	    			</div>
-    			</div>
+    			<!--  </div> -->
     		</div>
 		</section>
 	</body>
