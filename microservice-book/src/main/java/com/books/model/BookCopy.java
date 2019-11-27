@@ -1,6 +1,6 @@
 package com.books.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,15 +33,26 @@ public class BookCopy {
 	private Book book;
 	
 	@OneToMany(mappedBy = "bookCopy")
-	private Set<Borrowing> borrowings;
+	private List<Borrowing> borrowings;
 	
 	public BookCopy() {
 		
 	}
-
+	
+	public Boolean isBorrowed() {
+		Boolean borrowed = false;
+		for (Borrowing borrowing : borrowings) {
+			if (!(borrowing.getState().stateName.equals("Prêt terminé" ))) {
+				borrowed = true;
+				break;
+			} 
+		}
+		return borrowed;
+	}
+	
 	public BookCopy(Integer id,
 			String ean,
-			Book book, Set<Borrowing> borrowings) {
+			Book book, List<Borrowing> borrowings) {
 		super();
 		this.id = id;
 		this.ean = ean;
@@ -73,11 +84,11 @@ public class BookCopy {
 		this.book = book;
 	}
 
-	public Set<Borrowing> getBorrowings() {
+	public List<Borrowing> getBorrowings() {
 		return borrowings;
 	}
 
-	public void setBorrowings(Set<Borrowing> borrowings) {
+	public void setBorrowings(List<Borrowing> borrowings) {
 		this.borrowings = borrowings;
 	}
 
