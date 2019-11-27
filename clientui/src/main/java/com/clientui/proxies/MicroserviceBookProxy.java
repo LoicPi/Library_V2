@@ -15,6 +15,7 @@ import com.clientui.beans.AuthorBean;
 import com.clientui.beans.BookBean;
 import com.clientui.beans.BookCopyBean;
 import com.clientui.beans.BookTypeBean;
+import com.clientui.beans.BorrowingBean;
 import com.clientui.configuration.FeignConfig;
 
 @FeignClient(name = "zuul-server", contextId="booksProxy", configuration=FeignConfig.class)
@@ -53,4 +54,19 @@ public interface MicroserviceBookProxy {
 	
 	@GetMapping("/microservice-books/categories/{id}/vuecategorie")
 	BookTypeBean getBookType(@PathVariable("id") int id);
+	
+	@GetMapping("/microservice-books/emprunts")
+	List<BorrowingBean> listBorrowigs();
+	
+	@GetMapping("/microservice-books/emprunts/utilisateur/{idUser}")
+	List<BorrowingBean> listBorrowingsOfUser(@PathVariable("idUser") int idUser);
+	
+	@PostMapping("/microservice-books/emprunt/add-borrowing")
+	BorrowingBean addBorrowing(@Valid @RequestBody BorrowingBean borrowingBean);
+	
+	@PostMapping("/microservice-books/emprunt/{id}/renouvellement")
+	BorrowingBean renewalBorrowing (@PathVariable("id") int id);
+	
+	@PostMapping("/microservice-books/emprunt/{id}/returnborrowing")
+	BorrowingBean returnBorrowing(@PathVariable("id") int id);	
 }
