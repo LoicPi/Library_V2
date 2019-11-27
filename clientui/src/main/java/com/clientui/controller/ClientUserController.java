@@ -1,5 +1,7 @@
 package com.clientui.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.clientui.beans.BorrowingBean;
 import com.clientui.beans.UpdatePasswordBean;
 import com.clientui.beans.UserBean;
 import com.clientui.beans.UserLogBean;
@@ -20,6 +23,7 @@ import com.clientui.beans.UserUpdateBean;
 import com.clientui.exceptions.CanNotAddUserException;
 import com.clientui.exceptions.PasswordDoesNotMatchException;
 import com.clientui.exceptions.UserNotFoundException;
+import com.clientui.proxies.MicroserviceBookProxy;
 import com.clientui.proxies.MicroserviceUserProxy;
 
 @Controller
@@ -28,9 +32,12 @@ public class ClientUserController {
 	@Autowired
 	private MicroserviceUserProxy UsersProxy;
 	
+	@Autowired
+	private MicroserviceBookProxy BooksProxy;
+	
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping("/compte/Inscription")
+	@RequestMapping("/compte/inscription")
 	public String registrationPage (Model model) {
 		
 		UserBean user = new UserBean();
@@ -64,7 +71,7 @@ public class ClientUserController {
 		Integer idSession = (Integer) session.getAttribute("id");
 		
 		if (session.getAttribute("id") != null ) {
-			return "redirect:/compte/" + idSession + "/monCompte";
+			return "redirect:/compte/" + idSession + "/moncompte";
 		} else {
 			UserLogBean user = new UserLogBean();
 			model.addAttribute("user", user);
@@ -108,6 +115,8 @@ public class ClientUserController {
 			userUpdate.setUpdateFirstName(user.getFirstName());
 			userUpdate.setUpdateEmail(user.getEmail());
 			userUpdate.setUpdatePhoneNumber(user.getPhoneNumber());
+			userUpdate.setUpdateCardNumber(user.getCardNumber());
+			userUpdate.setUpdateDateRegistration(user.getDateRegistration());
 			
 			model.addAttribute("user", userUpdate);
 			
@@ -147,7 +156,9 @@ public class ClientUserController {
 			return "redirect:/accueil";
 		} else {
 			UserBean user = UsersProxy.getUser(id);
+			List<BorrowingBean> borrowings = BooksProxy.listBorrowingsOfUser(id);
 			model.addAttribute("user", user);
+			model.addAttribute("borrowings", borrowings);
 			return "userAccountPage";
 		}	
 	}
