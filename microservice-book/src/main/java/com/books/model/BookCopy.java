@@ -42,7 +42,7 @@ public class BookCopy {
 	public Boolean isBorrowed() {
 		Boolean borrowed = false;
 		for (Borrowing borrowing : borrowings) {
-			if (!(borrowing.getState().stateName.equals("Prêt terminé" ))) {
+			if (!(borrowing.getState().equals(State.Termine))) {
 				borrowed = true;
 				break;
 			} 
