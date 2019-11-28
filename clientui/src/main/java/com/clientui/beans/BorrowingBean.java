@@ -6,19 +6,21 @@ public class BorrowingBean {
 
 	private Integer id;
 	
-	private Date dateBorrowed;
+	private String dateBorrowed;
 	
-	private Date deadline;
+	private String deadline;
 	
 	private Boolean renewal = false;
 	
-	private Date dateRenewal;
+	private String dateRenewal;
+	
+	private String dateReturn;
 	
 	private Integer idUser;
 	
 	private String state;
 	
-	private BookCopyBean bookCopyBean;
+	private String bookName;
 
 	public BorrowingBean() {
 		
@@ -32,19 +34,19 @@ public class BorrowingBean {
 		this.id = id;
 	}
 
-	public Date getDateBorrowed() {
+	public String getDateBorrowed() {
 		return dateBorrowed;
 	}
 
-	public void setDateBorrowed(Date dateBorrowed) {
+	public void setDateBorrowed(String dateBorrowed) {
 		this.dateBorrowed = dateBorrowed;
 	}
 
-	public Date getDeadline() {
+	public String getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(Date deadline) {
+	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
 
@@ -56,12 +58,20 @@ public class BorrowingBean {
 		this.renewal = renewal;
 	}
 
-	public Date getDateRenewal() {
+	public String getDateRenewal() {
 		return dateRenewal;
 	}
 
-	public void setDateRenewal(Date dateRenewal) {
+	public void setDateRenewal(String dateRenewal) {
 		this.dateRenewal = dateRenewal;
+	}
+
+	public String getDateReturn() {
+		return dateReturn;
+	}
+
+	public void setDateReturn(String dateReturn) {
+		this.dateReturn = dateReturn;
 	}
 
 	public Integer getIdUser() {
@@ -80,12 +90,18 @@ public class BorrowingBean {
 		this.state = state;
 	}
 
-	public BookCopyBean getBookCopyBean() {
-		return bookCopyBean;
+	public String getBookName() {
+		return bookName;
 	}
 
-	public void setBookCopyBean(BookCopyBean bookCopyBean) {
-		this.bookCopyBean = bookCopyBean;
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
 	}
-		
+
+	@Override
+	public String toString() {
+		return "BorrowingBean [id=" + id + ", dateBorrowed=" + dateBorrowed + ", deadline=" + deadline + ", renewal="
+				+ renewal + ", dateRenewal=" + dateRenewal + ", dateReturn=" + dateReturn + ", idUser=" + idUser
+				+ ", state=" + state + ", bookName=" + bookName + "]";
+	}
 }
