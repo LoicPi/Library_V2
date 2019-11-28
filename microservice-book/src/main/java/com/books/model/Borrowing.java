@@ -16,8 +16,11 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity
 @Table(name="borrowings")
+@JsonSerialize(using= BorrowingSerializer.class)
 public class Borrowing {
 	
 	@Id
