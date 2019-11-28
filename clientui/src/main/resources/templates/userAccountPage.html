@@ -49,12 +49,23 @@
       					</form>
       				</div>
       			</div>
-      		</div>
-      		<div class="card border-secondary mx-auto">
-   				<div class="card-header text-center">
-      				<h3>Mes réservations</h3>
-      			</div>
-      			<div class="list-group">
+      			<div class="card border-secondary mx-auto">
+   					<div class="card-header text-center">
+      					<h3>Mes réservations</h3>
+      				</div>
+      				<div class=" card-body mx-auto col-8">
+      					<div class="list-group">
+      						<div class="list-group-item list-group-item-action flex-column align-items-start" th:each="borrowing : ${borrowings}">
+      							<div class="d-flex w-100 justify-content-around border-bottom">
+    								<h5 class="mb-1" th:text="${borrowing.bookName}"></h5>
+	    						</div>
+    							<br/>
+    							<p class="mb-1">Date de fin de prêt : <span th:text="${borrowing.deadline}"></span></p>
+    							<p class="mb-1" th:text="${borrowing.state}"></p>
+    							<p th:text="${#temporals.day(localDate)}"></p>			
+      						</div>
+      					</div>
+      				</div>
       			</div>
       		</div>
 		</section>
