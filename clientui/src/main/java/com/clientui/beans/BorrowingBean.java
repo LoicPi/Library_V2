@@ -1,7 +1,5 @@
 package com.clientui.beans;
 
-import java.util.Date;
-
 public class BorrowingBean {
 
 	private Integer id;
@@ -10,7 +8,7 @@ public class BorrowingBean {
 	
 	private String deadline;
 	
-	private Boolean renewal = false;
+	private Boolean renewal;
 	
 	private String dateRenewal;
 	

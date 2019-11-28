@@ -62,7 +62,12 @@
     							<br/>
     							<p class="mb-1">Date de fin de prêt : <span th:text="${borrowing.deadline}"></span></p>
     							<p class="mb-1" th:text="${borrowing.state}"></p>
-    							<p th:text="${#temporals.day(localDate)}"></p>			
+    							<span th:if="${borrowing.state != 'Prêt en retard' and borrowing.renewal == false}">
+    								<br/>
+    								<a class="btn btn-info btn-sm btn-block" th:href="@{/emprunt/__${borrowing.id}__/renouvellement}" role="button">Renouveller son prêt</a>
+    							</span>
+    							<span th:unless="${borrowing.state != 'Prêt en retard' and borrowing.renewal == false}">
+    							</span>			
       						</div>
       					</div>
       				</div>

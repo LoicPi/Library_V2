@@ -2,11 +2,13 @@ package com.books.web.controller;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,9 +115,9 @@ public class BorrowingController {
 		
 		borrowingRenewal.setDateRenewal(java.sql.Date.valueOf(localDate));
 		
-		LocalDate newDeadline = borrowingRenewal.getDeadline().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		Date newDeadline = DateUtils.addMonths(borrowingRenewal.getDeadline(), 1);
 		
-		borrowingRenewal.setDeadline(java.sql.Date.valueOf(newDeadline.plusMonths(1)));
+		borrowingRenewal.setDeadline(newDeadline);
 		
 		borrowingRenewal.setState(State.Renouvele);
 		
@@ -142,8 +144,12 @@ public class BorrowingController {
 		
 		borrowingReturn.setDateReturn(java.sql.Date.valueOf(localDate));
 		
+		borrowingReturn.setState(State.Termine);
+		
 		Borrowing returnBorrowing = borrowingDao.save(borrowingReturn);
 		
 		return new ResponseEntity<Borrowing>(returnBorrowing, HttpStatus.OK);
 	}
+	
+	
 }

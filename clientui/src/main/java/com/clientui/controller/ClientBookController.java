@@ -140,4 +140,18 @@ public class ClientBookController {
 		
 		return "bookTypePage";
 	}
+	
+	@RequestMapping("/emprunt/{id}/renouvellement")
+	public String renewalBorrowing(@PathVariable("id") int id, Model model, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		
+		Integer idSession = (Integer) session.getAttribute("id");
+		
+		BooksProxy.renewalBorrowing(id);
+				
+		return "redirect:/compte/" + idSession + "/moncompte";
+	}
+	
+	
 }
