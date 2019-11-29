@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.clientui.beans.AuthorBean;
 import com.clientui.beans.BookBean;
@@ -39,6 +40,9 @@ public interface MicroserviceBookProxy {
 	
 	@GetMapping("/microservice-books/livres/{id}/vueLivre")
 	BookBean getBook(@PathVariable("id") int id);
+	
+	@PostMapping("/microservice-books/livres/recherche")
+	List<BookBean> searchBooksByName(@RequestParam("name") String name);
 	
 	@GetMapping("/microservice-books/exemplaires")
 	List<BookCopyBean> listBooksCopies();
