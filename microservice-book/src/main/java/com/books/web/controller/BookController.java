@@ -84,10 +84,12 @@ public class BookController {
 	 * @param title Title of book
 	 * @return List of books
 	 */
-	@PostMapping("/livres/rechercheParTitre")
-	public List<Book> searchBooksByTitle (String title) {
+	@PostMapping("/livres/recherche")
+	public List<Book> searchBooksByName (String name) {
 		
-		List<Book> books = bookDao.findBooksByName(title);
+		List<Book> books = bookDao.findByNameContainingIgnoreCase(name);
+		
+		log.info("Récupération de la liste de livres recherchée");
 		
 		return books;
 	}
