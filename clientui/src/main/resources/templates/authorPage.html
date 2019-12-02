@@ -10,7 +10,7 @@
 		<section layout:fragment="content">
 			<div class="row col-10 mx-auto">
    		 		<div class="col-12 text-center">
-      				<img class="img-fluid" th:src="@{/images/livre-illustration.jpg}"/>
+      				<img class="img-fluid img-book" th:src="${author.image}"/>
       			</div>
 	      		<div class="col-12 text-center">
     				<h3 th:text="${author.firstName + author.lastName}"></h3>

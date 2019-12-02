@@ -12,8 +12,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -37,7 +40,7 @@ public class Book {
     private String description;
     
     @Column( name = "image" )
-    private Boolean image = false;
+    private String imagePath;
     
     @ManyToOne
     @JoinColumn(name="bookType_id")
@@ -49,6 +52,9 @@ public class Book {
     @ManyToMany(mappedBy = "books")
     private Set<Author> authors;   
     
+    @Transient
+    private MultipartFile bookImage;
+    
     public Book() {
     	
     }
@@ -56,15 +62,12 @@ public class Book {
 	public Book(Integer id,
 			@Size(max = 100, min = 3, message = "Le nom du livre doit contenir entre 3 et 50 charactères.") @NotEmpty(message = "Merci de rentrer un nom de livre") String name,
 			@Size(max = 1000, message = "La description ne doit pas dépasser 1000 charactères.") String description,
-			Boolean image, BookType bookType, Set<BookCopy> booksCopies, Set<Author> authors) {
+			String imagePath) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.image = image;
-		this.bookType = bookType;
-		this.booksCopies = booksCopies;
-		this.authors = authors;
+		this.imagePath = imagePath;
 	}
 
 	public Integer getId() {
@@ -91,12 +94,12 @@ public class Book {
 		this.description = description;
 	}
 
-	public Boolean getImage() {
-		return image;
+	public String getImagePath() {
+		return imagePath;
 	}
 
-	public void setImage(Boolean image) {
-		this.image = image;
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public BookType getBookType() {
@@ -123,8 +126,16 @@ public class Book {
 		this.authors = authors;
 	}
 
+	public MultipartFile getBookImage() {
+		return bookImage;
+	}
+
+	public void setBookImage(MultipartFile bookImage) {
+		this.bookImage = bookImage;
+	}
+
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", name=" + name + ", description=" + description + ", image=" + image + "]";
+		return "Book [id=" + id + ", name=" + name + ", description=" + description + ", imagePath=" + imagePath + "]";
 	}
 }

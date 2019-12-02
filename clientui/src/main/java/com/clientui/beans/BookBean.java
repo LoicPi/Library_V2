@@ -12,7 +12,7 @@ public class BookBean {
 	
 	private String description;
 	
-	private Boolean image = false;
+	private String image;
 	
 	private BookTypeBean bookTypeBean;
 	
@@ -50,11 +50,11 @@ public class BookBean {
 		this.description = description;
 	}
 
-	public Boolean getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(Boolean image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 

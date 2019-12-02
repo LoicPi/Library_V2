@@ -12,7 +12,7 @@ footer container {
 }
  
 header {
-	margin-bottom:50px;
+	margin-bottom:20px;
 }
 
 .info {
@@ -21,4 +21,18 @@ header {
 
 .userinfo {
 	margin-bottom:40px;
+}
+
+.btnStyle {
+	margin-top : 5px;
+}
+
+.img-list {
+	max-width: 75% !important;
+    padding: 10px;
+}
+
+.img-book {
+	max-width: 15% !important;
+    padding: 10px;
 }

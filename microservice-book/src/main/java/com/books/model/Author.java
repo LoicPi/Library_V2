@@ -38,7 +38,7 @@ public class Author {
     private String description;
     
     @Column( name = "image" )
-    private Boolean image = false;
+    private String image;
     
     @ManyToMany
     @JoinTable( name = "author_book", joinColumns = @JoinColumn(name = "author_id"), inverseJoinColumns = @JoinColumn (name = "book_id"))
@@ -52,7 +52,7 @@ public class Author {
 			@Size(max = 50, min = 3, message = "Le nom doit contenir entre 3 et 50 charactères.") @NotEmpty(message = "Merci de rentrer un prénom") String lastName,
 			@Size(max = 50, min = 3, message = "Le prénom doit contenir entre 3 et 50 charactères.") @NotEmpty(message = "Merci de rentrer un nom") String firstName,
 			@Size(max = 1000, message = "La description ne doit pas dépasser 1000 charactères.") String description,
-			Boolean image, Set<Book> books) {
+			String image, Set<Book> books) {
 		super();
 		this.id = id;
 		this.lastName = lastName;
@@ -94,11 +94,11 @@ public class Author {
 		this.description = description;
 	}
 
-	public Boolean getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(Boolean image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 

@@ -23,6 +23,7 @@ public class BookSerializer extends StdSerializer<Book> {
         jgen.writeNumberField("id", book.getId());
         jgen.writeStringField("name", book.getName());
         jgen.writeStringField("description", book.getDescription());
+        jgen.writeStringField("image", book.getImagePath());
         jgen.writeArrayFieldStart("bookCopies");
         for(BookCopy bookCopies : book.getBooksCopies()) {
         	jgen.writeStartObject();
