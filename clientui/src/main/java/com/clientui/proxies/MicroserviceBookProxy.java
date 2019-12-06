@@ -26,17 +26,11 @@ public interface MicroserviceBookProxy {
 	@GetMapping("/microservice-books/auteurs")
 	List<AuthorBean> listAuthors();
 	
-	@PostMapping("/microservice-books/auteurs/add-authors")
-	AuthorBean addAuthor(@Valid @RequestBody AuthorBean authorBean);
-	
 	@GetMapping("/microservice-books/auteurs/{id}/vueauteur")
 	AuthorBean getAuthor(@PathVariable("id") int id);
 	
 	@GetMapping( "/microservice-books/livres")
 	List<BookBean> listBooks();
-	
-	@PostMapping("/microservice-books/livres/add-book")
-	BookBean addBook(@Valid @RequestBody BookBean bookBean);
 	
 	@GetMapping("/microservice-books/livres/{id}/vueLivre")
 	BookBean getBook(@PathVariable("id") int id);
