@@ -16,5 +16,8 @@ public interface BorrowingDao extends JpaRepository<Borrowing, Integer> {
 	List<Borrowing> findByBookCopy(BookCopy bookCopy);
 	
 	@Query("Select b from Borrowing b where b.deadline < :today and b.state in (:states)")
-	List<Borrowing> findByStates(Date today, List<State> states);	
+	List<Borrowing> findByStates(Date today, List<State> states);
+	
+	@Query("Select b from Borrowing b where b.state =:state ")
+	List<Borrowing> findByStateName(State state);
 }
