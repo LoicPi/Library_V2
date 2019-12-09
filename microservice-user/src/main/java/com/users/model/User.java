@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -54,12 +55,12 @@ public class User {
     private String passwordControl;
     
     @Column( name = "card_number")
-    @NotEmpty(message = "Merci de renseigner votre numéro de carte d'adhérent.")
+    @NotNull(message = "Merci de renseigner votre numéro de carte d'adhérent.")
     private Integer cardNumber;
     
     @Column(name = "phone_number")
-    @Size( max = 9, min = 10, message = "Merci de renseigner un numéro de téléphone valide.")
-    private Integer phoneNumber;
+    @Size( max = 10, min = 10, message = "Merci de renseigner un numéro de téléphone valide.")
+    private String phoneNumber;
     
     @Column(name = "date_registration")
     @Temporal( TemporalType.DATE )
@@ -77,7 +78,7 @@ public class User {
 			@Size(min = 8, message = "Le mot de passe doit contenir au minimum 8 charactères.") @NotEmpty(message = "Merci de rentrer un mot de passe") String password,
 			String passwordControl,
 			@NotEmpty(message = "Merci de renseigner votre numéro de carte d'adhérent.") Integer cardNumber,
-			@Size(max = 10, min = 10, message = "Merci de renseigner un numéro de téléphone valide.") Integer phoneNumber,
+			@Size(max = 10, min = 10, message = "Merci de renseigner un numéro de téléphone valide.") String phoneNumber,
 			Date dateRegistration) {
 		super();
 		this.id = id;
@@ -147,11 +148,11 @@ public class User {
 		this.cardNumber = cardNumber;
 	}
 
-	public Integer getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(Integer phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

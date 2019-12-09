@@ -10,7 +10,7 @@ public class UpdateUser {
 
     private String updateEmail;
     
-    private Integer updatePhoneNumber;
+    private String updatePhoneNumber;
 
 	public Integer getId() {
 		return id;
@@ -44,11 +44,11 @@ public class UpdateUser {
 		this.updateEmail = updateEmail;
 	}
 
-	public Integer getUpdatePhoneNumber() {
+	public String getUpdatePhoneNumber() {
 		return updatePhoneNumber;
 	}
 
-	public void setUpdatePhoneNumber(Integer updatePhoneNumber) {
+	public void setUpdatePhoneNumber(String updatePhoneNumber) {
 		this.updatePhoneNumber = updatePhoneNumber;
 	}    
 

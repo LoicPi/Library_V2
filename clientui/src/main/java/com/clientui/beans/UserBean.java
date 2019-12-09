@@ -16,7 +16,7 @@ public class UserBean {
 	
 	private Integer cardNumber;
 	
-	private Integer phoneNumber;
+	private String phoneNumber;
 	
 	private String dateRegistration;
 	
@@ -80,11 +80,11 @@ public class UserBean {
 		this.cardNumber = cardNumber;
 	}
 
-	public Integer getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(Integer phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

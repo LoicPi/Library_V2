@@ -1,10 +1,8 @@
 package com.books.beans;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import com.books.model.BookCopy;
 import com.books.model.Borrowing;
 
 public class UserBean {
@@ -21,9 +19,9 @@ public class UserBean {
 	
 	private Integer cardNumber;
 	
-	private Integer phoneNumber;
+	private String phoneNumber;
 	
-	private Date dateRegistration;
+	private String dateRegistration;
 	
 	private List<Borrowing> borrowings = new ArrayList<Borrowing>();
 	
@@ -79,19 +77,19 @@ public class UserBean {
 		this.cardNumber = cardNumber;
 	}
 
-	public Integer getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(Integer phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Date getDateRegistration() {
+	public String getDateRegistration() {
 		return dateRegistration;
 	}
 
-	public void setDateRegistration(Date dateRegistration) {
+	public void setDateRegistration(String dateRegistration) {
 		this.dateRegistration = dateRegistration;
 	}
 
