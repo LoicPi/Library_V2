@@ -1,7 +1,5 @@
 package com.clientui.beans;
 
-import java.util.Date;
-
 public class UserBean {
 	
 	private Integer id;
@@ -20,7 +18,7 @@ public class UserBean {
 	
 	private Integer phoneNumber;
 	
-	private Date dateRegistration;
+	private String dateRegistration;
 	
 	public UserBean() {
 		
@@ -90,11 +88,11 @@ public class UserBean {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Date getDateRegistration() {
+	public String getDateRegistration() {
 		return dateRegistration;
 	}
 
-	public void setDateRegistration(Date dateRegistration) {
+	public void setDateRegistration(String dateRegistration) {
 		this.dateRegistration = dateRegistration;
 	}
 

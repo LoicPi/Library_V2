@@ -8,13 +8,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity
 @Table( name = "users")
+@JsonSerialize(using= UserSerializer.class)
 public class User {
 	
 	@Id
@@ -50,11 +58,12 @@ public class User {
     private Integer cardNumber;
     
     @Column(name = "phone_number")
-    @Size( max = 10, min = 10, message = "Merci de renseigner un numéro de téléphone valide.")
+    @Size( max = 9, min = 10, message = "Merci de renseigner un numéro de téléphone valide.")
     private Integer phoneNumber;
     
     @Column(name = "date_registration")
-    @NotEmpty( message = "Merci de renseigner votre date d'inscription.")
+    @Temporal( TemporalType.DATE )
+    @DateTimeFormat( iso = ISO.DATE )
     private Date dateRegistration;
     
     public User() {
