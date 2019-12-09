@@ -11,7 +11,7 @@
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  				<a class="navbar-brand" href="#">
+  				<a class="navbar-brand">
   					<i class="fas fa-book-reader"></i> 
     				Bibliothèque
     			</a>
@@ -24,7 +24,7 @@
         					<a class="nav-link" th:href="@{/accueil}"><i class="fas fa-home"></i> Accueil</a>
       					</li>
       					<li class="nav-item">
-        					<a class="nav-link" th:href="@{/livres}"><i class="fas fa-book"></i> Livre</a>
+        					<a class="nav-link" th:href="@{/livres}"><i class="fas fa-book"></i> Livres</a>
      	 				</li>
      	 				<li class="nav-item">
             				<a class="nav-link" href="" data-target="#myModal" data-toggle="modal"><i class="fas fa-info-circle"></i> Info</a>
@@ -32,14 +32,14 @@
         			</ul>
         			<ul class="nav navbar-nav navbar-right">
       					<li class="nav-item dropdown">
-      						<a class="nav-link" th:href="@{/compte/connexion}"><i class="fas fa-sign-in-alt"></i> Se connecter</a>
-<!--         					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
-<!--           					<i class="fas fa-user-circle"></i> Mon Compte -->
-<!--         					</a> -->
-<!--         					<div class="dropdown-menu" aria-labelledby="navbarDropdown"> -->
-<!--           						<a class="dropdown-item" href="@{/compte/connexion}">Se connecter</a> -->
-<!--           						<a class="dropdown-item" href="#">Se déconnecter</a> -->
-<!--         					</div> -->
+      						<a th:if="${session.isEmpty()}" class="nav-link" th:href="@{/compte/connexion}"><i class="fas fa-sign-in-alt"></i> Se connecter</a>
+        					<a th:unless="${session.isEmpty()}" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          						<i class="fas fa-user-circle"></i> Mon Compte
+        					</a>
+        					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          						<a class="dropdown-item" th:href="@{/compte/__${session.id}__/moncompte}">Mes infos</a>
+          						<a class="dropdown-item" th:href="@{/compte/__${session.id}__/deconnexion}">Se déconnecter</a>
+        					</div>
       					</li>
     				</ul>
  				</div>
@@ -51,7 +51,7 @@
  		
   		<footer class="footer">
   			<div class="container">
-  				<ul class="list-unstyled list-inline text-center">
+  				<ul class="list-unstyled list-inline text-center footer-icone">
     				<li class="list-inline-item">
     					<a class="btn-floating btn-fb mx-1">
     						<i class="fab fa-facebook"></i>

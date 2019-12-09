@@ -1,7 +1,11 @@
+body {
+	background-color : #f8f8ff;
+}
+
 footer {
   background-color: #343a40;
   color: white;
-  margin-top:50px;
+  margin-top:20px;
   position: relative;
   bottom: 0;
   width: 100%;
@@ -34,5 +38,57 @@ header {
 
 .img-book {
 	max-width: 15% !important;
-    padding: 10px;
+	padding:10px;
+}
+
+.footer-icone {
+	padding-top: 15px;
+	margin-bottom: 0px;
+}
+
+.card{
+	padding-right : 0px !important;
+	padding-left : 0px !important;
+}
+
+.card-header {
+	background-color: #a6dced !important;
+}
+.no-gutters{
+	background-color: #f0f8ff !important;
+}
+
+@media screen and (min-width: 200px) and (max-width: 640px) {
+	.infoperso {
+		margin-bottom: 20px;
+	}
+	.img-list {
+		margin-top : 20px
+	}
+	.img-book {
+		max-width : 50% important;
+		padding:10px;
+	}	
+}
+
+.list-group {
+	margin-bottom : 10px;
+}
+
+.booksearch {
+	margin-bottom : 20px;
+}
+
+.bookinfo {
+	margin-top : 15px;
+}
+
+.alignimg {
+	text-align : center;
+	margin-bottom : 20px;
+}
+
+.titlebook {
+	font-weight : bold;
+	text-decoration : underline;
 }

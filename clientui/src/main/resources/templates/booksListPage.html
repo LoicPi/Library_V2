@@ -8,7 +8,7 @@
  	</head>
  	<body>
  		<section layout:fragment="content">	
- 			<div class="col-md-8 mx-auto">
+ 			<div class="col-md-8 mx-auto booksearch">
       			<div class="card border-secondary">
       				<div class="card-header text-center">
       					<h3>Rechercher un livre</h3>
@@ -34,19 +34,19 @@
      					<h3>Liste des livres</h3>
 	     			</div>
     	 			<div class="card-body mx-auto">
-     					<div th:each="book: ${books}" class="card mb-3" style="max-width: 540px;">
+     					<div th:each="book: ${books}" class="card mb-3">
   							<div class="row no-gutters">
-  								<div class="col-md-4 text-center">
+  								<div class="col-4 text-center">
       								<img class="img-fluid col-md-4 img-list" th:src="${book.image}"/>
       							</div>
-    							<div class="col-md-8">
+    							<div class="col-8">
       								<div class="card-body">
         								<h5 th:text="${book.name}" class="card-title"></h5>
         								<div th:each="authorBean: ${book.authorsBean}">
         									<p class="card-text"><small th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName}"></small></p>
 	        							</div>
 <!--	         							<p class="card-text"><small th:text="${book.bookType}"></small></p> -->
-        								<a th:href="@{/livres/__${book.id}__/vuelivre}" class="btn btn-info btn-sm">Voir le détail</a>
+        								<a th:href="@{/livres/__${book.id}__/vuelivre}" class="btn btn-info btn-sm bookinfo">Voir le détail</a>
       								</div>
     							</div>
   							</div>

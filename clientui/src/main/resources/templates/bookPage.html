@@ -9,12 +9,12 @@
 	<body>
 		<section layout:fragment="content">			
 			<div class="row">
-   		 		<div class="col-12 text-center img-book">
+   		 		<div class="col-12 alignimg">
       				<img class="img-fluid img-book" th:src="${book.image}"/>
       			</div>
     			<!--  <div class="col-12 row">-->
 	    			<div class="col-12 text-center">
-    					<h3 th:text="${book.name}"></h3>
+    					<h3 class="titlebook" th:text="${book.name}"></h3>
     				</div>
    					<div class="col-12">
    						<h4 class="text-center">Auteur : <span th:each="authorBean: ${book.authorsBean}"><span th:ref="@{/auteur/__${authorBean.id}__/vueauteur}" th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName}"></span></span></h4>       					
