@@ -84,17 +84,17 @@ public class ClientUserController {
 		
 		HttpSession session = request.getSession();
 		
-//		try {
+		try {
 			UserBean userLogged = UsersProxy.logUser(user.getEmail(), user.getPassword());
 			session.setAttribute("id", userLogged.getId());
 			return "redirect:/compte/" + userLogged.getId() + "/moncompte";
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			if (e instanceof PasswordDoesNotMatchException) {
-//				model.addAttribute("errorMessage", "Le mot de passe ou l'adresse mail ne correspondent pas.");
-//			}
-//			return "loginPage";
-//		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (e instanceof PasswordDoesNotMatchException) {
+				model.addAttribute("errorMessage", "Le mot de passe ou l'adresse mail ne correspondent pas.");
+			}
+			return "loginPage";
+		}
 	}
 	
 	@RequestMapping("/compte/{id}/maj")
@@ -115,8 +115,6 @@ public class ClientUserController {
 			userUpdate.setUpdateFirstName(user.getFirstName());
 			userUpdate.setUpdateEmail(user.getEmail());
 			userUpdate.setUpdatePhoneNumber(user.getPhoneNumber());
-			userUpdate.setUpdateCardNumber(user.getCardNumber());
-			userUpdate.setUpdateDateRegistration(user.getDateRegistration());
 			
 			model.addAttribute("user", userUpdate);
 			
@@ -133,16 +131,16 @@ public class ClientUserController {
 		if (session.getAttribute("id") == null || id != idSession ) {
 			return "redirect:/accueil";
 		} else {
-			try {
+//			try {
 				UserBean user = UsersProxy.updateUser(id, updateUser);
 				return "redirect:/compte/" + user.getId() + "/moncompte";
-			} catch (Exception e) {
-				e.printStackTrace();
-				if (e instanceof UserNotFoundException) {
-					model.addAttribute("errorMessage", "L'utilisateur n'a pas été retrouvé.");
-				}
-				return "updateUserPage";
-			}	
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//				if (e instanceof UserNotFoundException) {
+//					model.addAttribute("errorMessage", "L'utilisateur n'a pas été retrouvé.");
+//				}
+//				return "updateUserPage";
+//			}	
 		}
 	}
 	

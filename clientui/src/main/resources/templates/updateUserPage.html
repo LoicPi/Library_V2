@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout.html}">
+	<head>
+		<meta charset="UTF-8">
+		<title>MAJ du compte</title>
+	</head>
+	<body>
+		<section layout:fragment="content">
+			<div class="col-10 mx-auto">
+				<div class="card border-secondary mx-auto">
+					<div class="card-header text-center">
+						<h3>Mise à jour des informations personnelles</h3>
+					</div>
+					<div class="card-body mx-auto col-8">
+						<form th:action="@{/compte/__${user.id}__/update-user}" th:object="${user}" method="post" class="form-horizontal" role="form">
+							
+							<div class="form-group row justify-content-center">
+								<label for="updateLastName" class="col-md-4 col-10 col-form-label form-control-label border bg-light">Nom : </label>
+								<input type="text" th:field="*{updateLastName}" class="form-control col-md-6 col-10" id="updateLastName"/>
+							</div>
+							<div class="form-group row justify-content-center">
+								<label for="updateFirstName" class="col-md-4 col-10 col-form-label form-control-label border bg-light">Prénom : </label>
+								<input type="text" th:field="*{updateFirstName}" class="form-control col-md-6 col-10" id="updateFirstName"/>
+							</div>
+							<div class="form-group row justify-content-center">
+								<label for="updateEmail" class="col-md-4 col-10 col-form-label form-control-label border bg-light">Email : </label>
+								<input type="email" th:field="*{updateEmail}" class="form-control col-md-6 col-10" id="updateEmail"/>
+							</div>
+							<div class="form-group row justify-content-center">
+								<label for="updatePhoneNumber" class="col-md-4 col-10 col-form-label form-control-label border bg-light">Numéro de téléphone : </label>
+								<input type="text" th:field="*{updatePhoneNumber}" class="form-control col-md-6 col-10" id="updatePhoneNumber"/>
+							</div>
+							<hr>  				
+      						<div class="d-flex flex-md-row flex-column justify-content-around">
+        						<button type="submit" class="btn btn-success btn-sm col-12 col-md-4 m-auto">Sauvegarder</button>
+        						<a class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" th:href="@{/compte/__${user.id}__/moncompte}" role="button">Annuler</a>
+      						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</body>
+</html>
