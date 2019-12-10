@@ -23,6 +23,8 @@ public class UserBean {
 	
 	private String dateRegistration;
 	
+	private String role;
+	
 	private List<Borrowing> borrowings = new ArrayList<Borrowing>();
 	
 	public UserBean() {
@@ -93,6 +95,14 @@ public class UserBean {
 		this.dateRegistration = dateRegistration;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public List<Borrowing> getBorrowings() {
 		return borrowings;
 	}
@@ -105,7 +115,6 @@ public class UserBean {
 	public String toString() {
 		return "UserBean [id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", email=" + email
 				+ ", password=" + password + ", cardNumber=" + cardNumber + ", phoneNumber=" + phoneNumber
-				+ ", dateRegistration=" + dateRegistration + ", borrowings=" + borrowings + "]";
+				+ ", dateRegistration=" + dateRegistration + ", role=" + role + ", borrowings=" + borrowings + "]";
 	}
-
 }

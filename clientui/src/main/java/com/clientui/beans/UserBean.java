@@ -20,6 +20,8 @@ public class UserBean {
 	
 	private String dateRegistration;
 	
+	private String role;
+	
 	public UserBean() {
 		
 	}
@@ -96,10 +98,18 @@ public class UserBean {
 		this.dateRegistration = dateRegistration;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
 		return "UserBean [id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", email=" + email
 				+ ", password=" + password + ", passwordControl=" + passwordControl + ", cardNumber=" + cardNumber
-				+ ", phoneNumber=" + phoneNumber + "]";
+				+ ", phoneNumber=" + phoneNumber + ", dateRegistration=" + dateRegistration + ", role=" + role + "]";
 	}
 }

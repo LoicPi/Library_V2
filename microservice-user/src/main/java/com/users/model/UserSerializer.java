@@ -31,6 +31,7 @@ public class UserSerializer extends StdSerializer<User> {
 		jGen.writeNumberField("cardNumber", user.getCardNumber());
 		jGen.writeStringField("phoneNumber", user.getPhoneNumber());
 		jGen.writeStringField("dateRegistration", dateFormat.format(user.getDateRegistration()));
+		jGen.writeStringField("role", user.getRole().roleName);
 		jGen.writeEndObject();
 	}
 }

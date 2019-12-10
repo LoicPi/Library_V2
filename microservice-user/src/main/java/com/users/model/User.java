@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -67,6 +69,10 @@ public class User {
     @DateTimeFormat( iso = ISO.DATE )
     private Date dateRegistration;
     
+    @Column(name="Role")
+	@Enumerated(EnumType.STRING)
+	private Role role;    
+    
     public User() {
     	
     }
@@ -77,9 +83,9 @@ public class User {
 			@Email(message = "Merci de rentrer une adresse mail valide.") @NotEmpty(message = "Merci de rentrer une adresse email") String email,
 			@Size(min = 8, message = "Le mot de passe doit contenir au minimum 8 charactères.") @NotEmpty(message = "Merci de rentrer un mot de passe") String password,
 			String passwordControl,
-			@NotEmpty(message = "Merci de renseigner votre numéro de carte d'adhérent.") Integer cardNumber,
+			@NotNull(message = "Merci de renseigner votre numéro de carte d'adhérent.") Integer cardNumber,
 			@Size(max = 10, min = 10, message = "Merci de renseigner un numéro de téléphone valide.") String phoneNumber,
-			Date dateRegistration) {
+			Date dateRegistration, Role role) {
 		super();
 		this.id = id;
 		this.lastName = lastName;
@@ -90,6 +96,7 @@ public class User {
 		this.cardNumber = cardNumber;
 		this.phoneNumber = phoneNumber;
 		this.dateRegistration = dateRegistration;
+		this.role = role;
 	}
 
 	public Integer getId() {
@@ -164,12 +171,19 @@ public class User {
 		this.dateRegistration = dateRegistration;
 	}
 
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", email=" + email
 				+ ", password=" + password + ", passwordControl=" + passwordControl + ", cardNumber=" + cardNumber
-				+ ", phoneNumber=" + phoneNumber + "]";
+				+ ", phoneNumber=" + phoneNumber + ", dateRegistration=" + dateRegistration + ", role=" + role + "]";
 	}
-
-    
+	
 }

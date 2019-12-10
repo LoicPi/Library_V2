@@ -28,6 +28,7 @@ import com.users.dto.UpdateUser;
 import com.users.exceptions.CanNotAddUserException;
 import com.users.exceptions.PasswordDoesNotMatchException;
 import com.users.exceptions.UserNotFoundException;
+import com.users.model.Role;
 import com.users.model.User;
 import com.users.tools.PasswordEncryptor;
 
@@ -66,11 +67,13 @@ public class UserController {
 	@PostMapping(value = "/compte/add-user")
 	public ResponseEntity<User> addUser(@Valid @RequestBody User user, BindingResult result) {
 		
-		user.setPassword(PasswordEncryptor.hashPassword(user.getPassword()));		
+		user.setPassword(PasswordEncryptor.hashPassword(user.getPassword()));
+		
+		user.setRole(Role.Utilisateur);
 		
 		User newUser = userDao.save(user);
 		
-		if(newUser == null) throw new CanNotAddUserException("Impossible d'ajouter cet utilisateur");
+		if(newUser == null) throw new CanNotAddUserException("UserException01");
 		
 		log.info("Sauvegarde de l'utilisateur : " + newUser );
 		
@@ -87,7 +90,7 @@ public class UserController {
 		
 		Optional<User> user = userDao.findById(id);
 		
-		if(!user.isPresent()) throw new UserNotFoundException("L'utilisateur avec l'id : " + id +" n'a pas été retrouvé.");
+		if(!user.isPresent()) throw new UserNotFoundException("UserException02");
 		
 		log.info("Accès au compte utilisateur");
 		
@@ -105,7 +108,7 @@ public class UserController {
 		
 		User userLogged = userDao.findByEmail(email);
 		
-		if(!PasswordEncryptor.checkPassword(password, userLogged.getPassword())) throw new PasswordDoesNotMatchException("Les mots de passes ne correspondent pas");
+		if(!PasswordEncryptor.checkPassword(password, userLogged.getPassword())) throw new PasswordDoesNotMatchException("UserException03");
 		
 		log.info("Connexion au compte utilisateur n°" + userLogged.getId());
 		
@@ -123,7 +126,7 @@ public class UserController {
 		
 		Optional<User> user = userDao.findById(id);
 		
-		if(!user.isPresent()) throw new UserNotFoundException("L'utilisateur avec l'id : " + id +" n'a pas été retrouvé.");
+		if(!user.isPresent()) throw new UserNotFoundException("UserException02");
 		
 		User userToUpdate = userDao.findUserById(id);
 		
@@ -149,7 +152,7 @@ public class UserController {
 		
 		Optional<User> user = userDao.findById(id);
 		
-		if(!user.isPresent()) throw new UserNotFoundException("L'utilisateur avec l'id : " + id +" n'a pas été retrouvé.");
+		if(!user.isPresent()) throw new UserNotFoundException("UserException02");
 		
 	    User userToDelete = user.get();
 
@@ -174,7 +177,7 @@ public class UserController {
 		
 		Optional<User> user = userDao.findById(id);
 		
-		if(!user.isPresent()) throw new UserNotFoundException("L'utilisateur avec l'id : " + id +" n'a pas été retrouvé.");
+		if(!user.isPresent()) throw new UserNotFoundException("UserException02");
 		
 		User userToUpdate = userDao.findUserById(id);
 		
