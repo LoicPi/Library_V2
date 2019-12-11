@@ -52,9 +52,6 @@ public class Book {
     @ManyToMany(mappedBy = "books")
     private Set<Author> authors;   
     
-    @Transient
-    private MultipartFile bookImage;
-    
     public Book() {
     	
     }
@@ -124,14 +121,6 @@ public class Book {
 
 	public void setAuthors(Set<Author> authors) {
 		this.authors = authors;
-	}
-
-	public MultipartFile getBookImage() {
-		return bookImage;
-	}
-
-	public void setBookImage(MultipartFile bookImage) {
-		this.bookImage = bookImage;
 	}
 
 	@Override
