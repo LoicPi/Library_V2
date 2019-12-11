@@ -29,4 +29,17 @@ public class ClientHomeController {
 		}
 		return "homePage";
 	}
+	
+	@RequestMapping("/info")
+	public String infoPage(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		Integer idSession = (Integer) session.getAttribute("id");
+		
+		if (session.getAttribute("id") != null ) {			
+			UserBean user = UsersProxy.getUser(idSession);
+			model.addAttribute("user", user);
+		}
+		return "infoPage";
+	}
 }

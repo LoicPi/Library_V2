@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout.html}">
+	<head>
+		<meta charset="UTF-8">
+		<title>Informations Pratiques</title>
+	</head>
+	<body>
+		<section layout:fragment="content">	
+			<div class="container infocont">
+				<h1>Infos Pratiques</h1>
+				<hr>
+				<h3>Horaires d'ouverture</h3>
+				<p>
+					<span>Lundi : </span>
+					<br>
+					<span>Mardi : </span>
+					<br>
+					<span>Mercredi : </span>
+					<br>
+					<span>Jeudi : </span>
+					<br>
+					<span>Vendredi : </span>
+					<br>
+					<span>Samedi : </span>
+					<br>
+					<span>Dimanche : </span>
+				</p>
+				<h3>Nous contacter :</h3>
+				<p>
+					<h5>E-mail :</h5><span>ville.bibliotheque@gmail.com</span>
+					<h5>Téléphone :</h5><span>XX.XX.XX.XX.XX</span>
+				</p>
+				<h3>Où trouver la bibliothèque :</h3>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+					Ut risus erat, elementum in massa quis, dictum vulputate metus. 
+					<p class="imgbibl"><img class="imginfo" th:src="@{/images/Bibliotheque_facade.jpeg}"/></p>
+				</p>
+				<h3>Comment s'inscrire :</h3>
+				<p>
+					Sed rhoncus elit in est elementum tristique. Aenean euismod 
+					condimentum blandit. Donec tempus nibh in auctor blandit. 
+					Pellentesque venenatis felis et elit elementum, id sollicitudin 
+					tortor cursus. Sed sed nisl nisi. Morbi vel odio turpis. 
+					Curabitur eleifend nisl ac luctus scelerisque. Sed blandit eros 
+					eu nunc tempus, et accumsan ipsum gravida. Aliquam efficitur 
+					gravida elit, ut dignissim mi tempus id. Fusce eu auctor ex, eget 
+					tincidunt neque. Vestibulum lobortis ante a tristique finibus. 
+					Aenean lobortis, mi eget aliquam luctus, nisl arcu sagittis elit, 
+					sed tincidunt eros leo non erat. Donec nibh turpis, condimentum 
+					vitae dapibus nec, ornare ut ex. Aenean placerat venenatis turpis. 
+					Vivamus et dolor et libero luctus condimentum quis eu odio. 
+				</p>
+			</div>
+		</section>
+	</body>
+</html>
