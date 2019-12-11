@@ -37,8 +37,7 @@ public class ResponseFilter extends ZuulFilter {
         //response.setStatus(400);
 
         log.info(" CODE HTTP {} ", response.getStatus());
-
-
+        
         return null;
     }
 }
