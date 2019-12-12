@@ -18,7 +18,7 @@ public class BorrowingBatch {
 	@Autowired
 	private BorrowingDao borrowingDao;
 	
-	@Scheduled(cron = "*/5 * * * * *")
+	@Scheduled(cron = "*/30 * * * * *")
 	public void BorrowingStatus() {
 		List<Borrowing> borrowings = borrowingDao.findByStates(new Date(), Arrays.asList(State.EnCours, State.Renouvele));
 		

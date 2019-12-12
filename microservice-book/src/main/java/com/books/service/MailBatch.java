@@ -1,5 +1,7 @@
 package com.books.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class MailBatch {
 		
 		List<UserBean> users = new ArrayList<UserBean>();
 		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		
 		for (Borrowing borrowing : borrowings) {
 			
@@ -56,9 +59,9 @@ public class MailBatch {
             
             for (Borrowing borrowing : userRelaunched.getBorrowings()) {
 				listBook = listBook + "\n\n- " + borrowing.getBookCopy().getBook().getName() +
-						 " Date de prêt : " + borrowing.getDateBorrowed() +
+						 " Date de prêt : " + dateFormat.format(borrowing.getDateBorrowed()) +
 						 " "
-						 + "Date de fin de prêt : " + borrowing.getDeadline();
+						 + "Date de fin de prêt : " + dateFormat.format(borrowing.getDeadline());
 			}
             
             String mailText = "Bonjour " + userRelaunched.getFirstName() + " " + userRelaunched.getLastName() + "," +
