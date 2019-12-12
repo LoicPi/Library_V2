@@ -29,7 +29,7 @@ Le projet est découpé en plusieurs microservices :
 5. Créer deux bases de données sous PostgreSQL :
 	- une base de données pour le microservice-user
 	- une base de données pour le microservice-book
-6. Créer un repository GitHub pour le dossier library-config-repo
+6. Créer un repository GitHub pour le dossier library-config-repo ou cloner le projet GitHub : https://github.com/LoicPi/Library-config-repo.git
 7. Dans le microservice config-server modifier dans le fichier application.properties se trouvant dans le dossier src/main/resources :
 	spring.cloud.config.server.git.uri=*"l'adresse de votre repository GitHub"*
 8. Dans votre repository library-config-repo, modifier pour les deux microservices (book et user) les informations suivantes concernant les bases de données :
@@ -43,6 +43,14 @@ Le projet est découpé en plusieurs microservices :
 	4. microservice-user
 	5. microservice-book
 	6. clientui
-10. Dans PGAdmin via l'utilitaire QueryTools implémentez les données fourni pour les deux bases de données
-12. Dans votre navigateur allez sur la page http://localhost:8080/accueil
-13. Vous pouvez vous connectez et naviguez sur le site
+10. Dans PGAdmin via QueryTools implémentez les jeu de données :
+	1. Pour le microservice book le fichier de jeu de données se trouve dans le microservice book sous src/main/resources/db/data_librarymbook.sql
+	2. Pour le microservice user le fichier de jeu de données se trouve dans le microservice user sous src/main/resources/db/data_librarymuser.sql
+11. Dans votre navigateur allez sur la page http://localhost:8080/accueil
+12. Vous pouvez vous connectez grâce aux logins suivants :
+	- adresse mail : test@test.fr
+	- mot de passe : test
+13. Vous pouvez dès lors naviguez sur le site de la bibliothèque et accéder au compte test
+
+
+
