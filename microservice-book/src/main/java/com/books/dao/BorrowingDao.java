@@ -12,7 +12,9 @@ import com.books.model.State;
 
 public interface BorrowingDao extends JpaRepository<Borrowing, Integer> {
 	
+	@Query("Select b from Borrowing b where b.idUser =:idUser order by dateBorrowed")
 	List<Borrowing> findByIdUser(Integer idUser);
+	
 	List<Borrowing> findByBookCopy(BookCopy bookCopy);
 	
 	@Query("Select b from Borrowing b where b.deadline < :today and b.state in (:states)")
