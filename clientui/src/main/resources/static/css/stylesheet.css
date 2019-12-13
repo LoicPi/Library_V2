@@ -19,7 +19,7 @@ body {
 }
 
 /*Section*/
-.section{
+section{
 	padding-bottom :20px;
 }
 
@@ -40,6 +40,11 @@ header {
 
 .logo {
 	color:white !important;
+}
+
+/*UserAccount Page */
+.infoperso {
+	margin-bottom: 20px;
 }
 
 /*updateUserPage button*/
@@ -117,16 +122,19 @@ header {
 	padding-bottom: 20px;
 }
 
+/*Author Page */
+.description {
+	text-align: justify;
+}
+
+
 /*Mobile*/
 @media only screen and (max-width: 640px) {
-	.infoperso {
-		margin-bottom: 20px;
-	}
 	.img-list {
 		margin-top : 20px
 	}
 	.img-book {
-		max-width : 50% important;
+		max-width : 50% !important;
 		padding:10px;
 	}	
 }

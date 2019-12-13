@@ -9,12 +9,12 @@
 	<body>
 		<section layout:fragment="content">
 			<div class="row mx-auto">
-				<div class="col-md-5 col-10 card border-secondary mx-auto infoperso">
+				<div class="col-10 col-md-8 card border-secondary mx-auto infoperso">
    					<div class="card-header text-center">
 						<h3>Mes Informations</h3>
 						<a th:href="@{/compte/__${user.id}__/maj}" class="btn btn-info btn-sm" role="button">Modifier vos informations</a>
 					</div>
-					<div class="card-body mx-auto col-12">
+					<div class="card-body mx-auto col-10 col-md-8">
 						<form class="form-horizontal" role="form">
 							<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Nom : </label>
@@ -49,13 +49,13 @@
       					</form>
       				</div>
       			</div>
-      			<div class="col-md-5 col-10 card border-secondary mx-auto">
+      			<div class="col-10 col-md-8 card border-secondary mx-auto">
    					<div class="card-header text-center">
       					<h3>Mes réservations</h3>
       				</div>
-      				<div class=" card-body mx-auto col-12">
+      				<div class="card-body mx-auto col-10 col-md-8">
       					<div class="list-group">
-      						<div class="list-group-item list-group-item-action flex-column align-items-start" th:each="borrowing : ${borrowings}">
+      						<div class="list-group-item list-group-item-action flex-column align-items-start" th:each="borrowing : ${borrowings}" th:if="${borrowing.state != 'Prêt terminé'}">
       							<div class="d-flex w-100 justify-content-around border-bottom">
     								<h5 class="mb-1" th:text="${borrowing.bookName}"></h5>
 	    						</div>
@@ -64,10 +64,12 @@
     							<p class="mb-1" th:text="${borrowing.state}"></p>
     							<span th:if="${borrowing.state != 'Prêt en retard' and borrowing.renewal == false}">
     								<br/>
-    								<a class="btn btn-info btn-sm btn-block" th:href="@{/emprunt/__${borrowing.id}__/renouvellement}" role="button">Renouveller son prêt</a>
+    								<div class="text-center">
+    									<a class="btn btn-info btn-sm btn-block" th:href="@{/emprunt/__${borrowing.id}__/renouvellement}" role="button">Renouveller son prêt</a>
+    								</div>
     							</span>
     							<span th:unless="${borrowing.state != 'Prêt en retard' and borrowing.renewal == false}">
-    							</span>			
+    							</span>
       						</div>
       					</div>
       				</div>
