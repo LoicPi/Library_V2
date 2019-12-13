@@ -64,7 +64,7 @@ public class BookController {
 	@PostMapping("/livres/recherche")
 	public List<Book> searchBooksByName (String name) {
 		
-		List<Book> books = bookDao.findByNameContainingIgnoreCase(name);
+		List<Book> books = bookDao.findByNameContainingIgnoreCaseOrderByName(name);
 		
 		log.info("Récupération de la liste de livres recherchée");
 		

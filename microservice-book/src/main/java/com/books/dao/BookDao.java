@@ -10,7 +10,7 @@ import com.books.model.Book;
 
 public interface BookDao extends JpaRepository<Book, Integer> {
 	
-	List<Book> findByNameContainingIgnoreCase(@Param("name") String name); 
+	List<Book> findByNameContainingIgnoreCaseOrderByName(@Param("name") String name); 
 	
 	@Query("From Book b order by b.name")
 	List<Book> findAll();
