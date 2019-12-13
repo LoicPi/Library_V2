@@ -83,6 +83,12 @@ public class BorrowingController {
 		
 		borrowing.setState(State.EnCours);
 		
+		LocalDate ld = LocalDate.of( 2001 , 01 , 01 ) ; 
+		
+		borrowing.setDateRenewal(java.sql.Date.valueOf(ld));
+		
+		borrowing.setDateReturn(java.sql.Date.valueOf(ld));
+		
 		Borrowing newBorrowing = borrowingDao.save(borrowing);
 		
 		if(newBorrowing == null) throw new CanNotAddBorrowingException ("Impossible d'ajouter l'emprunt.");
