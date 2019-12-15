@@ -19,7 +19,7 @@ import com.clientui.beans.UserBean;
 import com.clientui.beans.UserUpdateBean;
 import com.clientui.configuration.FeignConfig;
 
-@FeignClient(name = "zuul-server", url="http://laptop-aoar6kck:9004", contextId="usersProxy", configuration= FeignConfig.class )
+@FeignClient(name = "zuul-server", contextId="usersProxy", configuration= FeignConfig.class )
 @RibbonClient(name = "microservice-users")
 public interface MicroserviceUserProxy {
 	
