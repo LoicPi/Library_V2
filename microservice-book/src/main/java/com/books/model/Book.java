@@ -12,11 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -50,7 +47,10 @@ public class Book {
     private Set<BookCopy> booksCopies;
     
     @ManyToMany(mappedBy = "books")
-    private Set<Author> authors;   
+    private Set<Author> authors;
+    
+    @OneToMany(mappedBy = "book")
+    private Set<Booking> bookings;
     
     public Book() {
     	
