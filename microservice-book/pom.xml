@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.books</groupId>
 	<artifactId>microservice-book</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<name>microservice-book</name>
 	<description>Management of book</description>
 
