@@ -1,5 +1,9 @@
 package com.books.dto;
 
+import com.books.serializer.BookingDtoSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize(using= BookingDtoSerializer.class)
 public class BookingDto {
 
 	private Integer id;
