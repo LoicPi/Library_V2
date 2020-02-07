@@ -1,6 +1,8 @@
 package com.books.model;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -19,6 +21,8 @@ public class BookSerializer extends StdSerializer<Book> {
 	@Override
 	public void serialize(Book book, JsonGenerator jgen, SerializerProvider serializer) throws IOException {
 		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
 		jgen.writeStartObject();
         jgen.writeNumberField("id", book.getId());
         jgen.writeStringField("name", book.getName());
@@ -30,13 +34,13 @@ public class BookSerializer extends StdSerializer<Book> {
         	jgen.writeNumberField("id", bookCopies.getId());
         	jgen.writeStringField("ean", bookCopies.getEan());
         	jgen.writeBooleanField("borrowed", bookCopies.isBorrowed());
-//        	jgen.writeArrayFieldStart("borrowings");
-//        	for(Borrowing borrowings : bookCopies.getBorrowings()) {
-//        		jgen.writeStartObject();
-//        		jgen.writeStringField("state", borrowings.getState().stateName);
-//        		jgen.writeEndObject();
-//        	}
-//        	jgen.writeEndArray();
+        	jgen.writeArrayFieldStart("borrowings");
+        	for(Borrowing borrowings : bookCopies.getBorrowings()) {
+        		jgen.writeStartObject();
+        		jgen.writeStringField("deadline", dateFormat.format(borrowings.getDeadline()));
+        		jgen.writeEndObject();
+        	}
+        	jgen.writeEndArray();
         	jgen.writeEndObject();
         }
         jgen.writeEndArray();
@@ -49,6 +53,8 @@ public class BookSerializer extends StdSerializer<Book> {
         	jgen.writeEndObject();
         }
         jgen.writeEndArray();
+        jgen.writeNumberField("numberOfBooking", book.getBookings().size());
+        jgen.writeNumberField("maxNumberOfBooking", book.getBooksCopies().size()*2);
         jgen.writeStringField("bookType", book.getBookType().getType());
         jgen.writeEndObject();
 	}
