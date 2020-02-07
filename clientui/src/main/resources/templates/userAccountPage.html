@@ -62,6 +62,7 @@
     							<br/>
     							<p class="mb-1">Date de fin de prêt : <span th:text="${borrowing.deadline}"></span></p>
     							<p class="mb-1" th:text="${borrowing.state}"></p>
+    							<!-- Vérification du statut pour ne pas faire apparaître le bouton de renouvellement si le statut est en retard -->
     							<span th:if="${borrowing.state != 'Prêt en retard' and borrowing.renewal == false}">
     								<br/>
     								<div class="text-center">
