@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,9 +19,10 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity
 @Table(name="bookings")
-
 public class Booking {
 
 	@Id
@@ -31,8 +34,10 @@ public class Booking {
 	@Column(name = "idUser")
 	private Integer idUser;
 	
-	@Column(name = "position")
-	private Integer position;
+	@Column(name = "dateMail")
+	@Temporal( TemporalType.DATE )
+    @DateTimeFormat( iso = ISO.DATE )
+	private Date createBooking;
 	
 	@Column(name = "sendMail")
 	private Boolean sendMail = false;
@@ -42,6 +47,10 @@ public class Booking {
     @DateTimeFormat( iso = ISO.DATE )
 	private Date dateMail;
 	
+	@Column(name="State")
+	@Enumerated(EnumType.STRING)
+	private State state;
+	
 	@ManyToOne
 	@JoinColumn(name = "book_id")
 	private Book book;
@@ -49,14 +58,16 @@ public class Booking {
 	public Booking() {
 		
 	}
-	
-	public Booking(Integer id, @NotNull Integer idUser, Integer position, Boolean sendMail, Date dateMail) {
+
+	public Booking(Integer id, @NotNull Integer idUser, Date createBooking, Boolean sendMail, Date dateMail,
+			State state) {
 		super();
 		this.id = id;
 		this.idUser = idUser;
-		this.position = position;
+		this.createBooking = createBooking;
 		this.sendMail = sendMail;
 		this.dateMail = dateMail;
+		this.state = state;
 	}
 
 	public Integer getId() {
@@ -75,12 +86,12 @@ public class Booking {
 		this.idUser = idUser;
 	}
 
-	public Integer getPosition() {
-		return position;
+	public Date getCreateBooking() {
+		return createBooking;
 	}
 
-	public void setPosition(Integer position) {
-		this.position = position;
+	public void setCreateBooking(Date createBooking) {
+		this.createBooking = createBooking;
 	}
 
 	public Book getBook() {
@@ -107,10 +118,18 @@ public class Booking {
 		this.dateMail = dateMail;
 	}
 
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
 	@Override
 	public String toString() {
-		return "Booking [id=" + id + ", idUser=" + idUser + ", position=" + position + ", sendMail=" + sendMail
-				+ ", dateMail=" + dateMail + "]";
+		return "Booking [id=" + id + ", idUser=" + idUser + ", createBooking=" + createBooking + ", sendMail="
+				+ sendMail + ", dateMail=" + dateMail + ", state=" + state + "]";
 	}
 	
 }
