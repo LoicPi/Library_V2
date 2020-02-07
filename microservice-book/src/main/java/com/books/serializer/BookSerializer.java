@@ -1,9 +1,13 @@
-package com.books.model;
+package com.books.serializer;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import com.books.model.Author;
+import com.books.model.Book;
+import com.books.model.BookCopy;
+import com.books.model.Borrowing;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;

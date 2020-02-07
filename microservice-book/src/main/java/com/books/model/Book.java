@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.books.serializer.BookSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
