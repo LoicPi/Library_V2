@@ -65,7 +65,7 @@ public class BookingController {
 		Integer maxBooking = (booking.getBook().getBooksCopies().size())*2;
 		
 		//Check that user has not already booked this book
-		List<Booking> bookingBook = bookingDao.findBookingByBook_IdOrderByDateMail(idBook);
+		List<Booking> bookingBook = bookingDao.findBookingByBook_IdOrderByDateCreate(idBook);
 		
 		for (Booking bookingB : bookingBook) {
 			if ((bookingB.getIdUser()).equals(booking.getIdUser())) {
@@ -127,7 +127,7 @@ public class BookingController {
 			bookingD.setIdUser(booking.getIdUser());
 			bookingD.setBookName(booking.getBook().getName());
 			
-			List<Booking> bookingList = bookingDao.findBookingByBook_IdOrderByDateMail(booking.getBook().getId());
+			List<Booking> bookingList = bookingDao.findBookingByBook_IdOrderByDateCreate(booking.getBook().getId());
 			
 			for (int i = 0; i < bookingList.size(); i++) {
 				if (bookingList.get(i).getId().equals(bookingD.getId())) {
@@ -135,6 +135,8 @@ public class BookingController {
 					break;
 				}
 			}
+			
+			
 			
 			bookings.add(bookingD);
 		}
@@ -144,6 +146,18 @@ public class BookingController {
 		log.info("Récupération de la liste des réservations d'un utilisateur");
 		
 		return bookings;
+	}
+	
+	@GetMapping("/reservations")
+	public List<Booking> listBookings() {
+		
+		List<Booking> bookings = bookingDao.findAll();
+		
+		if(bookings.isEmpty()) throw new BookingNotFoundException("Aucune réservation n'a été retrouvé.");
+		
+		log.info("Récupération de la liste des réservations.");
+		
+		return bookings;		
 	}
 	
 }

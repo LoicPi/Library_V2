@@ -9,7 +9,7 @@ import com.books.model.Booking;
 
 public interface BookingDao extends JpaRepository<Booking, Integer> {
 
-	List<Booking> findBookingByBook_IdOrderByDateMail(Integer idBook);
+	List<Booking> findBookingByBook_IdOrderByDateCreate(Integer idBook);
 	
 	List<Booking> findBookingBySendMail(Boolean sendMail);
 

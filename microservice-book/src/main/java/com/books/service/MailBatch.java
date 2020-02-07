@@ -104,7 +104,7 @@ public class MailBatch {
 				
 				bookingService.cancelBookingMail(booking.getId());
 				
-				List<Booking> bookings = bookingDao.findBookingByBook_IdOrderByDateMail(bookId);
+				List<Booking> bookings = bookingDao.findBookingByBook_IdOrderByDateCreate(bookId);
 				
 				if ( bookings.size() > 0 ) {
 					

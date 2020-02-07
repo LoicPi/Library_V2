@@ -100,7 +100,7 @@ public class BorrowingController {
 		
 		Book bookBorrowed = borrowing.getBookCopy().getBook();
 		
-		List<Booking> bookingBook = bookingDao.findBookingByBook_IdOrderByDateMail(bookBorrowed.getId());
+		List<Booking> bookingBook = bookingDao.findBookingByBook_IdOrderByDateCreate(bookBorrowed.getId());
 		
 		if (bookingBook.size() > 0) {
 			Booking booking = bookingBook.get(0);
@@ -206,7 +206,7 @@ public class BorrowingController {
 		
 		Book bookReturn = borrowingReturn.getBookCopy().getBook();
 		
-		List<Booking> bookings = bookingDao.findBookingByBook_IdOrderByDateMail(bookReturn.getId());
+		List<Booking> bookings = bookingDao.findBookingByBook_IdOrderByDateCreate(bookReturn.getId());
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		

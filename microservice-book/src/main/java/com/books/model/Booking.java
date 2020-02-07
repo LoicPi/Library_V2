@@ -34,7 +34,7 @@ public class Booking {
 	@Column(name = "idUser")
 	private Integer idUser;
 	
-	@Column(name = "dateMail")
+	@Column(name = "dateCreate")
 	@Temporal( TemporalType.DATE )
     @DateTimeFormat( iso = ISO.DATE )
 	private Date createBooking;
