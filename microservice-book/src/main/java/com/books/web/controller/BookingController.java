@@ -1,13 +1,16 @@
 package com.books.web.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,10 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.books.dao.BookDao;
 import com.books.dao.BookingDao;
 import com.books.dao.BorrowingDao;
+import com.books.dto.BookingDto;
 import com.books.exceptions.BookingNotFoundException;
 import com.books.exceptions.CanNotAddBookingException;
 import com.books.model.Booking;
 import com.books.model.Borrowing;
+import com.books.model.State;
+import com.books.service.BookingService;
 
 @RestController
 public class BookingController {
@@ -34,6 +40,9 @@ public class BookingController {
 	
 	@Autowired
 	private BookingDao bookingDao;
+	
+	@Autowired
+	private BookingService bookingService;
 	
 	/**
 	 * Function which adds a booking following user request
@@ -56,7 +65,7 @@ public class BookingController {
 		Integer maxBooking = (booking.getBook().getBooksCopies().size())*2;
 		
 		//Check that user has not already booked this book
-		List<Booking> bookingBook = bookingDao.findBookingByBook_Id(idBook);
+		List<Booking> bookingBook = bookingDao.findBookingByBook_IdOrderByDateMail(idBook);
 		
 		for (Booking bookingB : bookingBook) {
 			if ((bookingB.getIdUser()).equals(booking.getIdUser())) {
@@ -65,7 +74,7 @@ public class BookingController {
 		}
 		
 		//Check that user has not already borrowed this book
-		List<Borrowing> borrowingsOfUser = borrowingDao.findByIdUser(idUser);
+		List<Borrowing> borrowingsOfUser = borrowingDao.findByIdUserAndStates(idUser, Arrays.asList(State.EnCours, State.Renouvele, State.EnRetard));
 		
 		for (Borrowing borrowingU : borrowingsOfUser) {
 			if ((borrowingU.getBookCopy().getBook().getId()).equals(booking.getBook().getId())) {
@@ -78,7 +87,15 @@ public class BookingController {
 			throw new CanNotAddBookingException("La capacité de réservation de ce livre est au maximum");
 		}
 		
-		booking.setPosition(bookingBook.size()+1);
+		LocalDate localDate = LocalDate.now();
+		
+		LocalDate ld = LocalDate.of( 2001 , 01 , 01 );
+		
+		booking.setCreateBooking(java.sql.Date.valueOf(localDate));
+		
+		booking.setDateMail(java.sql.Date.valueOf(ld));
+		
+		booking.setState(State.EnAttente);
 				
 		Booking newBooking = bookingDao.save(booking);
 		
@@ -91,31 +108,42 @@ public class BookingController {
 	 * Function to delete a booking
 	 * @param id id of the booking
 	 */
-	@PostMapping("/reservation/{id}/del-booking")
-	public void delBooking (@PathVariable int id){
+	@PostMapping("/reservation/{id}/cancel-booking")
+	public void cancelBookingByUser (@PathVariable int id){	
+		bookingService.cancelBookingUser(id);
+	}
+	
+	@GetMapping("/reservation/utilisateur/{idUser}")
+	public List<BookingDto> listBookingsOfUser(@PathVariable int idUser) {
 		
-		Optional<Booking> booking = bookingDao.findById(id);
+		List<Booking> bookingsofUser = bookingDao.findByIdUser(idUser);
 		
-		if (!booking.isPresent()) throw new BookingNotFoundException ("La réservation avec l'id : " + id + " n'a pas été retrouvé.");
+		List<BookingDto> bookings = new ArrayList<BookingDto>();
 		
-		Booking bookingDel = booking.get();
-		
-		Integer bookingDelPosition = bookingDel.getPosition();
-		
-		Integer bookId = bookingDel.getBook().getId();
-		
-		bookingDao.delete(bookingDel);
-
-		List<Booking> bookingList = bookingDao.findBookingByBook_Id(bookId);
-		
-		if (bookingList.size() > 0) {
-			for (Booking bookingB : bookingList) {
-				if (bookingB.getPosition() != 1 && bookingDelPosition < bookingB.getPosition() ) {
-					bookingB.setPosition(bookingB.getPosition()-1);
-					bookingDao.save(bookingB);
+		for (Booking booking : bookingsofUser) {
+			BookingDto bookingD = new BookingDto();
+			
+			bookingD.setId(booking.getId());
+			bookingD.setIdUser(booking.getIdUser());
+			bookingD.setBookName(booking.getBook().getName());
+			
+			List<Booking> bookingList = bookingDao.findBookingByBook_IdOrderByDateMail(booking.getBook().getId());
+			
+			for (int i = 0; i < bookingList.size(); i++) {
+				if (bookingList.get(i).getId().equals(bookingD.getId())) {
+					bookingD.setPosition(i+1);
+					break;
 				}
 			}
+			
+			bookings.add(bookingD);
 		}
+		
+		if(bookings.isEmpty()) throw new BookingNotFoundException("Les emprunts de livres pour l'utilisateur : " + idUser + " n'ont pas été retrouvés.");
+		
+		log.info("Récupération de la liste des réservations d'un utilisateur");
+		
+		return bookings;
 	}
 	
 }

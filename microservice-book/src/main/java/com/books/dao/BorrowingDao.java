@@ -22,4 +22,7 @@ public interface BorrowingDao extends JpaRepository<Borrowing, Integer> {
 	
 	@Query("Select b from Borrowing b where b.state =:state ")
 	List<Borrowing> findByStateName(State state);
+	
+	@Query("Select b from Borrowing b where b.idUser =:idUser and b.state in (:states)")
+	List<Borrowing> findByIdUserAndStates(Integer idUser, List<State> states);
 }

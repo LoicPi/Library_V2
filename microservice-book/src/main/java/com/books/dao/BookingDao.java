@@ -9,11 +9,10 @@ import com.books.model.Booking;
 
 public interface BookingDao extends JpaRepository<Booking, Integer> {
 
-	List<Booking> findBookingByBook_Id(Integer idBook);
+	List<Booking> findBookingByBook_IdOrderByDateMail(Integer idBook);
 	
 	List<Booking> findBookingBySendMail(Boolean sendMail);
-	
-	@Query("Select b from Booking where b.book_id =: bookId and b.position =: position")
-	Booking findByBookAndPosition (Integer bookId, Integer position); 
+
+	List<Booking> findByIdUser(int idUser); 
 	
 }
