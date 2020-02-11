@@ -25,6 +25,7 @@ import com.books.exceptions.CanNotAddBookingException;
 import com.books.model.Booking;
 import com.books.model.Borrowing;
 import com.books.model.State;
+import com.books.service.BookService;
 import com.books.service.BookingService;
 
 @RestController
@@ -40,6 +41,9 @@ public class BookingController {
 	
 	@Autowired
 	private BookingDao bookingDao;
+	
+	@Autowired
+	private BookService bookService;
 	
 	@Autowired
 	private BookingService bookingService;
@@ -69,7 +73,7 @@ public class BookingController {
 		
 		for (Booking bookingB : bookingBook) {
 			if ((bookingB.getIdUser()).equals(booking.getIdUser())) {
-				throw new CanNotAddBookingException("L'utilisateur a déjà réservé ce livre.");
+				throw new CanNotAddBookingException("BookingException01");
 			}
 		}
 		
@@ -78,20 +82,20 @@ public class BookingController {
 		
 		for (Borrowing borrowingU : borrowingsOfUser) {
 			if ((borrowingU.getBookCopy().getBook().getId()).equals(booking.getBook().getId())) {
-				throw new CanNotAddBookingException("Ce livre est emprunté par l'utilisateur");
+				throw new CanNotAddBookingException("BookingException02");
 			}
 		}
 		
 		//Checks that if the maximum number of bookings is reached
 		if (bookingBook.size() >= maxBooking) {
-			throw new CanNotAddBookingException("La capacité de réservation de ce livre est au maximum");
+			throw new CanNotAddBookingException("BookingException03");
 		}
 		
 		LocalDate localDate = LocalDate.now();
 		
 		LocalDate ld = LocalDate.of( 2001 , 01 , 01 );
 		
-		booking.setCreateBooking(java.sql.Date.valueOf(localDate));
+		booking.setDateCreate(java.sql.Date.valueOf(localDate));
 		
 		booking.setDateMail(java.sql.Date.valueOf(ld));
 		
@@ -99,7 +103,7 @@ public class BookingController {
 				
 		Booking newBooking = bookingDao.save(booking);
 		
-		if (newBooking == null ) throw new CanNotAddBookingException("Impossible d'ajouter la réservation");
+		if (newBooking == null ) throw new CanNotAddBookingException("BookingException04");
 		
 		return new ResponseEntity<Booking>(newBooking, HttpStatus.OK);		
 	}
@@ -136,12 +140,14 @@ public class BookingController {
 				}
 			}
 			
+			bookService.nearestDeadlineBook(booking.getBook());
 			
+			bookingD.setNearestDeadline(booking.getBook().getNearestDeadline());
 			
 			bookings.add(bookingD);
 		}
 		
-		if(bookings.isEmpty()) throw new BookingNotFoundException("Les emprunts de livres pour l'utilisateur : " + idUser + " n'ont pas été retrouvés.");
+//		if(bookings.isEmpty()) throw new BookingNotFoundException("BookingNotFoundException01");
 		
 		log.info("Récupération de la liste des réservations d'un utilisateur");
 		

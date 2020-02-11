@@ -1,5 +1,6 @@
 package com.books.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.books.dao.BookDao;
 import com.books.exceptions.BookNotFoundException;
 import com.books.model.Book;
+import com.books.service.BookService;
 
 @RestController
 public class BookController {
@@ -22,6 +24,9 @@ public class BookController {
 	
 	@Autowired
 	private BookDao bookDao;
+	
+	@Autowired
+	private BookService bookService;
 	
 	/**
 	 * Function to have the list of books
@@ -34,6 +39,10 @@ public class BookController {
 		
 		if( books.isEmpty() ) throw new BookNotFoundException("Aucun livre n'a été retrouvé.");
 		
+		for (Book book : books) {
+			bookService.nearestDeadlineBook(book);
+		}
+
 		log.info("Récupération de la liste des livres");
 
 		return books;
@@ -47,13 +56,17 @@ public class BookController {
 	@GetMapping("/livres/{id}/vueLivre")
 	public Book getBook(@PathVariable int id){
 		
-		Optional<Book> book = bookDao.findById(id);
+		Optional<Book> bookO = bookDao.findById(id);
 		
-		if(!book.isPresent()) throw new BookNotFoundException("Le livre avec l'id : " + id +" n'a pas été retrouvé.");
+		if(!bookO.isPresent()) throw new BookNotFoundException("Le livre avec l'id : " + id +" n'a pas été retrouvé.");
+
+		Book book = bookO.get();
 		
+		bookService.nearestDeadlineBook(book);
+
 		log.info("Accès au livre");
 		
-		return book.get();
+		return book;
 	}
 	
 	/**
@@ -66,9 +79,16 @@ public class BookController {
 		
 		List<Book> books = bookDao.findByNameContainingIgnoreCaseOrderByName(name);
 		
+		List<Book> booksS = new ArrayList<Book>();
+		
+		for (Book book : books) {
+			bookService.nearestDeadlineBook(book);
+			booksS.add(book);
+		}
+		
 		log.info("Récupération de la liste de livres recherchée");
 		
-		return books;
+		return booksS;
 	}
 	
 }
