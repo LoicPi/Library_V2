@@ -14,7 +14,15 @@ public class BookBean {
 	
 	private String image;
 	
-	private BookTypeBean bookTypeBean;
+	private String bookTypeBean;
+	
+	private Integer numberOfBooking;
+	
+	private Integer maxNumberOfBooking;
+	
+	private String nearestDeadline;
+	
+	private Boolean avaibleBook;
 	
 	@JsonProperty("bookCopies")
 	private Set<BookCopyBean> booksCopiesBean;
@@ -58,12 +66,28 @@ public class BookBean {
 		this.image = image;
 	}
 
-	public BookTypeBean getBookTypeBean() {
+	public String getBookTypeBean() {
 		return bookTypeBean;
 	}
 
-	public void setBookTypeBean(BookTypeBean bookTypeBean) {
+	public void setBookTypeBean(String bookTypeBean) {
 		this.bookTypeBean = bookTypeBean;
+	}
+
+	public Integer getNumberOfBooking() {
+		return numberOfBooking;
+	}
+
+	public void setNumberOfBooking(Integer numberOfBooking) {
+		this.numberOfBooking = numberOfBooking;
+	}
+
+	public Integer getMaxNumberOfBooking() {
+		return maxNumberOfBooking;
+	}
+
+	public void setMaxNumberOfBooking(Integer maxNumberOfBooking) {
+		this.maxNumberOfBooking = maxNumberOfBooking;
 	}
 
 	public Set<BookCopyBean> getBooksCopiesBean() {
@@ -82,8 +106,27 @@ public class BookBean {
 		this.authorsBean = authorsBean;
 	}
 
+	public String getNearestDeadline() {
+		return nearestDeadline;
+	}
+
+	public void setNearestDeadline(String nearestDeadline) {
+		this.nearestDeadline = nearestDeadline;
+	}
+	
+	public Boolean getAvaibleBook() {
+		return avaibleBook;
+	}
+
+	public void setAvaibleBook(Boolean avaibleBook) {
+		this.avaibleBook = avaibleBook;
+	}
+	
 	@Override
 	public String toString() {
-		return "BookBean [id=" + id + ", name=" + name + ", description=" + description + ", image=" + image + "]";
+		return "BookBean [id=" + id + ", name=" + name + ", description=" + description + ", image=" + image
+				+ ", bookTypeBean=" + bookTypeBean + ", numberOfBooking=" + numberOfBooking + ", maxNumberOfBooking="
+				+ maxNumberOfBooking + ", nearestDeadline=" + nearestDeadline + "]";
 	}
+	
 }
