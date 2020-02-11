@@ -19,8 +19,6 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 @Entity
 @Table(name="bookings")
 public class Booking {
@@ -37,7 +35,7 @@ public class Booking {
 	@Column(name = "dateCreate")
 	@Temporal( TemporalType.DATE )
     @DateTimeFormat( iso = ISO.DATE )
-	private Date createBooking;
+	private Date dateCreate;
 	
 	@Column(name = "sendMail")
 	private Boolean sendMail = false;
@@ -64,7 +62,7 @@ public class Booking {
 		super();
 		this.id = id;
 		this.idUser = idUser;
-		this.createBooking = createBooking;
+		this.dateCreate = createBooking;
 		this.sendMail = sendMail;
 		this.dateMail = dateMail;
 		this.state = state;
@@ -86,12 +84,12 @@ public class Booking {
 		this.idUser = idUser;
 	}
 
-	public Date getCreateBooking() {
-		return createBooking;
+	public Date getDateCreate() {
+		return dateCreate;
 	}
 
-	public void setCreateBooking(Date createBooking) {
-		this.createBooking = createBooking;
+	public void setDateCreate(Date dateCreate) {
+		this.dateCreate = dateCreate;
 	}
 
 	public Book getBook() {
@@ -128,7 +126,7 @@ public class Booking {
 
 	@Override
 	public String toString() {
-		return "Booking [id=" + id + ", idUser=" + idUser + ", createBooking=" + createBooking + ", sendMail="
+		return "Booking [id=" + id + ", idUser=" + idUser + ", dateCreate=" + dateCreate + ", sendMail="
 				+ sendMail + ", dateMail=" + dateMail + ", state=" + state + "]";
 	}
 	

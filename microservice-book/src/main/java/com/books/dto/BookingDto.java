@@ -13,6 +13,8 @@ public class BookingDto {
 	private Integer position;
 	
 	private String bookName;
+	
+	private String nearestDeadline;
 
 	public Integer getId() {
 		return id;
@@ -44,6 +46,14 @@ public class BookingDto {
 
 	public void setBookName(String bookName) {
 		this.bookName = bookName;
+	}
+
+	public String getNearestDeadline() {
+		return nearestDeadline;
+	}
+
+	public void setNearestDeadline(String nearestDeadline) {
+		this.nearestDeadline = nearestDeadline;
 	}
 	
 }

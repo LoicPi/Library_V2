@@ -19,11 +19,13 @@ public class BookingDtoSerializer extends StdSerializer<BookingDto> {
 
 	@Override
 	public void serialize(BookingDto bookingDto, JsonGenerator jgen, SerializerProvider serializer) throws IOException {
+		
 		jgen.writeStartObject();
         jgen.writeNumberField("id", bookingDto.getId());
         jgen.writeNumberField("idUser", bookingDto.getIdUser());
         jgen.writeNumberField("position", bookingDto.getPosition());
         jgen.writeStringField("bookName", bookingDto.getBookName());
+        jgen.writeStringField("deadline", bookingDto.getNearestDeadline());
         jgen.writeEndObject();
 	}
 }
