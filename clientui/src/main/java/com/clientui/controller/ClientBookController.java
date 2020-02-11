@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.clientui.beans.AuthorBean;
 import com.clientui.beans.BookBean;
 import com.clientui.beans.BookTypeBean;
+import com.clientui.beans.BookingBean;
 import com.clientui.beans.UserBean;
+import com.clientui.exceptions.BorrowingInvalidRenewalException;
+import com.clientui.exceptions.CanNotAddBookingException;
 import com.clientui.proxies.MicroserviceBookProxy;
 import com.clientui.proxies.MicroserviceUserProxy;
 
@@ -24,162 +27,224 @@ public class ClientBookController {
 
 	@Autowired
 	private MicroserviceBookProxy BooksProxy;
-	
+
 	@Autowired
 	private MicroserviceUserProxy UsersProxy;
-	
+
 	@RequestMapping("/livres")
 	public String booksListPage(Model model, HttpServletRequest request) {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		Integer idSession = (Integer) session.getAttribute("id");
-		
-		if (session.getAttribute("id") != null ) {			
+
+		if (session.getAttribute("id") != null) {
 			UserBean user = UsersProxy.getUser(idSession);
 			model.addAttribute("user", user);
 		}
-		
+
 		List<BookBean> books = BooksProxy.listBooks();
-		
+
 		model.addAttribute("books", books);
-		
+
 		BookBean bookBean = new BookBean();
-		
+
 		model.addAttribute("bookBean", bookBean);
-		
+
 		return "booksListPage";
 	}
-	
+
 	@RequestMapping("/livres/recherche")
 	public String searchBook(@ModelAttribute("bookBean") BookBean bookBean, Model model, HttpServletRequest request) {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		Integer idSession = (Integer) session.getAttribute("id");
-		
-		if (session.getAttribute("id") != null ) {			
+
+		if (session.getAttribute("id") != null) {
 			UserBean user = UsersProxy.getUser(idSession);
 			model.addAttribute("user", user);
 		}
-		
+
 		String name = bookBean.getName();
-		
+
 		List<BookBean> books = BooksProxy.searchBooksByName(name);
-		
+
 		model.addAttribute("bookBean", bookBean);
-		
+
 		model.addAttribute("books", books);
-		
-		return "booksListPage"; 
+
+		return "booksListPage";
 	}
-	
+
 	@RequestMapping("/livres/{id}/vuelivre")
 	public String bookPage(@PathVariable("id") int id, Model model, HttpServletRequest request) {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		Integer idSession = (Integer) session.getAttribute("id");
-		
-		if (session.getAttribute("id") != null ) {			
+
+		if (session.getAttribute("id") != null) {
 			UserBean user = UsersProxy.getUser(idSession);
 			model.addAttribute("user", user);
 		}
-		
+
 		BookBean bookBean = BooksProxy.getBook(id);
-		
+
 		model.addAttribute("book", bookBean);
-		
+
 		return "bookPage";
 	}
-	
+
 	@RequestMapping("/auteurs")
 	public String authorsListPage(Model model, HttpServletRequest request) {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		Integer idSession = (Integer) session.getAttribute("id");
-		
-		if (session.getAttribute("id") != null ) {			
+
+		if (session.getAttribute("id") != null) {
 			UserBean user = UsersProxy.getUser(idSession);
 			model.addAttribute("user", user);
 		}
-		
+
 		List<AuthorBean> authors = BooksProxy.listAuthors();
-		
-		model.addAttribute("authors",  authors);
-		
+
+		model.addAttribute("authors", authors);
+
 		return "authorsListPage";
 	}
-	
+
 	@RequestMapping("/auteurs/{id}/vueauteur")
 	public String authorPage(@PathVariable("id") int id, Model model, HttpServletRequest request) {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		Integer idSession = (Integer) session.getAttribute("id");
-		
-		if (session.getAttribute("id") != null ) {			
+
+		if (session.getAttribute("id") != null) {
 			UserBean user = UsersProxy.getUser(idSession);
 			model.addAttribute("user", user);
 		}
-		
+
 		AuthorBean author = BooksProxy.getAuthor(id);
-		
+
 		model.addAttribute("author", author);
-		
+
 		return "authorPage";
 	}
-	
+
 	@RequestMapping("/categories")
 	public String bookTypesListPage(Model model, HttpServletRequest request) {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		Integer idSession = (Integer) session.getAttribute("id");
-		
-		if (session.getAttribute("id") != null ) {			
+
+		if (session.getAttribute("id") != null) {
 			UserBean user = UsersProxy.getUser(idSession);
 			model.addAttribute("user", user);
 		}
-		
-		List<BookTypeBean> bookTypes  = BooksProxy.listBooksTypes();
-		
+
+		List<BookTypeBean> bookTypes = BooksProxy.listBooksTypes();
+
 		model.addAttribute("bookTypes", bookTypes);
-		
+
 		return "bookTypesListPage";
 	}
-	
+
 	@RequestMapping("/categories/{id}/vuecategories")
 	public String bookTypePage(@PathVariable("id") int id, Model model, HttpServletRequest request) {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		Integer idSession = (Integer) session.getAttribute("id");
-		
-		if (session.getAttribute("id") != null ) {			
+
+		if (session.getAttribute("id") != null) {
 			UserBean user = UsersProxy.getUser(idSession);
 			model.addAttribute("user", user);
 		}
-		
+
 		BookTypeBean bookType = BooksProxy.getBookType(id);
-		
+
 		model.addAttribute("bookType", bookType);
-		
+
 		return "bookTypePage";
 	}
-	
+
 	@RequestMapping("/emprunt/{id}/renouvellement")
 	public String renewalBorrowing(@PathVariable("id") int id, Model model, HttpServletRequest request) {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		Integer idSession = (Integer) session.getAttribute("id");
-		
-		BooksProxy.renewalBorrowing(id);
-				
+
+		try {
+			BooksProxy.renewalBorrowing(id);
+		} catch( Exception e) {
+			e.printStackTrace();
+			if (e instanceof BorrowingInvalidRenewalException) {
+				String message = e.getMessage();
+				model.addAttribute("errorMessage", message);
+			}
+		}
+
 		return "redirect:/compte/" + idSession + "/moncompte";
 	}
-	
-	
+
+	@RequestMapping("/reservations")
+	public String bookingsListPage(Model model, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+
+		Integer idSession = (Integer) session.getAttribute("id");
+
+		if (session.getAttribute("id") != null) {
+			UserBean user = UsersProxy.getUser(idSession);
+			model.addAttribute("user", user);
+		}
+
+		List<BookingBean> bookings = BooksProxy.listBookings();
+
+		model.addAttribute("bookings", bookings);
+
+		return "bookingsListPage";
+	}
+
+	@RequestMapping("/reservation/{id}/add-booking")
+	public String addBooking(@PathVariable("id") int id, Model model, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+
+		Integer idSession = (Integer) session.getAttribute("id");
+
+		if (session.getAttribute("id") != null) {
+			UserBean user = UsersProxy.getUser(idSession);
+			model.addAttribute("user", user);
+			try {
+				BooksProxy.addBooking(user.getId(), id);
+			} catch (Exception e) {
+				e.printStackTrace();
+				if (e instanceof CanNotAddBookingException) {
+					String message = e.getMessage();
+					model.addAttribute("errorMessage", message);
+				}
+			}
+		} else {
+			model.addAttribute("errorMessage", "Merci de vous connecter pour effectuer une réservation.");
+		}
+		return "redirect:/livres/"+ id +"/vuelivre";
+	}
+
+	@RequestMapping("reservation/{id}/cancel-booking")
+	public String cancelBooking(@PathVariable("id") int id, Model model, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+
+		Integer idSession = (Integer) session.getAttribute("id");
+		
+		BooksProxy.cancelBookingByUser(id);
+		
+		return "redirect:/compte/" + idSession + "/moncompte";
+	}
 }

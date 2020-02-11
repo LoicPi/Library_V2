@@ -16,6 +16,7 @@ import com.clientui.beans.AuthorBean;
 import com.clientui.beans.BookBean;
 import com.clientui.beans.BookCopyBean;
 import com.clientui.beans.BookTypeBean;
+import com.clientui.beans.BookingBean;
 import com.clientui.beans.BorrowingBean;
 import com.clientui.configuration.FeignConfig;
 
@@ -66,5 +67,17 @@ public interface MicroserviceBookProxy {
 	BorrowingBean renewalBorrowing (@PathVariable("id") int id);
 	
 	@PostMapping("/microservice-books/emprunt/{id}/returnborrowing")
-	BorrowingBean returnBorrowing(@PathVariable("id") int id);	
+	BorrowingBean returnBorrowing(@PathVariable("id") int id);
+	
+	@GetMapping("/microservice-books/reservations")
+	List<BookingBean> listBookings();
+	
+	@GetMapping("microservice-books/reservation/utilisateur/{idUser}")
+	List<BookingBean> listBookingsOfUser(@PathVariable ("idUser") int idUser);
+	
+	@PostMapping("microservice-books/reservation/{id}/cancel-booking")
+	BookingBean cancelBookingByUser (@PathVariable ("id") int id);
+	
+	@PostMapping("microservice-books/reservation/add-booking")
+	BookingBean addBooking(@RequestParam("idUser") int idUser, @RequestParam("idBook") int idBook);
 }

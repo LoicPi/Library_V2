@@ -1,59 +1,82 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/layout.html}">
-	<head>
-		<meta charset="UTF-8">
- 		<title>Livres</title>
- 	</head>
- 	<body>
- 		<section layout:fragment="content">	
- 			<div class="col-md-8 mx-auto booksearch">
-      			<div class="card border-secondary">
-      				<div class="card-header text-center">
-      					<h3>Rechercher un livre</h3>
-      				</div>
-      				<div class="card-body">
-      					<form th:action="@{/livres/recherche}" th:object="${bookBean}" method="post">
-      						<div class="form-row searchHeader d-flex flex-md-row flex-column justify-content-around">
-      							<div class="col search">
-      								<input id="name" type="search" class="form-control" name="name" aria-describedby="Search" placeholder="Nom du livre">
-      							</div>
-      						</div>
-      						<hr>
-  							<div class="row justify-content-around">
-  								<button type="submit" class="btn btn-success btn-sm col-4"><i class="fas fa-search text-white" aria-hidden="true"></i></button>
-  							</div>
-      					</form>
-      				</div>
-      			</div>
-      		</div>	
-			<div class="col-md-8 mx-auto">
-   				<div class="card border-secondary">
-   					<div class="card-header text-center">
-     					<h3>Liste des livres</h3>
-	     			</div>
-    	 			<div class="card-body mx-auto">
-     					<div th:each="book: ${books}" class="card mb-3">
-  							<div class="row no-gutters">
-  								<div class="col-4 text-center">
-      								<img class="img-fluid col-md-4 img-list" th:src="${book.image}"/>
-      							</div>
-    							<div class="col-8">
-      								<div class="card-body">
-        								<h5 th:text="${book.name}" class="card-title"></h5>
-        								<div th:each="authorBean: ${book.authorsBean}">
-        									<p class="card-text"><small th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName}"></small></p>
-	        							</div>
-<!--	         							<p class="card-text"><small th:text="${book.bookType}"></small></p> -->
-        								<a th:href="@{/livres/__${book.id}__/vuelivre}" class="btn btn-info btn-sm bookinfo">Voir le détail</a>
-      								</div>
-    							</div>
-  							</div>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Livres</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="col-md-8 mx-auto booksearch">
+			<div class="card border-secondary">
+				<div class="card-header text-center">
+					<h3>Rechercher un livre</h3>
+				</div>
+				<div class="card-body">
+					<form th:action="@{/livres/recherche}" th:object="${bookBean}"
+						method="post">
+						<div
+							class="form-row searchHeader d-flex flex-md-row flex-column justify-content-around">
+							<div class="col search">
+								<input id="name" type="search" class="form-control" name="name"
+									aria-describedby="Search" placeholder="Nom du livre">
+							</div>
+						</div>
+						<hr>
+						<div class="row justify-content-around">
+							<button type="submit" class="btn btn-success btn-sm col-4">
+								<i class="fas fa-search text-white" aria-hidden="true"></i>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8 mx-auto">
+			<div class="card border-secondary">
+				<div class="card-header text-center">
+					<h3>Liste des livres</h3>
+				</div>
+				<div class="card-body mx-auto">
+					<div th:each="book: ${books}" class="card mb-3">
+						<div class="row no-gutters">
+							<div class="col-4 text-center">
+								<img class="img-fluid col-md-4 img-list" th:src="${book.image}" />
+							</div>
+							<div class="col-8">
+								<div class="card-body">
+									<h5 th:text="${book.name}" class="card-title"></h5>
+									<div th:each="authorBean: ${book.authorsBean}">
+										<p class="card-text">
+											<small
+												th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName}"></small>
+										</p>
+									</div>
+									<p class="card-text">
+										<small th:text="${book.bookTypeBean}"></small>
+									</p>
+									<span th:if="${book.avaibleBook == true}">
+										<br />
+										<div class="text-center">
+											<a class="btn btn-info btn-sm bookinfo">Disponible</a>
+										</div>
+									</span>
+									<span th:unless="${book.avaibleBook == true}">
+										<br />
+										<div class="text-center">
+											<a class="btn btn-info btn-sm bookinfo">Emprunté jusqu'au <span th:text="${book.nearestDeadline}"></a>
+										</div>
+									</span>
+									<br />
+									<a th:href="@{/livres/__${book.id}__/vuelivre}"	class="btn btn-info btn-sm bookinfo">Voir le détail</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
-	 </body>
+		</div>
+	</section>
+</body>
 </html>

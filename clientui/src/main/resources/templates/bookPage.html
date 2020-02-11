@@ -1,80 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/layout.html}">
-	<head>
-		<meta charset="UTF-8">
- 		<title th:text="${book.name}"></title>
-	</head>
-	<body>
-		<section layout:fragment="content">			
-			<div class="row col-10 mx-auto">
-   		 		<div class="col-12 alignimg">
-      				<img class="img-fluid img-book" th:src="${book.image}"/>
-      			</div>
-    			<!--  <div class="col-12 row">-->
-	    			<div class="col-12 text-center">
-    					<h3 class="titlebook" th:text="${book.name}"></h3>
-    				</div>
-   					<div class="col-12">
-   						<h4 class="text-center">
-   							Auteur : 
-   							<span th:each="authorBean: ${book.authorsBean}">
-   								<a th:href="@{/auteurs/__${authorBean.id}__/vueauteur}" th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName} + ' '"></a>
-   							</span>
-   						</h4>       					
-	       			</div>
-	       			<div class="col-12">
-	       				<h4>Description</h4>
-	       				<hr>
-	       				<p class="description" th:text="${book.description}"></p>
-	       			</div>
-   					<div class="col-12">
-  						<h4>Exemplaires</h4>
-  						<hr>
-  						<table class="table table-striped">
-  							<thead>
-  								<tr>
-  									<th>N°</th>
-  									<th>EAN</th>
-  									<th>Disponibilité</th>
-  								</tr>
-  							</thead>
-  							<tbody th:each="bookCopyBean, iter: ${book.booksCopiesBean}">
-  								<tr>
-  									<td th:text="${iter.count}"></td>
-  									<td th:text="${bookCopyBean.ean}"></td>
-  									<td><span th:if="${bookCopyBean.borrowed}">Prêt en cours</span>
-  										<span th:unless="${bookCopyBean.borrowed}">Disponible</span>
-  									</td>
-  								</tr>  							
-  							</tbody>
-  						</table>
-  							
-<!--     						<ul class="nav nav-tabs card-header-tabs" id="details-list" role="tablist"> -->
-<!--       							<li class="nav-item"> -->
-<!--         							<a class="nav-link active" href="#description" id="description-tab" role="tab" aria-controls="description" aria-selected="true">Résumé</a> -->
-<!--       							</li> -->
-<!--       							<li class="nav-item"> -->
-<!-- 	        						<a class="nav-link"  href="#bookCopy" id="bookCopy-tab" role="tab" aria-controls="bookCopy" aria-selected="false">Exemplaires</a> -->
-<!--     	  						</li> -->
-<!--       						</ul> -->
-	
-<!--     	  					<div class="tab-content"> -->
-<!--       							<div class="tab-pane active" id="description" role="tabpanel" arial-labelledby="description-tab"> -->
-<!--       								<p class="card-text"><small th:text="${book.description}"></small></p> -->
-<!--       							</div> -->
-<!--       							<div class="tab-pane" id="bookCopy" role="tabpanel" aria-labelledby="bookCopy-tab"> -->
-<!--       								<p class="card-text"><small th:text="${book.description}"></small></p> -->
-<!--       								<p th:each="bookCopyBean: ${book.booksCopiesBean}" class="card-text"> -->
-<!-- 	      								Exemplaire n°<small th:text="${bookCopyBean.id}"></small> -->
-<!--     	  							</p> -->
-<!--       							</div> -->
-<!--       						</div> -->
-      					
-	    			</div>
-    			<!--  </div> -->
-    		</div>
-		</section>
-	</body>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title th:text="${book.name}"></title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="row col-10 mx-auto">
+			<div class="col-12 alignimg">
+				<img class="img-fluid img-book" th:src="${book.image}" />
+			</div>
+			<div class="col-12 text-center">
+				<h3 class="titlebook" th:text="${book.name}"></h3>
+			</div>
+			<div class="col-12">
+				<h4 class="text-center">
+					Auteur : <span th:each="authorBean: ${book.authorsBean}"> <a
+						th:href="@{/auteurs/__${authorBean.id}__/vueauteur}"
+						th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName} + ' '"></a>
+					</span>
+				</h4>
+			</div>
+			<div class="col-12">
+				<h4>Description</h4>
+				<hr>
+				<p class="description" th:text="${book.description}"></p>
+			</div>
+			<span th:if="${book.avaibleBook == true}">
+			</span>
+			<span th:unless="${book.avaibleBook == true}">
+				<div class="col-12">
+					<h4>Réserver ce livre</h4>
+					<hr>
+					<p class="mb-1">Date prochaine de fin de prêt : <span th:text="${book.nearestDeadline}"></span></p>
+					<p class="mb-1">Nombre de personnes ayant réservé ce livre : <span th:text="${book.numberOfBooking}"></span></p>
+					
+					<span th:if="${book.numberOfBooking != book.maxNumberOfBooking}">
+						<br />
+						<form th:action="@{/reservation/__${book.id}__/add-booking}" method="post">
+							
+							<div class="text-center">
+								<input type="submit" class="btn btn-success btn-sm" id="submit" name="submit" value="Réserver ce livre">
+							</div>
+						</form>
+					</span>
+					<span th:unless="${book.numberOfBooking != book.maxNumberOfBooking}">
+						<p>Vous ne pouvez pas réserver ce document pour le moment.</p>
+					</span>
+				</div>
+			</span>
+			<div th:if="${errorMessage != null}" class="alert alert-warning" role="alert">
+								<p><span th:text="${errorMessage}"></span></p>
+							</div>
+			<div class="col-12">
+				<h4>Exemplaires</h4>
+				<hr>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>N°</th>
+							<th>EAN</th>
+							<th>Disponibilité</th>
+						</tr>
+					</thead>
+					<tbody th:each="bookCopyBean, iter: ${book.booksCopiesBean}">
+						<tr>
+							<td th:text="${iter.count}"></td>
+							<td th:text="${bookCopyBean.ean}"></td>
+							<td>
+								<span th:if="${bookCopyBean.borrowed}">Prêt en cours</span> 
+								<span th:unless="${bookCopyBean.borrowed}">Disponible</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</body>
 </html>
