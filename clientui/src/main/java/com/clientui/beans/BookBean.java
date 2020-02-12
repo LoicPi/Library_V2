@@ -14,7 +14,7 @@ public class BookBean {
 	
 	private String image;
 	
-	private String bookTypeBean;
+	private String bookType;
 	
 	private Integer numberOfBooking;
 	
@@ -66,12 +66,12 @@ public class BookBean {
 		this.image = image;
 	}
 
-	public String getBookTypeBean() {
-		return bookTypeBean;
+	public String getBookType() {
+		return bookType;
 	}
 
-	public void setBookTypeBean(String bookTypeBean) {
-		this.bookTypeBean = bookTypeBean;
+	public void setBookType(String bookType) {
+		this.bookType = bookType;
 	}
 
 	public Integer getNumberOfBooking() {
@@ -125,7 +125,7 @@ public class BookBean {
 	@Override
 	public String toString() {
 		return "BookBean [id=" + id + ", name=" + name + ", description=" + description + ", image=" + image
-				+ ", bookTypeBean=" + bookTypeBean + ", numberOfBooking=" + numberOfBooking + ", maxNumberOfBooking="
+				+ ", bookType=" + bookType + ", numberOfBooking=" + numberOfBooking + ", maxNumberOfBooking="
 				+ maxNumberOfBooking + ", nearestDeadline=" + nearestDeadline + "]";
 	}
 	
