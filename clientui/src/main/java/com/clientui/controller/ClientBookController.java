@@ -218,6 +218,10 @@ public class ClientBookController {
 
 		Integer idSession = (Integer) session.getAttribute("id");
 
+		BookBean bookBean = BooksProxy.getBook(id);
+
+		model.addAttribute("book", bookBean);
+		
 		if (session.getAttribute("id") != null) {
 			UserBean user = UsersProxy.getUser(idSession);
 			model.addAttribute("user", user);
@@ -233,7 +237,7 @@ public class ClientBookController {
 		} else {
 			model.addAttribute("errorMessage", "Merci de vous connecter pour effectuer une réservation.");
 		}
-		return "redirect:/livres/"+ id +"/vuelivre";
+		return "bookPage";
 	}
 
 	@RequestMapping("reservation/{id}/cancel-booking")
