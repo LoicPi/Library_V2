@@ -9,99 +9,124 @@
 	<body>
 		<section layout:fragment="content">
 			<div class="row mx-auto">
-				<div class="col-10 col-md-8 card border-secondary mx-auto infoperso">
-   					<div class="card-header text-center">
-						<h3>Mes Informations</h3>
-						<a th:href="@{/compte/__${user.id}__/maj}" class="btn btn-info btn-sm" role="button">Modifier vos informations</a>
-					</div>
-					<div class="card-body mx-auto col-10 col-md-8">
-						<form class="form-horizontal" role="form">
-							<div class="form-group row justify-content-center">
-								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Nom : </label>
-								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.lastName}"></label>
-							</div>
-							<div class="form-group row justify-content-center">
-								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Prénom :</label>
-								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.firstName}"></label>
-							</div>
-							<div class="form-group row justify-content-center">
-								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">E-mail :</label>
-								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.email}"></label>
-							</div>
-							<div class="form-group row justify-content-center">
-								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Téléphone :</label>
-								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.phoneNumber}"></label>
-							</div>
-							<div class="form-group row justify-content-center">
-								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">N° de carte :</label>
-								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.cardNumber}"></label>
-							</div>
-							<div class="form-group row justify-content-center">
-								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Date d'inscription :</label>
-								<label class="col-md-6 col-10 col-form-label form-control-label border" th:text="${user.dateRegistration}"></label>
-							</div>
-<!-- 							<div class="form-group row justify-content-center"> -->
-<!-- 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Mot de Passe :</label> -->
-<!-- 								<label class="col-md-6 col-10 col-form-label form-control-label border"> -->
-<!--         							<a class="btn btn-info btn-sm col-6" th:href="@{/compte/__${user.id}__/majmdp}" role="button">Modifier</a> -->
-<!-- 								</label> -->
-<!-- 							</div> -->
-      					</form>
-      				</div>
-      			</div>
-      			<div class="col-10 col-md-8 card border-secondary mx-auto">
-   					<div class="card-header text-center">
-      					<h3>Mes emprunts</h3>
-      				</div>
-      				<div class="card-body mx-auto col-10 col-md-8">
-      					<div class="list-group">
-      						<div class="list-group-item list-group-item-action flex-column align-items-start" th:each="borrowing : ${borrowings}" th:if="${borrowing.state != 'Prêt terminé'}">
-      							<div class="d-flex w-100 justify-content-around border-bottom">
-    								<h5 class="mb-1" th:text="${borrowing.bookName}"></h5>
-	    						</div>
-    							<br/>
-    							<p class="mb-1">Date de fin de prêt : <span th:text="${borrowing.deadline}"></span></p>
-    							<p class="mb-1" th:text="${borrowing.state}"></p>
-    							<span th:if="${borrowing.state != 'Prêt en retard' and borrowing.renewal == false}">
-    								<br/>
-    								<form th:action="@{/emprunt/__${borrowing.id}__/renouvellement}" method="post">
-    									<div th:if="${errorMessage != null}" class="alert alert-warning" role="alert">
-											<span th:text="${errorMessage}"></span>
-										</div>
-    									<div class="text-center">
-    										<input type="submit" class="btn btn-info btn-sm btn-block" id="submit" name="submit" value="Renouveller son prêt">
-    									</div>
-    								</form>							
-    							</span>
-    							<span th:unless="${borrowing.state != 'Prêt en retard' and borrowing.renewal == false}">
-    							</span>
-      						</div>
-      					</div>
-      				</div>
-      			</div>
-      			<div class="col-10 col-md-8 card border-secondary mx-auto">
-   					<div class="card-header text-center">
-      					<h3>Mes réservations</h3>
-      				</div>
-      				<div class="card-body mx-auto col-10 col-md-8">
-      					<div class="list-group">
-      						<span th:if="${bookings ne null}">
-      							<div class="list-group-item list-group-item-action flex-column align-items-start" th:each="booking : ${bookings}" th:if="${bookings.state != 'Réservation terminé'}">
-      								<div class="d-flex w-100 justify-content-around border-bottom">
-    									<h5 class="mb-1" th:text="${booking.bookName}"></h5>
-	    							</div>
-    								<br/>
-    								<p class="mb-1">Date prochaine de fin de prêt : <span th:text="${booking.nearlestDeadline}"></span></p>
-    								<p class="mb-1">Position dans la liste d'attente : <span th:text="${booking.position}"></span></p>
-    								<a class="btn btn-info btn-sm btn-block" th:href="@{/reservation/__${booking.id}__/cancel-booking}" role="button">Annuler cette réservation</a>
-      							</div>
-      						</span>
-      						<span th:unless="${bookings ne null}">
-      							<p class="mb-1">Vous n'avez pas de réservation en cours.</p>
-      						</span>
-      					</div>
-      				</div>
-      			</div>
+				<div class="container">
+    				<div class="col-lg-10 col-md-12 col-sm-12">
+        				<div class="page-header">
+            				<h2>Mon Compte</h2>
+       					 </div>
+        				<div class="card text-center">
+            				<div class="card-header">
+               					<ul class="nav nav-tabs card-header-tabs">
+                    				<li class="nav-item">
+                       					<a class="nav-link active" data-toggle="tab" href="#infos">Mes Informations</a>
+                    				</li>
+                    				<li class="nav-item">
+                        				<a class="nav-link" data-toggle="tab" href="#emprunts">Mes Emprunts</a>
+                    				</li>
+                    				<li class="nav-item">
+                        				<a class="nav-link" data-toggle="tab" href="#resas">Mes Réservations</a>
+                    				</li>
+                				</ul>
+            				</div>
+           		 			<div class="tab-content card-body">
+                				<div id="infos" class="tab-pane active">
+                					<div class="col-12 col-md-10 border-secondary mx-auto infoperso">	
+										<a th:href="@{/compte/__${user.id}__/maj}" class="btn btn-info btn-sm" role="button">Modifier vos informations</a>
+										<div class="card-body mx-auto col-12 col-md-10">
+											<form class="form-horizontal" role="form">
+												<div class="form-group row justify-content-center">
+													<label class="col-md-5 col-10 col-form-label form-control-label border bg-light">Nom : </label>
+													<label class="col-md-7 col-10 col-form-label form-control-label border" th:text="${user.lastName}"></label>
+												</div>
+												<div class="form-group row justify-content-center">
+													<label class="col-md-5 col-10 col-form-label form-control-label border bg-light">Prénom :</label>
+													<label class="col-md-7 col-10 col-form-label form-control-label border" th:text="${user.firstName}"></label>
+												</div>
+												<div class="form-group row justify-content-center">
+													<label class="col-md-5 col-10 col-form-label form-control-label border bg-light">E-mail :</label>
+													<label class="col-md-7 col-10 col-form-label form-control-label border" th:text="${user.email}"></label>
+												</div>
+												<div class="form-group row justify-content-center">
+													<label class="col-md-5 col-10 col-form-label form-control-label border bg-light">Téléphone :</label>
+													<label class="col-md-7 col-10 col-form-label form-control-label border" th:text="${user.phoneNumber}"></label>
+												</div>
+												<div class="form-group row justify-content-center">
+													<label class="col-md-5 col-10 col-form-label form-control-label border bg-light">N° de carte :</label>
+													<label class="col-md-7 col-10 col-form-label form-control-label border" th:text="${user.cardNumber}"></label>
+												</div>
+												<div class="form-group row justify-content-center">
+													<label class="col-md-5 col-10 col-form-label form-control-label border bg-light">Date d'inscription :</label>
+													<label class="col-md-7 col-10 col-form-label form-control-label border" th:text="${user.dateRegistration}"></label>
+												</div>
+      										</form>			
+      									</div>
+      								</div>
+                				</div>
+                				<div id="emprunts" class="tab-pane">
+                					<div class="col-12 col-md-10 border-secondary mx-auto">
+      									<div class="card-body mx-auto col-12 col-md-10">
+      										<div class="list-group">
+      											<span th:if="${not #lists.isEmpty(borrowings)}">
+      												<div class="list-group-item list-group-item-action flex-column align-items-start mb-3" th:each="borrowing : ${borrowings}" th:if="${borrowing.state != 'Prêt terminé'}">
+      													<div class="d-flex w-100 justify-content-around border-bottom">
+    														<h5 class="mb-1" th:text="${borrowing.bookName}"></h5>
+	    												</div>
+					    								<br/>
+    													<p class="mb-1">Date de fin de prêt : <span th:text="${borrowing.deadline}"></span></p>
+    													<p class="mb-1" th:switch="${borrowing.state}">
+    														<span th:case="'Prêt en cours'" class="currentBorrowing" th:text="${borrowing.state}"></span>
+    														<span th:case="'Prêt en retard'" class="lateBorrowing" th:text="${borrowing.state}"></span>
+    														<span th:case="'Prêt renouvelé'" class="renewalBorrowing" th:text="${borrowing.state}"></span>
+    													</p>
+    													<span th:if="${borrowing.state != 'Prêt en retard' and borrowing.renewal == false}">
+    														<br/>
+    														<form th:action="@{/emprunt/__${borrowing.id}__/renouvellement}" method="post">
+    															<div th:if="${errorMessage != null}" class="alert alert-warning" role="alert">
+																	<span th:text="${errorMessage}"></span>
+																</div>
+	    														<div class="text-center">
+    																<input type="submit" class="btn btn-info btn-sm btn-block" id="submit" name="submit" value="Renouveller son prêt">
+    															</div>
+    														</form>							
+  						  								</span>
+    													<span th:unless="${borrowing.state != 'Prêt en retard' and borrowing.renewal == false}">
+    													</span>
+      												</div>
+      											</span>
+      											<span th:unless="${not #lists.isEmpty(borrowings)}">
+      												<p class="mb-1">Vous n'avez pas d'emprunts en cours.</p>
+      											</span>	
+      										</div>
+      									</div>
+      								</div>	
+                				</div>                				        				
+                				<div id="resas" class="tab-pane">
+                					<div class="col-12 col-md-10 border-secondary mx-auto">
+      									<div class="card-body mx-auto col-12 col-md-10">
+      										<div class="list-group">
+      											<span th:if="${not #lists.isEmpty(bookings)}">
+      												<div class="list-group-item list-group-item-action flex-column align-items-start mb-3" th:each="booking : ${bookings}" th:if="${bookings.state != 'Réservation terminé'}">
+      													<div class="d-flex w-100 justify-content-around border-bottom">
+    														<h5 class="mb-1" th:text="${booking.bookName}"></h5>
+	    												</div>
+    													<br/>
+    													<p class="mb-1">Date prochaine de fin de prêt : <span th:text="${booking.nearlestDeadline}"></span></p>
+    													<p class="mb-1">Position dans la liste d'attente : <span th:text="${booking.position}"></span></p>
+    													<a class="btn btn-info btn-sm btn-block" th:href="@{/reservation/__${booking.id}__/cancel-booking}" role="button">Annuler cette réservation</a>
+      												</div>
+      											</span>
+      											<span th:unless="${not #lists.isEmpty(bookings)}">
+      												<p class="mb-1">Vous n'avez pas de réservation en cours.</p>
+      											</span>
+ 					     					</div>
+					      				</div>
+					      			</div>			
+                				</div>
+            				</div>
+        				</div>
+        <!-- END WIDGET 2 -->
+    				</div>
+				</div>
       		</div>
 		</section>
 	</body>

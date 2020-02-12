@@ -39,40 +39,35 @@
 					<h3>Liste des livres</h3>
 				</div>
 				<div class="card-body mx-auto">
-					<div th:each="book: ${books}" class="card mb-3">
-						<div class="row no-gutters">
-							<div class="col-4 text-center">
-								<img class="img-fluid col-md-4 img-list" th:src="${book.image}" />
+					<div th:each="book: ${books}"class="list-group-item list-group-item-action card mb-3">
+						<a th:href="@{/livres/__${book.id}__/vuelivre}"	>
+						<div class="row">
+							<div class="col-12 col-md-4 text-center">
+								<img class="img-fluid img-list" th:src="${book.image}" />
 							</div>
-							<div class="col-8">
+							<div class="col-12 col-md-8">
 								<div class="card-body">
 									<h5 th:text="${book.name}" class="card-title"></h5>
 									<div th:each="authorBean: ${book.authorsBean}">
 										<p class="card-text">
-											<small
-												th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName}"></small>
+											<small th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName}"></small>
 										</p>
 									</div>
+									<br />
 									<p class="card-text">
-										<small th:text="${book.bookTypeBean}"></small>
+										<small class = "bookType" th:text="${book.bookType}"></small>
 									</p>
 									<span th:if="${book.avaibleBook == true}">
-										<br />
-										<div class="text-center">
-											<a class="btn btn-info btn-sm bookinfo">Disponible</a>
-										</div>
+										<small class ="avaible">Disponible</small>
 									</span>
 									<span th:unless="${book.avaibleBook == true}">
-										<br />
-										<div class="text-center">
-											<a class="btn btn-info btn-sm bookinfo">Emprunté jusqu'au <span th:text="${book.nearestDeadline}"></a>
-										</div>
+										<small class ="notAvaible">Emprunté jusqu'au <span th:text="${book.nearestDeadline}"></small>
 									</span>
 									<br />
-									<a th:href="@{/livres/__${book.id}__/vuelivre}"	class="btn btn-info btn-sm bookinfo">Voir le détail</a>
 								</div>
 							</div>
 						</div>
+						</a>
 					</div>
 				</div>
 			</div>

@@ -9,51 +9,63 @@
 <body>
 	<section layout:fragment="content">
 		<div class="row col-10 mx-auto">
-			<div class="col-12 alignimg">
-				<img class="img-fluid img-book" th:src="${book.image}" />
+			<div th:if="${errorMessage != null}" class="alert alert-warning col-12" role="alert">
+				<p><span th:text="${errorMessage}"></span></p>
 			</div>
-			<div class="col-12 text-center">
-				<h3 class="titlebook" th:text="${book.name}"></h3>
-			</div>
-			<div class="col-12">
-				<h4 class="text-center">
-					Auteur : <span th:each="authorBean: ${book.authorsBean}"> <a
-						th:href="@{/auteurs/__${authorBean.id}__/vueauteur}"
-						th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName} + ' '"></a>
-					</span>
-				</h4>
-			</div>
-			<div class="col-12">
-				<h4>Description</h4>
-				<hr>
-				<p class="description" th:text="${book.description}"></p>
+			<div class="row">
+				<div class="col-md-4 col-12 alignimg">
+					<img class="img-fluid img-book" th:src="${book.image}" />
+				</div>
+				<div class="col-md-8 col-12">
+					<div class="col-12">
+						<h3 class="titlebook" th:text="${book.name}"></h3>
+					</div>
+					<div class="col-12">
+						<h4>Auteur : 
+							<span th:each="authorBean: ${book.authorsBean}"> 
+								<a th:href="@{/auteurs/__${authorBean.id}__/vueauteur}" th:text="${authorBean.lastName} + ' ' + ${authorBean.firstName} + ' '"></a>
+							</span>
+						</h4>
+					</div>
+					<div class="col-12">
+						<br/>
+						<p class="card-text bookType" th:text="${book.bookType}"></p>
+						<br/>
+					</div>
+					<div class="col-12">
+						<span th:if="${book.avaibleBook == true}">
+							<p class ="avaible">Disponible</p>
+						</span>
+						<span th:unless="${book.avaibleBook == true}">
+							<p class ="notAvaible">Emprunté jusqu'au <span th:text="${book.nearestDeadline}"></p>
+						</span>
+					</div>					
+					<div class="col-12">
+						<br/>
+						<h4>Description</h4>
+						<hr>
+						<p class="description" th:text="${book.description}"></p>
+					</div>
+				</div>
 			</div>
 			<span th:if="${book.avaibleBook == true}">
 			</span>
 			<span th:unless="${book.avaibleBook == true}">
 				<div class="col-12">
-					<h4>Réserver ce livre</h4>
-					<hr>
-					<p class="mb-1">Date prochaine de fin de prêt : <span th:text="${book.nearestDeadline}"></span></p>
-					<p class="mb-1">Nombre de personnes ayant réservé ce livre : <span th:text="${book.numberOfBooking}"></span></p>
-					
-					<span th:if="${book.numberOfBooking != book.maxNumberOfBooking}">
-						<br />
+					<div class="row col-12 justify-content-between">
+						<h4>Réserver ce livre</h4>
 						<form th:action="@{/reservation/__${book.id}__/add-booking}" method="post">
-							
 							<div class="text-center">
 								<input type="submit" class="btn btn-success btn-sm" id="submit" name="submit" value="Réserver ce livre">
 							</div>
 						</form>
-					</span>
-					<span th:unless="${book.numberOfBooking != book.maxNumberOfBooking}">
-						<p>Vous ne pouvez pas réserver ce document pour le moment.</p>
-					</span>
+					</div>	
+					<hr>
+					<p class="mb-1">Date prochaine de fin de prêt : <span th:text="${book.nearestDeadline}"></span></p>
+					<p class="mb-1">Nombre de personnes ayant réservé ce livre : <span th:text="${book.numberOfBooking}"></span></p>
 				</div>
+				<br/>
 			</span>
-			<div th:if="${errorMessage != null}" class="alert alert-warning" role="alert">
-								<p><span th:text="${errorMessage}"></span></p>
-							</div>
 			<div class="col-12">
 				<h4>Exemplaires</h4>
 				<hr>
