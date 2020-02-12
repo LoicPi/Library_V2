@@ -23,7 +23,9 @@ public class CustomErrorDecoder implements ErrorDecoder{
 					return new CanNotAddUserException("");
 				case "UserException02":
 					return new UserNotFoundException("L'utilisateur n'existe pas.");
-				case"UserException03":
+				case "UserException03":
+					return new UserNotFoundException("L'adresse mail ne correspond à aucun compte");
+				case"UserException04":
 					return new PasswordDoesNotMatchException("Le mot de passe associé à cet email n'est pas bon.");
 				case"Borrowing01":
 					return new BorrowingInvalidRenewalException("L'emprunt a déjà été renouvelé. Vous ne pouvez pas renouveler plus d'une fois un emprunt.");

@@ -94,6 +94,9 @@ public class ClientUserController {
 			if (e instanceof PasswordDoesNotMatchException) {
 				model.addAttribute("errorMessage", e.getMessage());
 			}
+			if (e instanceof UserNotFoundException) {
+				model.addAttribute("errorMessage", e.getMessage());
+			}
 			return "loginPage";
 		}
 	}

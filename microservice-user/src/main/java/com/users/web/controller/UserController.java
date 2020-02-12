@@ -3,6 +3,7 @@ package com.users.web.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -108,7 +109,9 @@ public class UserController {
 		
 		User userLogged = userDao.findByEmail(email);
 		
-		if(!PasswordEncryptor.checkPassword(password, userLogged.getPassword())) throw new PasswordDoesNotMatchException("UserException03");
+		if(Objects.isNull(userLogged)) throw new UserNotFoundException("UserException03");
+		
+		if(!PasswordEncryptor.checkPassword(password, userLogged.getPassword())) throw new PasswordDoesNotMatchException("UserException04");
 		
 		log.info("Connexion au compte utilisateur n°" + userLogged.getId());
 		
