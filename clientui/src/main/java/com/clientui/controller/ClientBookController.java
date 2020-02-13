@@ -217,16 +217,14 @@ public class ClientBookController {
 		HttpSession session = request.getSession();
 
 		Integer idSession = (Integer) session.getAttribute("id");
-
-		BookBean bookBean = BooksProxy.getBook(id);
-
-		model.addAttribute("book", bookBean);
 		
 		if (session.getAttribute("id") != null) {
 			UserBean user = UsersProxy.getUser(idSession);
 			model.addAttribute("user", user);
 			try {
 				BooksProxy.addBooking(user.getId(), id);
+				String acceptMessage = "Votre demande de réservation a bien été pris en compte.";
+				model.addAttribute("acceptMessage", acceptMessage);
 			} catch (Exception e) {
 				e.printStackTrace();
 				if (e instanceof CanNotAddBookingException) {
@@ -237,6 +235,10 @@ public class ClientBookController {
 		} else {
 			model.addAttribute("errorMessage", "Merci de vous connecter pour effectuer une réservation.");
 		}
+		
+		BookBean bookBean = BooksProxy.getBook(id);
+		model.addAttribute("book", bookBean);
+		
 		return "bookPage";
 	}
 

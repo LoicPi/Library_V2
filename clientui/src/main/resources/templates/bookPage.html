@@ -9,8 +9,11 @@
 <body>
 	<section layout:fragment="content">
 		<div class="row col-10 mx-auto">
+			<div th:if="${acceptMessage != null}" class="alert alert-success col-12" role="alert">
+				<p class="text-center" th:text="${acceptMessage}"></p>
+			</div>
 			<div th:if="${errorMessage != null}" class="alert alert-warning col-12" role="alert">
-				<p><span th:text="${errorMessage}"></span></p>
+				<p class="text-center" th:text="${errorMessage}"></p>
 			</div>
 			<div class="row">
 				<div class="col-md-4 col-12 alignimg">

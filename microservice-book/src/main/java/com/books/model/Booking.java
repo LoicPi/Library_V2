@@ -19,8 +19,12 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.books.serializer.BookingSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity
 @Table(name="bookings")
+@JsonSerialize(using= BookingSerializer.class)
 public class Booking {
 
 	@Id
