@@ -81,7 +81,7 @@ public class BorrowingController {
 		
 		List<Borrowing> borrowingsOfUser = borrowingDao.findByIdUser(idUser);
 		
-		if(borrowingsOfUser.isEmpty()) throw new BorrowingNotFoundException("Les emprunts de livres pour l'utilisateur : " + idUser + " n'ont pas été retrouvés.");
+//		if(borrowingsOfUser.isEmpty()) throw new BorrowingNotFoundException("Les emprunts de livres pour l'utilisateur : " + idUser + " n'ont pas été retrouvés.");
 		
 		log.info("Récupération de la liste des emprunts d'un utilisateur");
 		
@@ -100,12 +100,16 @@ public class BorrowingController {
 		
 		Book bookBorrowed = borrowing.getBookCopy().getBook();
 		
-		List<Booking> bookingBook = bookingDao.findBookingByBook_IdOrderByDateCreate(bookBorrowed.getId());
+		Integer borrowingIdUser = borrowing.getIdUser();
+		
+		List<Booking> bookingBook = bookingDao.findBookingByBookAndStateOrderByDateCreate(bookBorrowed, State.EnAttente);
 		
 		if (bookingBook.size() > 0) {
 			Booking booking = bookingBook.get(0);
 			
-			if(booking.getIdUser().equals(borrowing.getIdUser())) {
+			Integer bookingIdUser = booking.getIdUser();
+			
+			if(borrowingIdUser.equals(bookingIdUser)) {
 				borrowing.setDateBorrowed(java.sql.Date.valueOf(localDate));
 				
 				borrowing.setDeadline(java.sql.Date.valueOf(localDate.plusMonths(1)));
@@ -164,7 +168,7 @@ public class BorrowingController {
 		Borrowing borrowingRenewal = borrowing.get();
 		
 		if(borrowingRenewal.getRenewal() == true) {
-			throw new BorrowingInvalidRenewalException ("L'emprunt avec l'id : " + borrowingRenewal.getId() + " a déjà été renouvelé.");
+			throw new BorrowingInvalidRenewalException ("Borrowing01");
 		}
 		
 		borrowingRenewal.setRenewal(true);
@@ -206,7 +210,7 @@ public class BorrowingController {
 		
 		Book bookReturn = borrowingReturn.getBookCopy().getBook();
 		
-		List<Booking> bookings = bookingDao.findBookingByBook_IdOrderByDateCreate(bookReturn.getId());
+		List<Booking> bookings = bookingDao.findBookingByBookAndStateOrderByDateCreate(bookReturn, State.EnAttente);
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		
@@ -214,9 +218,7 @@ public class BorrowingController {
 			
 			Booking booking = bookings.get(0);
 			
-			booking.setCreateBooking(java.sql.Date.valueOf(localDate));
-			
-			booking.setState(State.EnCours);
+			booking.setDateMail(java.sql.Date.valueOf(localDate));
 			
 			Date deadlineBooking = DateUtils.addDays(booking.getDateMail(), 2);
 			
@@ -234,11 +236,10 @@ public class BorrowingController {
 			
 			mailService.sendMessage( mailTo, mailSubject, mailText );
 			
-			booking.setDateMail(java.sql.Date.valueOf(localDate));
-			
 			booking.setSendMail(true);
 			
 			bookingDao.save(booking);
+			
 		}
 		
 		Borrowing returnBorrowing = borrowingDao.save(borrowingReturn);
