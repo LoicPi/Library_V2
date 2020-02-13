@@ -105,15 +105,21 @@
       									<div class="card-body mx-auto col-12 col-md-10">
       										<div class="list-group">
       											<span th:if="${not #lists.isEmpty(bookings)}">
-      												<div class="list-group-item list-group-item-action flex-column align-items-start mb-3" th:each="booking : ${bookings}" th:if="${bookings.state != 'Réservation terminé'}">
-      													<div class="d-flex w-100 justify-content-around border-bottom">
-    														<h5 class="mb-1" th:text="${booking.bookName}"></h5>
-	    												</div>
-    													<br/>
-    													<p class="mb-1">Date prochaine de fin de prêt : <span th:text="${booking.nearlestDeadline}"></span></p>
-    													<p class="mb-1">Position dans la liste d'attente : <span th:text="${booking.position}"></span></p>
-    													<a class="btn btn-info btn-sm btn-block" th:href="@{/reservation/__${booking.id}__/cancel-booking}" role="button">Annuler cette réservation</a>
-      												</div>
+      												<span  th:each="booking : ${bookings}" th:switch="${booking.state}">
+      													<div class="list-group-item list-group-item-action flex-column align-items-start mb-3" th:case="'Réservation en attente'">
+      														<div class="d-flex w-100 justify-content-around border-bottom">
+    															<h5 class="mb-1" th:text="${booking.bookName}"></h5>
+	    													</div>
+    														<br/>
+    														<p class="mb-1">Date prochaine de fin de prêt : <span th:text="${booking.deadline}"></span></p>
+    														<p class="mb-1">Position dans la liste d'attente : <span th:text="${booking.position}"></span></p>
+    														<a class="btn btn-info btn-sm btn-block" th:href="@{/reservation/__${booking.id}__/cancel-booking}" role="button">Annuler cette réservation</a>
+      													</div>
+      												
+      													<span th:case="*">
+      														<p class="mb-1">Vous n'avez pas de réservation en cours.</p>
+      													</span>
+      												</span>
       											</span>
       											<span th:unless="${not #lists.isEmpty(bookings)}">
       												<p class="mb-1">Vous n'avez pas de réservation en cours.</p>

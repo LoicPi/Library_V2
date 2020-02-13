@@ -26,6 +26,7 @@ public class BookingDtoSerializer extends StdSerializer<BookingDto> {
         jgen.writeNumberField("position", bookingDto.getPosition());
         jgen.writeStringField("bookName", bookingDto.getBookName());
         jgen.writeStringField("deadline", bookingDto.getNearestDeadline());
+        jgen.writeStringField("state", bookingDto.getState());
         jgen.writeEndObject();
 	}
 }

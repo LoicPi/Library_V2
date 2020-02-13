@@ -69,7 +69,7 @@ public class BookingController {
 		Integer maxBooking = (booking.getBook().getBooksCopies().size())*2;
 		
 		//Check that user has not already booked this book
-		List<Booking> bookingBook = bookingDao.findBookingByBook_IdOrderByDateCreate(idBook);
+		List<Booking> bookingBook = bookingDao.findBookingByBookAndStateOrderByDateCreate(booking.getBook(), State.EnAttente);
 		
 		for (Booking bookingB : bookingBook) {
 			if ((bookingB.getIdUser()).equals(booking.getIdUser())) {
@@ -120,7 +120,7 @@ public class BookingController {
 	@GetMapping("/reservation/utilisateur/{idUser}")
 	public List<BookingDto> listBookingsOfUser(@PathVariable int idUser) {
 		
-		List<Booking> bookingsofUser = bookingDao.findByIdUser(idUser);
+		List<Booking> bookingsofUser = bookingDao.findByIdUserAndState(idUser, State.EnAttente);
 		
 		List<BookingDto> bookings = new ArrayList<BookingDto>();
 		
@@ -130,8 +130,9 @@ public class BookingController {
 			bookingD.setId(booking.getId());
 			bookingD.setIdUser(booking.getIdUser());
 			bookingD.setBookName(booking.getBook().getName());
+			bookingD.setState(booking.getState().stateName);
 			
-			List<Booking> bookingList = bookingDao.findBookingByBook_IdOrderByDateCreate(booking.getBook().getId());
+			List<Booking> bookingList = bookingDao.findBookingByBookAndStateOrderByDateCreate(booking.getBook(), State.EnAttente);
 			
 			for (int i = 0; i < bookingList.size(); i++) {
 				if (bookingList.get(i).getId().equals(bookingD.getId())) {

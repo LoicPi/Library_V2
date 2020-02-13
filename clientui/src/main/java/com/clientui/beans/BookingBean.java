@@ -10,7 +10,9 @@ public class BookingBean {
 	
 	private String bookName;
 	
-	private String nearestDeadline;
+	private String deadline;
+	
+	private String state;
 
 	public BookingBean() {
 		
@@ -48,18 +50,26 @@ public class BookingBean {
 		this.bookName = bookName;
 	}
 
-	public String getNearestDeadline() {
-		return nearestDeadline;
+	public String getDeadline() {
+		return deadline;
 	}
 
-	public void setNearestDeadline(String nearestDeadline) {
-		this.nearestDeadline = nearestDeadline;
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	@Override
 	public String toString() {
 		return "BookingBean [id=" + id + ", idUser=" + idUser + ", position=" + position + ", bookName=" + bookName
-				+ ", nearestDeadline=" + nearestDeadline + "]";
+				+ ", deadline=" + deadline + ", state=" + state + "]";
 	}
 	
 }

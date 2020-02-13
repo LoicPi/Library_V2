@@ -8,8 +8,8 @@ public enum State {
 	Renouvele("Prêt renouvelé"),	
 	EnAttente("Réservation en attente"),
 	Finie("Réservation terminé"),
-	AnnuleU("Réservation annulé par l'utilisateur"),
-	AnnuleM("Réservation annulé suite mail");	
+	AnnuleU("Réservation annulé utilisateur"),
+	AnnuleM("Réservation annulé mail");	
 	
 	public String stateName;
 
