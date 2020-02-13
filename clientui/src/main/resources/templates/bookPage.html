@@ -69,8 +69,8 @@
 				</div>	
 				<hr>
 				<p class="mb-1" th:switch="${book.nearestDeadline}">
-					<em th:case="'01/01/2001'"></em>
-					<em th:case="*"> Date prochaine de fin de prêt : <span th:text="${book.nearestDeadline}"></span></em>
+					<span th:case="'01/01/2001'"></span>
+					<span th:case="*"> Date prochaine de fin de prêt : <span th:text="${book.nearestDeadline}"></span></span>
 				</p>
 				<p class="mb-1">Nombre de personnes ayant réservé ce livre : <span th:text="${book.numberOfBooking}"></span></p>
 				<br/>
