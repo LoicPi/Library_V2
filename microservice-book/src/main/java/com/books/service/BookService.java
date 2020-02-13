@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.books.dao.BookCopyDao;
+import com.books.dao.BookingDao;
 import com.books.dao.BorrowingDao;
 import com.books.model.Book;
 import com.books.model.BookCopy;
+import com.books.model.Booking;
 import com.books.model.Borrowing;
 import com.books.model.State;
 
@@ -27,6 +29,9 @@ public class BookService {
 	
 	@Autowired
 	private BorrowingDao borrowingDao;
+	
+	@Autowired
+	private BookingDao bookingDao;
 	
 	public void nearestDeadlineBook (Book book) {
 		
@@ -54,5 +59,13 @@ public class BookService {
 			LocalDate ld = LocalDate.of( 2001 , 01 , 01 ) ;
 			book.setNearestDeadline(dateFormat.format(java.sql.Date.valueOf(ld)));
 		}
+	}
+	
+	public void numberOfBooking (Book book) {
+		
+		List<Booking> bookings = bookingDao.findBookingByBookAndStateOrderByDateCreate(book, State.EnAttente);
+		
+		book.setNumberOfBooking(bookings.size());
+		
 	}
 }

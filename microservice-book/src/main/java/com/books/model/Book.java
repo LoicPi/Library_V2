@@ -57,6 +57,9 @@ public class Book {
 
 	@Transient
 	private String nearestDeadline;
+	
+	@Transient
+	private Integer numberOfBooking;
 
 	public Boolean avaibleBook() {
 		Boolean avaibleBook = false;
@@ -154,6 +157,14 @@ public class Book {
 
 	public void setNearestDeadline(String nearestDeadline) {
 		this.nearestDeadline = nearestDeadline;
+	}
+
+	public Integer getNumberOfBooking() {
+		return numberOfBooking;
+	}
+
+	public void setNumberOfBooking(Integer numberOfBooking) {
+		this.numberOfBooking = numberOfBooking;
 	}
 
 	@Override
