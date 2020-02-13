@@ -120,7 +120,7 @@ public class BookingController {
 	@GetMapping("/reservation/utilisateur/{idUser}")
 	public List<BookingDto> listBookingsOfUser(@PathVariable int idUser) {
 		
-		List<Booking> bookingsofUser = bookingDao.findByIdUserAndState(idUser, State.EnAttente);
+		List<Booking> bookingsofUser = bookingDao.findByIdUserAndStateOrderByDateCreate(idUser, State.EnAttente);
 		
 		List<BookingDto> bookings = new ArrayList<BookingDto>();
 		

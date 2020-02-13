@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -52,13 +53,11 @@ public class MailBatch {
 			
 			UserBean user = microserviceUserProxy.getUser(borrowing.getIdUser());
 			
-			List<Borrowing> borrowingsUser = user.getBorrowings();
-			
-			borrowingsUser.add(borrowing);
-			
-			user.setBorrowings(borrowingsUser);
-			
-			if (!(users.contains(user))) {
+			if(users.size() > 0) {
+				if ((users.contains(user))) {
+					users.add(user);
+				}
+			} else {
 				users.add(user);
 			}
 		}		
@@ -69,7 +68,9 @@ public class MailBatch {
             String mailSubject = "Vos prêts à la bibliothèque sont en retard";
             String listBook = "";
             
-            for (Borrowing borrowing : userRelaunched.getBorrowings()) {
+            List<Borrowing> borrowingOfUser = borrowingDao.findByIdUserAndStates(userRelaunched.getId(), Arrays.asList(State.EnRetard));
+            
+            for (Borrowing borrowing : borrowingOfUser) {
 				listBook = listBook + "\n\n- " + borrowing.getBookCopy().getBook().getName() +
 						 " Date de prêt : " + dateFormat.format(borrowing.getDateBorrowed()) +
 						 " "
@@ -87,54 +88,57 @@ public class MailBatch {
 		}	
 	}
 	
-	@Scheduled(cron = "*/60 * * * * *")
+	@Scheduled(cron = "*/30 * * * * *")
 	public void sendBookingMail () {
 		
-		List<Booking> bookingList = bookingDao.findBookingBySendMail(true);
+		List<Booking> bookingList = bookingDao.findBookingBySendMailAndState(true, State.EnAttente);
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
+		LocalDate localDate = LocalDate.now();
 			
-		for (Booking booking : bookingList) {
+		if(bookingList.size() > 0) {
 			
-			Date dateDeadline = DateUtils.addDays(booking.getDateMail(), 2);
-			
-			if(booking.getDateMail().after(dateDeadline)) {
+			for (Booking booking : bookingList) {
 				
-				Integer bookId = booking.getBook().getId();
+				Date dateDeadline = DateUtils.addDays(booking.getDateMail(), 2);
 				
-				bookingService.cancelBookingMail(booking.getId());
+				Date today = new Date();
 				
-				List<Booking> bookings = bookingDao.findBookingByBook_IdOrderByDateCreate(bookId);
+				if(today.after(dateDeadline)) {
+					
+					bookingService.cancelBookingMail(booking.getId());
 				
-				if ( bookings.size() > 0 ) {
+					List<Booking> bookings = bookingDao.findBookingByBookAndStateOrderByDateCreate(booking.getBook(), State.EnAttente);
+				
+					if ( bookings.size() > 0 ) {
 					
-					Booking bookingMail = bookings.get(0);
+						Booking bookingMail = bookings.get(0);
+
+						bookingMail.setDateMail(java.sql.Date.valueOf(localDate));
 					
-					LocalDate localDate = LocalDate.now();
+						Book book = bookingMail.getBook();
 					
-					bookingMail.setDateMail(java.sql.Date.valueOf(localDate));
+						Date deadlineBooking = DateUtils.addDays(bookingMail.getDateMail(), 2);
 					
-					Book book = bookingMail.getBook();
+						UserBean user = microserviceUserProxy.getUser(bookingMail.getIdUser());
 					
-					Date deadlineBooking = DateUtils.addDays(bookingMail.getDateMail(), 2);
+						String mailTo = user.getEmail();
+						String mailSubject = "Bibliothèque : Votre réservation est disponible";
+						String mailText = "Bonjour " + user.getFirstName() + " " + user.getLastName() + "," +
+								"\n\nNous vous informons que la réservation du document ci-dessous est disponible : " +
+								"\n\n" + book.getName() +
+								"\n\nVous avez jusqu'au " + dateFormat.format(deadlineBooking) + " pour venir récupérer votre document." +
+								"\n\nPassée cette date, le document sera remis en circulation." +
+								"\n\nCordialement," +
+								"\n\nL'équipe de la Bibliothèque";
 					
-					UserBean user = microserviceUserProxy.getUser(bookingMail.getIdUser());
+						mailService.sendMessage( mailTo, mailSubject, mailText );
 					
-					String mailTo = user.getEmail();
-					String mailSubject = "Bibliothèque : Votre réservation est disponible";
-					String mailText = "Bonjour " + user.getFirstName() + " " + user.getLastName() + "," +
-							"\n\nNous vous informons que la réservation du document ci-dessous est disponible : " +
-							"\n\n" + book.getName() +
-							"\n\nVous avez jusqu'au " + dateFormat.format(deadlineBooking) + " pour venir récupérer votre document." +
-							"\n\nPassée cette date, le document sera remis en circulation." +
-							"\n\nCordialement," +
-		                    "\n\nL'équipe de la Bibliothèque";
+						bookingMail.setSendMail(true);
 					
-					mailService.sendMessage( mailTo, mailSubject, mailText );
-					
-					bookingMail.setSendMail(true);
-					
-					bookingDao.save(bookingMail);
+						bookingDao.save(bookingMail);
+					}
 				}
 			}
 		}	
