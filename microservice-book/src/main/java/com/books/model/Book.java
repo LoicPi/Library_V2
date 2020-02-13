@@ -60,6 +60,9 @@ public class Book {
 	
 	@Transient
 	private Integer numberOfBooking;
+	
+	@Transient
+	private Boolean isBooking;
 
 	public Boolean avaibleBook() {
 		Boolean avaibleBook = false;
@@ -165,6 +168,14 @@ public class Book {
 
 	public void setNumberOfBooking(Integer numberOfBooking) {
 		this.numberOfBooking = numberOfBooking;
+	}
+
+	public Boolean getIsBooking() {
+		return isBooking;
+	}
+
+	public void setIsBooking(Boolean isBooking) {
+		this.isBooking = isBooking;
 	}
 
 	@Override

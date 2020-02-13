@@ -42,6 +42,7 @@ public class BookController {
 		for (Book book : books) {
 			bookService.nearestDeadlineBook(book);
 			bookService.numberOfBooking(book);
+			bookService.bookingBook(book);
 		}
 
 		log.info("Récupération de la liste des livres");
@@ -65,7 +66,8 @@ public class BookController {
 		
 		bookService.nearestDeadlineBook(book);
 		bookService.numberOfBooking(book);
-
+		bookService.bookingBook(book);
+		
 		log.info("Accès au livre");
 		
 		return book;
@@ -86,6 +88,7 @@ public class BookController {
 		for (Book book : books) {
 			bookService.nearestDeadlineBook(book);
 			bookService.numberOfBooking(book);
+			bookService.bookingBook(book);
 			booksS.add(book);
 		}
 		

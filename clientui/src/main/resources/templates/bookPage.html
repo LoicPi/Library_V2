@@ -37,7 +37,12 @@
 					</div>
 					<div class="col-12">
 						<span th:if="${book.avaibleBook == true}">
-							<p class ="avaible">Disponible</p>
+							<span th:if="${book.bookingBook == true}">
+								<small class ="booking">Réservé</small>
+							</span>
+							<span th:unless="${book.bookingBook == true}">
+								<small class ="avaible">Disponible</small>
+							</span>
 						</span>
 						<span th:unless="${book.avaibleBook == true}">
 							<p class ="notAvaible">Emprunté jusqu'au <span th:text="${book.nearestDeadline}"></p>
@@ -51,24 +56,25 @@
 					</div>
 				</div>
 			</div>
-			<span th:if="${book.avaibleBook == true}">
+			<span th:if="${book.avaibleBook == true and book.bookingBook != true}">
 			</span>
-			<span th:unless="${book.avaibleBook == true}">
-				<div class="col-12">
-					<div class="row col-12 justify-content-between">
-						<h4>Réserver ce livre</h4>
-						<form th:action="@{/reservation/__${book.id}__/add-booking}" method="post">
-							<div class="text-center">
-								<input type="submit" class="btn btn-success btn-sm" id="submit" name="submit" value="Réserver ce livre">
-							</div>
-						</form>
-					</div>	
-					<hr>
-					<p class="mb-1">Date prochaine de fin de prêt : <span th:text="${book.nearestDeadline}"></span></p>
-					<p class="mb-1">Nombre de personnes ayant réservé ce livre : <span th:text="${book.numberOfBooking}"></span></p>
-				</div>
+			<div class="col-12" th:unless="${book.avaibleBook == true and book.bookingBook != true}">
+				<div class="row col-12 justify-content-between">
+					<h4>Réservation</h4>
+					<form th:action="@{/reservation/__${book.id}__/add-booking}" method="post">
+						<div class="text-center">
+							<input type="submit" class="btn btn-dark btn-sm" id="submit" name="submit" value="Réserver ce livre">
+						</div>
+					</form>
+				</div>	
+				<hr>
+				<p class="mb-1" th:switch="${book.nearestDeadline}">
+					<em th:case="'01/01/2001'"></em>
+					<em th:case="*"> Date prochaine de fin de prêt : <span th:text="${book.nearestDeadline}"></span></em>
+				</p>
+				<p class="mb-1">Nombre de personnes ayant réservé ce livre : <span th:text="${book.numberOfBooking}"></span></p>
 				<br/>
-			</span>
+			</div>
 			<div class="col-12">
 				<h4>Exemplaires</h4>
 				<hr>
@@ -86,7 +92,10 @@
 							<td th:text="${bookCopyBean.ean}"></td>
 							<td>
 								<span th:if="${bookCopyBean.borrowed}">Prêt en cours</span> 
-								<span th:unless="${bookCopyBean.borrowed}">Disponible</span>
+								<span th:unless="${bookCopyBean.borrowed}">
+									<span th:if="${book.bookingBook == true}">Réservé</span>
+									<span th:unless="${book.bookingBook == true}">Disponible</span>
+								</span>
 							</td>
 						</tr>
 					</tbody>

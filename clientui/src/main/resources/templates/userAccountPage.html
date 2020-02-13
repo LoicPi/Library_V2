@@ -111,7 +111,10 @@
     															<h5 class="mb-1" th:text="${booking.bookName}"></h5>
 	    													</div>
     														<br/>
-    														<p class="mb-1">Date prochaine de fin de prêt : <span th:text="${booking.deadline}"></span></p>
+    														<p class="mb-1" th:switch="${booking.deadline}">
+																<em th:case="'01/01/2001'"></em>
+																<em th:case="*"> Date prochaine de fin de prêt : <span th:text="${booking.deadline}"></span></em>
+															</p>
     														<p class="mb-1">Position dans la liste d'attente : <span th:text="${booking.position}"></span></p>
     														<a class="btn btn-info btn-sm btn-block" th:href="@{/reservation/__${booking.id}__/cancel-booking}" role="button">Annuler cette réservation</a>
       													</div>

@@ -53,6 +53,7 @@ public class BookSerializer extends StdSerializer<Book> {
         jgen.writeNumberField("numberOfBooking", book.getNumberOfBooking());
         jgen.writeNumberField("maxNumberOfBooking", book.getBooksCopies().size()*2);
         jgen.writeStringField("bookType", book.getBookType().getType());
+        jgen.writeBooleanField("bookingBook", book.getIsBooking());
         jgen.writeEndObject();
 	}
 

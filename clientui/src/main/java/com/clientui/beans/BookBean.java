@@ -24,6 +24,8 @@ public class BookBean {
 	
 	private Boolean avaibleBook;
 	
+	private Boolean bookingBook;
+	
 	@JsonProperty("bookCopies")
 	private Set<BookCopyBean> booksCopiesBean;
 	
@@ -122,6 +124,14 @@ public class BookBean {
 		this.avaibleBook = avaibleBook;
 	}
 	
+	public Boolean getBookingBook() {
+		return bookingBook;
+	}
+
+	public void setBookingBook(Boolean bookingBook) {
+		this.bookingBook = bookingBook;
+	}
+
 	@Override
 	public String toString() {
 		return "BookBean [id=" + id + ", name=" + name + ", description=" + description + ", image=" + image

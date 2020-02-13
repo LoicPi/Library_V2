@@ -68,4 +68,15 @@ public class BookService {
 		book.setNumberOfBooking(bookings.size());
 		
 	}
+	
+	public void bookingBook (Book book) {
+
+		List<Booking> bookings = bookingDao.findBookingByBookAndStateOrderByDateCreate(book, State.EnAttente);
+		
+		if(bookings.size() > 0) {
+			book.setIsBooking(true);
+		} else {
+			book.setIsBooking(false);
+		}
+	}
 }

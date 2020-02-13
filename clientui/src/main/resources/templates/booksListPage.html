@@ -58,7 +58,12 @@
 										<small class = "bookType" th:text="${book.bookType}"></small>
 									</p>
 									<span th:if="${book.avaibleBook == true}">
-										<small class ="avaible">Disponible</small>
+										<span th:if="${book.bookingBook == true}">
+											<small class ="booking">Réservé</small>
+										</span>
+										<span th:unless="${book.bookingBook == true}">
+											<small class ="avaible">Disponible</small>
+										</span>
 									</span>
 									<span th:unless="${book.avaibleBook == true}">
 										<small class ="notAvaible">Emprunté jusqu'au <span th:text="${book.nearestDeadline}"></small>
