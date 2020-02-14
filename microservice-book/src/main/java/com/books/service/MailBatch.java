@@ -40,7 +40,7 @@ public class MailBatch {
 	@Autowired
 	private MailService mailService;
 	
-	@Scheduled(cron = "*/60 * * * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void sendingLateMail() {
 		
 		List<Borrowing> borrowings = borrowingDao.findByStateName(State.EnRetard);
@@ -88,7 +88,7 @@ public class MailBatch {
 		}	
 	}
 	
-	@Scheduled(cron = "*/30 * * * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void sendBookingMail () {
 		
 		List<Booking> bookingList = bookingDao.findBookingBySendMailAndState(true, State.EnAttente);
