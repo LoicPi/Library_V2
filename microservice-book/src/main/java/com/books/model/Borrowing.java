@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.books.serializer.BorrowingSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity

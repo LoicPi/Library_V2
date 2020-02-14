@@ -14,7 +14,17 @@ public class BookBean {
 	
 	private String image;
 	
-	private BookTypeBean bookTypeBean;
+	private String bookType;
+	
+	private Integer numberOfBooking;
+	
+	private Integer maxNumberOfBooking;
+	
+	private String nearestDeadline;
+	
+	private Boolean avaibleBook;
+	
+	private Boolean bookingBook;
 	
 	@JsonProperty("bookCopies")
 	private Set<BookCopyBean> booksCopiesBean;
@@ -58,12 +68,28 @@ public class BookBean {
 		this.image = image;
 	}
 
-	public BookTypeBean getBookTypeBean() {
-		return bookTypeBean;
+	public String getBookType() {
+		return bookType;
 	}
 
-	public void setBookTypeBean(BookTypeBean bookTypeBean) {
-		this.bookTypeBean = bookTypeBean;
+	public void setBookType(String bookType) {
+		this.bookType = bookType;
+	}
+
+	public Integer getNumberOfBooking() {
+		return numberOfBooking;
+	}
+
+	public void setNumberOfBooking(Integer numberOfBooking) {
+		this.numberOfBooking = numberOfBooking;
+	}
+
+	public Integer getMaxNumberOfBooking() {
+		return maxNumberOfBooking;
+	}
+
+	public void setMaxNumberOfBooking(Integer maxNumberOfBooking) {
+		this.maxNumberOfBooking = maxNumberOfBooking;
 	}
 
 	public Set<BookCopyBean> getBooksCopiesBean() {
@@ -82,8 +108,35 @@ public class BookBean {
 		this.authorsBean = authorsBean;
 	}
 
+	public String getNearestDeadline() {
+		return nearestDeadline;
+	}
+
+	public void setNearestDeadline(String nearestDeadline) {
+		this.nearestDeadline = nearestDeadline;
+	}
+	
+	public Boolean getAvaibleBook() {
+		return avaibleBook;
+	}
+
+	public void setAvaibleBook(Boolean avaibleBook) {
+		this.avaibleBook = avaibleBook;
+	}
+	
+	public Boolean getBookingBook() {
+		return bookingBook;
+	}
+
+	public void setBookingBook(Boolean bookingBook) {
+		this.bookingBook = bookingBook;
+	}
+
 	@Override
 	public String toString() {
-		return "BookBean [id=" + id + ", name=" + name + ", description=" + description + ", image=" + image + "]";
+		return "BookBean [id=" + id + ", name=" + name + ", description=" + description + ", image=" + image
+				+ ", bookType=" + bookType + ", numberOfBooking=" + numberOfBooking + ", maxNumberOfBooking="
+				+ maxNumberOfBooking + ", nearestDeadline=" + nearestDeadline + "]";
 	}
+	
 }

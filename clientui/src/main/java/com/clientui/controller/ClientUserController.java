@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.clientui.beans.BookingBean;
 import com.clientui.beans.BorrowingBean;
 import com.clientui.beans.UpdatePasswordBean;
 import com.clientui.beans.UserBean;
@@ -91,7 +92,10 @@ public class ClientUserController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (e instanceof PasswordDoesNotMatchException) {
-				model.addAttribute("errorMessage", "Le mot de passe ou l'adresse mail ne correspondent pas.");
+				model.addAttribute("errorMessage", e.getMessage());
+			}
+			if (e instanceof UserNotFoundException) {
+				model.addAttribute("errorMessage", e.getMessage());
 			}
 			return "loginPage";
 		}
@@ -155,8 +159,10 @@ public class ClientUserController {
 		} else {
 			UserBean user = UsersProxy.getUser(id);
 			List<BorrowingBean> borrowings = BooksProxy.listBorrowingsOfUser(id);
+			List<BookingBean> bookings = BooksProxy.listBookingsOfUser(id);
 			model.addAttribute("user", user);
 			model.addAttribute("borrowings", borrowings);
+			model.addAttribute("bookings", bookings);
 			return "userAccountPage";
 		}	
 	}

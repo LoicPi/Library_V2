@@ -54,7 +54,7 @@ header {
 
 /*ListBook Page*/
 .img-list {
-	max-width: 75% !important;
+	max-width: 250px !important;
     padding: 10px;
 }
 
@@ -68,7 +68,7 @@ header {
 
 /*Book Page*/
 .img-book {
-	max-width: 15% !important;
+	max-width: 300px  !important;
 	padding:10px;
 }
 
@@ -89,7 +89,7 @@ header {
 }
 
 .card-header {
-	background-color: #a6dced !important;
+	background-color: #e0e0e0 !important;
 }
 
 .no-gutters{
@@ -111,7 +111,7 @@ header {
 
 /*InfoPage*/
 .imginfo{
-	max-width : 50%;
+	max-width : 250px;
 }
 
 .imgbibl{
@@ -131,11 +131,90 @@ header {
 /*Mobile*/
 @media only screen and (max-width: 640px) {
 	.img-list {
+		max-width : 150px;
 		margin-top : 20px
 	}
 	.img-book {
-		max-width : 50% !important;
+		max-width : 150px !important;
 		padding:10px;
 	}	
 }
 
+/*BookAvaible*/
+.avaible {
+	border: solid 1px;
+	display: inline-block;
+	padding: 0rem 1rem 0rem 1rem;
+	background: #739c4b;
+	color:#fff;
+}
+
+/*BookNotAvaible*/
+.notAvaible {
+	border: solid 1px;
+	display: inline-block;
+	padding: 0rem 1rem 0rem 1rem;
+	background: #DC143C;
+	color:#fff;
+}
+
+/*Book booking*/
+.booking {
+	border: solid 1px;
+	display: inline-block;
+	padding: 0rem 1rem 0rem 1rem;
+	background: #ffb74d;
+	color:#fff;
+}
+
+/*BookType*/
+.bookType {
+	border: solid 1px;
+	display: inline-block;
+	padding: 0rem 1rem 0rem 1rem;
+	background: #a32363;
+	color:#fff;
+}
+
+/*Current Borrowing*/
+.currentBorrowing {
+	border: solid 1px;
+	display: inline-block;
+	padding: 0rem 1rem 0rem 1rem;
+	background: #739c4b;
+	color:#fff;
+}
+
+/*Late Borrowing*/
+.lateBorrowing {
+	border: solid 1px;
+	display: inline-block;
+	padding: 0rem 1rem 0rem 1rem;
+	background: #DC143C;
+	color:#fff;
+}
+
+/*Renewal Borrowing*/
+.renewalBorrowing {
+	border: solid 1px;
+	display: inline-block;
+	padding: 0rem 1rem 0rem 1rem;
+	background: #ffc400;
+	color:#fff;
+}
+
+a {
+	outline: none;
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: none;
+  	color: black;
+}
+
+
+
+
+  

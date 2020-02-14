@@ -5,7 +5,11 @@ public enum State {
 	EnCours("Prêt en cours"),
 	EnRetard("Prêt en retard"),
 	Termine("Prêt terminé"),
-	Renouvele("Prêt renouvelé");
+	Renouvele("Prêt renouvelé"),	
+	EnAttente("Réservation en attente"),
+	Finie("Réservation terminé"),
+	AnnuleU("Réservation annulé utilisateur"),
+	AnnuleM("Réservation annulé mail");	
 	
 	public String stateName;
 

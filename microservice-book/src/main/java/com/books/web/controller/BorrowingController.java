@@ -1,5 +1,7 @@
 package com.books.web.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -19,12 +21,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.books.beans.UserBean;
+import com.books.dao.BookingDao;
 import com.books.dao.BorrowingDao;
 import com.books.exceptions.BorrowingInvalidRenewalException;
 import com.books.exceptions.BorrowingNotFoundException;
 import com.books.exceptions.CanNotAddBorrowingException;
+import com.books.model.Book;
+import com.books.model.Booking;
 import com.books.model.Borrowing;
 import com.books.model.State;
+import com.books.proxies.MicroserviceUserProxy;
+import com.books.service.BookingService;
+import com.books.service.MailService;
 
 @RestController
 public class BorrowingController {
@@ -33,6 +42,18 @@ public class BorrowingController {
 	
 	@Autowired
 	private BorrowingDao borrowingDao;
+	
+	@Autowired
+	private BookingDao bookingDao;
+	
+	@Autowired
+	private MicroserviceUserProxy microserviceUserProxy;
+	
+	@Autowired
+	private MailService mailService;
+	
+	@Autowired
+	private BookingService bookingService;
 	
 	/**
 	 * Function to get a list of borrowing
@@ -60,8 +81,6 @@ public class BorrowingController {
 		
 		List<Borrowing> borrowingsOfUser = borrowingDao.findByIdUser(idUser);
 		
-		if(borrowingsOfUser.isEmpty()) throw new BorrowingNotFoundException("Les emprunts de livres pour l'utilisateur : " + idUser + " n'ont pas été retrouvés.");
-		
 		log.info("Récupération de la liste des emprunts d'un utilisateur");
 		
 		return borrowingsOfUser;
@@ -77,23 +96,59 @@ public class BorrowingController {
 		
 		LocalDate localDate = LocalDate.now();
 		
-		borrowing.setDateBorrowed(java.sql.Date.valueOf(localDate));
+		Book bookBorrowed = borrowing.getBookCopy().getBook();
 		
-		borrowing.setDeadline(java.sql.Date.valueOf(localDate.plusMonths(1)));
+		Integer borrowingIdUser = borrowing.getIdUser();
 		
-		borrowing.setState(State.EnCours);
+		List<Booking> bookingBook = bookingDao.findBookingByBookAndStateOrderByDateCreate(bookBorrowed, State.EnAttente);
 		
-		LocalDate ld = LocalDate.of( 2001 , 01 , 01 ) ; 
-		
-		borrowing.setDateRenewal(java.sql.Date.valueOf(ld));
-		
-		borrowing.setDateReturn(java.sql.Date.valueOf(ld));
-		
-		Borrowing newBorrowing = borrowingDao.save(borrowing);
-		
-		if(newBorrowing == null) throw new CanNotAddBorrowingException ("Impossible d'ajouter l'emprunt.");
-		
-		return new ResponseEntity<Borrowing>(newBorrowing, HttpStatus.OK);		
+		if (bookingBook.size() > 0) {
+			Booking booking = bookingBook.get(0);
+			
+			Integer bookingIdUser = booking.getIdUser();
+			
+			if(borrowingIdUser.equals(bookingIdUser)) {
+				borrowing.setDateBorrowed(java.sql.Date.valueOf(localDate));
+				
+				borrowing.setDeadline(java.sql.Date.valueOf(localDate.plusMonths(1)));
+				
+				borrowing.setState(State.EnCours);
+				
+				LocalDate ld = LocalDate.of( 2001 , 01 , 01 ) ; 
+				
+				borrowing.setDateRenewal(java.sql.Date.valueOf(ld));
+				
+				borrowing.setDateReturn(java.sql.Date.valueOf(ld));
+				
+				Borrowing newBorrowing = borrowingDao.save(borrowing);
+				
+				bookingService.endBooking(booking.getId());
+				
+				if(newBorrowing == null) throw new CanNotAddBorrowingException ("Impossible d'ajouter l'emprunt.");
+				
+				return new ResponseEntity<Borrowing>(newBorrowing, HttpStatus.OK);
+			} else {
+				throw new CanNotAddBorrowingException ("Ce livre est reservé par un autre utilisateur.");
+			}
+		} else {
+			borrowing.setDateBorrowed(java.sql.Date.valueOf(localDate));
+			
+			borrowing.setDeadline(java.sql.Date.valueOf(localDate.plusMonths(1)));
+			
+			borrowing.setState(State.EnCours);
+			
+			LocalDate ld = LocalDate.of( 2001 , 01 , 01 ) ; 
+			
+			borrowing.setDateRenewal(java.sql.Date.valueOf(ld));
+			
+			borrowing.setDateReturn(java.sql.Date.valueOf(ld));
+			
+			Borrowing newBorrowing = borrowingDao.save(borrowing);
+			
+			if(newBorrowing == null) throw new CanNotAddBorrowingException ("Impossible d'ajouter l'emprunt.");
+			
+			return new ResponseEntity<Borrowing>(newBorrowing, HttpStatus.OK);
+		}			
 	}
 	
 	/**
@@ -111,7 +166,7 @@ public class BorrowingController {
 		Borrowing borrowingRenewal = borrowing.get();
 		
 		if(borrowingRenewal.getRenewal() == true) {
-			throw new BorrowingInvalidRenewalException ("L'emprunt avec l'id : " + borrowingRenewal.getId() + " a déjà été renouvelé.");
+			throw new BorrowingInvalidRenewalException ("Borrowing01");
 		}
 		
 		borrowingRenewal.setRenewal(true);
@@ -150,6 +205,40 @@ public class BorrowingController {
 		borrowingReturn.setDateReturn(java.sql.Date.valueOf(localDate));
 		
 		borrowingReturn.setState(State.Termine);
+		
+		Book bookReturn = borrowingReturn.getBookCopy().getBook();
+		
+		List<Booking> bookings = bookingDao.findBookingByBookAndStateOrderByDateCreate(bookReturn, State.EnAttente);
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
+		if (bookings.size() > 0) {
+			
+			Booking booking = bookings.get(0);
+			
+			booking.setDateMail(java.sql.Date.valueOf(localDate));
+			
+			Date deadlineBooking = DateUtils.addDays(booking.getDateMail(), 2);
+			
+			UserBean user = microserviceUserProxy.getUser(booking.getIdUser());
+			
+			String mailTo = user.getEmail();
+			String mailSubject = "Bibliothèque : Votre réservation est disponible";
+			String mailText = "Bonjour " + user.getFirstName() + " " + user.getLastName() + "," +
+					"\n\nNous vous informons que la réservation du document ci-dessous est disponible : " +
+					"\n\n" + bookReturn.getName() +
+					"\n\nVous avez jusqu'au " + dateFormat.format(deadlineBooking) + " pour venir récupérer votre document." +
+					"\n\nPassée cette date, le document sera remis en circulation." +
+					"\n\nCordialement," +
+                    "\n\nL'équipe de la Bibliothèque";
+			
+			mailService.sendMessage( mailTo, mailSubject, mailText );
+			
+			booking.setSendMail(true);
+			
+			bookingDao.save(booking);
+			
+		}
 		
 		Borrowing returnBorrowing = borrowingDao.save(borrowingReturn);
 		

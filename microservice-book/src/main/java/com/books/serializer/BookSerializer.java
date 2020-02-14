@@ -1,7 +1,13 @@
-package com.books.model;
+package com.books.serializer;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
+import com.books.model.Author;
+import com.books.model.Book;
+import com.books.model.BookCopy;
+import com.books.model.Borrowing;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
@@ -30,13 +36,6 @@ public class BookSerializer extends StdSerializer<Book> {
         	jgen.writeNumberField("id", bookCopies.getId());
         	jgen.writeStringField("ean", bookCopies.getEan());
         	jgen.writeBooleanField("borrowed", bookCopies.isBorrowed());
-//        	jgen.writeArrayFieldStart("borrowings");
-//        	for(Borrowing borrowings : bookCopies.getBorrowings()) {
-//        		jgen.writeStartObject();
-//        		jgen.writeStringField("state", borrowings.getState().stateName);
-//        		jgen.writeEndObject();
-//        	}
-//        	jgen.writeEndArray();
         	jgen.writeEndObject();
         }
         jgen.writeEndArray();
@@ -49,7 +48,12 @@ public class BookSerializer extends StdSerializer<Book> {
         	jgen.writeEndObject();
         }
         jgen.writeEndArray();
+        jgen.writeStringField("nearestDeadline", book.getNearestDeadline());
+        jgen.writeBooleanField("avaibleBook", book.avaibleBook());
+        jgen.writeNumberField("numberOfBooking", book.getNumberOfBooking());
+        jgen.writeNumberField("maxNumberOfBooking", book.getBooksCopies().size()*2);
         jgen.writeStringField("bookType", book.getBookType().getType());
+        jgen.writeBooleanField("bookingBook", book.getIsBooking());
         jgen.writeEndObject();
 	}
 
