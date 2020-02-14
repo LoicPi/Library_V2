@@ -33,6 +33,10 @@ public class BookService {
 	@Autowired
 	private BookingDao bookingDao;
 	
+	/**
+	 * Function to set the param nearestDeadlineBook in Book class
+	 * @param book the book to set
+	 */
 	public void nearestDeadlineBook (Book book) {
 		
 		List<Date> dates = new ArrayList<Date>();
@@ -61,6 +65,10 @@ public class BookService {
 		}
 	}
 	
+	/**
+	 * Function to set the number of booking in book class
+	 * @param book the book to set
+	 */
 	public void numberOfBooking (Book book) {
 		
 		List<Booking> bookings = bookingDao.findBookingByBookAndStateOrderByDateCreate(book, State.EnAttente);
@@ -69,6 +77,10 @@ public class BookService {
 		
 	}
 	
+	/**
+	 * Function to set bookingBook in book class
+	 * @param book the book to set
+	 */
 	public void bookingBook (Book book) {
 
 		List<Booking> bookings = bookingDao.findBookingByBookAndStateOrderByDateCreate(book, State.EnAttente);

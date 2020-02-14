@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,8 @@ import com.books.proxies.MicroserviceUserProxy;
 @Component
 public class MailBatch {
 	
+	Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private BorrowingDao borrowingDao;
 	
@@ -39,7 +43,7 @@ public class MailBatch {
 	
 	@Autowired
 	private MailService mailService;
-	
+	 
 	@Scheduled(cron = "0 0 0 * * *")
 	public void sendingLateMail() {
 		
@@ -85,9 +89,15 @@ public class MailBatch {
                     "\n\nCordialement," +
                     "\n\nL'équipe de la Bibliothèque";
             mailService.sendMessage( mailTo, mailSubject, mailText );
-		}	
+		}
+		
+		log.info("Lancement du batch d'envoi des mails de retard de prêt.");
 	}
 	
+	/*
+	 * Function Batch to cancel a booking when user don't come to borrow the book who is booking
+	 * and send a mail to the next user who is booking the book in the list
+	 */
 	@Scheduled(cron = "0 0 0 * * *")
 	public void sendBookingMail () {
 		
@@ -141,6 +151,8 @@ public class MailBatch {
 					}
 				}
 			}
-		}	
+		}
+		
+		log.info("Lancement du batch pour annuler les réservations si un utilisateur n'a pas pris sa réservation à temps.");
 	}
 }

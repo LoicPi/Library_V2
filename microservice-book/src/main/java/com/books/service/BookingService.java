@@ -16,6 +16,10 @@ public class BookingService {
 	@Autowired
 	public BookingDao bookingDao;
 
+	/**
+	 * Function to end a booking object
+	 * @param id the id of the booking
+	 */
 	public void endBooking(int id) {
 		// Find booking by id
 		Optional<Booking> booking = bookingDao.findById(id);
@@ -31,6 +35,10 @@ public class BookingService {
 		bookingDao.save(bookingEnd);
 	}
 
+	/**
+	 * Function to cancel a booking on the user's demand
+	 * @param id if of the booking
+	 */
 	public void cancelBookingUser(int id) {
 		// Find booking by id
 		Optional<Booking> booking = bookingDao.findById(id);
@@ -46,6 +54,10 @@ public class BookingService {
 		bookingDao.save(bookingEnd);
 	}
 	
+	/**
+	 * Function to cancel a booking when the batch verify if booking is be past
+	 * @param id id of the booking
+	 */
 	public void cancelBookingMail(int id) {
 		// Find booking by id
 		Optional<Booking> booking = bookingDao.findById(id);

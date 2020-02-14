@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -15,10 +17,12 @@ import com.books.model.State;
 @Component
 public class BorrowingBatch {
 	
+	Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private BorrowingDao borrowingDao;
 	
-	@Scheduled(cron = "*/30 * * * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void BorrowingStatus() {
 		List<Borrowing> borrowings = borrowingDao.findByStates(new Date(), Arrays.asList(State.EnCours, State.Renouvele));
 		
@@ -26,9 +30,8 @@ public class BorrowingBatch {
 			borrowing.setState(State.EnRetard);
 			borrowingDao.save(borrowing);
 		}
-		
-		System.out.println("lancement du batch");
-		
+
+		log.info("Lancement du batch de passage des livres en retard au statut en retard.");		
 	}
 
 }

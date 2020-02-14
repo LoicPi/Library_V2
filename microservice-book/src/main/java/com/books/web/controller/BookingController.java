@@ -148,8 +148,6 @@ public class BookingController {
 			bookings.add(bookingD);
 		}
 		
-//		if(bookings.isEmpty()) throw new BookingNotFoundException("BookingNotFoundException01");
-		
 		log.info("Récupération de la liste des réservations d'un utilisateur");
 		
 		return bookings;

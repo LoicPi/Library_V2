@@ -81,8 +81,6 @@ public class BorrowingController {
 		
 		List<Borrowing> borrowingsOfUser = borrowingDao.findByIdUser(idUser);
 		
-//		if(borrowingsOfUser.isEmpty()) throw new BorrowingNotFoundException("Les emprunts de livres pour l'utilisateur : " + idUser + " n'ont pas été retrouvés.");
-		
 		log.info("Récupération de la liste des emprunts d'un utilisateur");
 		
 		return borrowingsOfUser;
