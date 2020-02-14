@@ -8,9 +8,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.clientui.beans.AuthorBean;
 import com.clientui.beans.BookBean;
@@ -77,7 +80,7 @@ public class ClientBookController {
 		return "booksListPage";
 	}
 
-	@RequestMapping("/livres/{id}/vuelivre")
+	@GetMapping("/livres/{id}/vuelivre")
 	public String bookPage(@PathVariable("id") int id, Model model, HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
@@ -88,7 +91,7 @@ public class ClientBookController {
 			UserBean user = UsersProxy.getUser(idSession);
 			model.addAttribute("user", user);
 		}
-
+		
 		BookBean bookBean = BooksProxy.getBook(id);
 
 		model.addAttribute("book", bookBean);
@@ -211,8 +214,8 @@ public class ClientBookController {
 		return "bookingsListPage";
 	}
 
-	@RequestMapping("/reservation/{id}/add-booking")
-	public String addBooking(@PathVariable("id") int id, Model model, HttpServletRequest request) {
+	@PostMapping("/reservation/{id}/add-booking")
+	public String addBooking(@PathVariable("id") int id, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
 		HttpSession session = request.getSession();
 
@@ -220,26 +223,22 @@ public class ClientBookController {
 		
 		if (session.getAttribute("id") != null) {
 			UserBean user = UsersProxy.getUser(idSession);
-			model.addAttribute("user", user);
 			try {
 				BooksProxy.addBooking(user.getId(), id);
 				String acceptMessage = "Votre demande de réservation a bien été pris en compte.";
-				model.addAttribute("acceptMessage", acceptMessage);
+				redirectAttributes.addFlashAttribute("acceptMessage", acceptMessage);
 			} catch (Exception e) {
 				e.printStackTrace();
 				if (e instanceof CanNotAddBookingException) {
 					String message = e.getMessage();
-					model.addAttribute("errorMessage", message);
+					redirectAttributes.addFlashAttribute("errorMessage", message);
 				}
 			}
 		} else {
-			model.addAttribute("errorMessage", "Merci de vous connecter pour effectuer une réservation.");
+			redirectAttributes.addFlashAttribute("errorMessage", "Merci de vous connecter pour effectuer une réservation.");
 		}
 		
-		BookBean bookBean = BooksProxy.getBook(id);
-		model.addAttribute("book", bookBean);
-		
-		return "bookPage";
+		return "redirect:/livres/" + id + "/vuelivre";
 	}
 
 	@RequestMapping("reservation/{id}/cancel-booking")
