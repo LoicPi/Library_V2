@@ -4,12 +4,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
+import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -113,8 +117,11 @@ public class BookingController {
 	 * @param id id of the booking
 	 */
 	@PostMapping("/reservation/{id}/cancel-booking")
-	public void cancelBookingByUser (@PathVariable int id){	
-		bookingService.cancelBookingUser(id);
+	public ResponseEntity<Booking> cancelBookingByUser (@PathVariable int id){	
+		
+		Booking booking = bookingService.cancelBookingUser(id);
+		
+		return new ResponseEntity<Booking>(booking, HttpStatus.OK);
 	}
 	
 	@GetMapping("/reservation/utilisateur/{idUser}")
@@ -163,6 +170,24 @@ public class BookingController {
 		log.info("Récupération de la liste des réservations.");
 		
 		return bookings;		
+	}
+	
+	@DeleteMapping("/reservation/{id}/delete-booking")
+	public Response deleteBooking (@PathVariable int id) {
+		
+		Optional<Booking> booking = bookingDao.findById(id);
+		
+		if(!booking.isPresent()) throw new BookingNotFoundException("Aucune réservation n'a été retrouvé.");
+		
+		Booking bookingDelete = booking.get();
+		
+		String bookingD = bookingDelete.toString();
+		
+		bookingDao.delete(bookingDelete);
+		
+		log.info("Suppression de la reservation : " + bookingD );
+		
+		return Response.status(200).entity("Booking is deleted").build();
 	}
 	
 }

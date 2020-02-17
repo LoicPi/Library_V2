@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -245,5 +247,22 @@ public class BorrowingController {
 		return new ResponseEntity<Borrowing>(returnBorrowing, HttpStatus.OK);
 	}
 	
+	@DeleteMapping("emprunt/{id}/delete-borrowing")
+	public Response deleteBorrowing(@PathVariable int id) {
+		
+		Optional<Borrowing> borrowing = borrowingDao.findById(id);
+		
+		if(!borrowing.isPresent()) throw new BorrowingNotFoundException("Aucun prêt n'a été retrouvé.");
+		
+		Borrowing borrowingDelete = borrowing.get();
+		
+		String borrowingD = borrowingDelete.toString();
+		
+		borrowingDao.delete(borrowingDelete);
+		
+		log.info("Suppression de l'emprunt : " + borrowingD );
+		
+		return Response.status(200).entity("Borrowing is deleted").build();
+	}
 	
 }
