@@ -39,7 +39,7 @@ public class BookingService {
 	 * Function to cancel a booking on the user's demand
 	 * @param id if of the booking
 	 */
-	public void cancelBookingUser(int id) {
+	public Booking cancelBookingUser(int id) {
 		// Find booking by id
 		Optional<Booking> booking = bookingDao.findById(id);
 
@@ -52,6 +52,8 @@ public class BookingService {
 
 		// Save the booking in the database
 		bookingDao.save(bookingEnd);
+		
+		return bookingEnd;
 	}
 	
 	/**
