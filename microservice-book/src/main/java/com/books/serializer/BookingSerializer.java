@@ -23,6 +23,7 @@ public class BookingSerializer extends StdSerializer<Booking> {
 		jgen.writeStartObject();
         jgen.writeNumberField("id", booking.getId());
         jgen.writeNumberField("idUser", booking.getIdUser());
+        jgen.writeNumberField("idBook", booking.getBook().getId());
         jgen.writeStringField("bookName", booking.getBook().getName());
         jgen.writeStringField("state", booking.getState().stateName);
         jgen.writeEndObject();

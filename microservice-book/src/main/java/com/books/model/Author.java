@@ -1,6 +1,6 @@
 package com.books.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +14,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.books.serializer.AuthorSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity
 @Table(name="authors")
+@JsonSerialize(using = AuthorSerializer.class)
 public class Author {
 	
 	@Id
@@ -42,7 +46,7 @@ public class Author {
     
     @ManyToMany
     @JoinTable( name = "author_book", joinColumns = @JoinColumn(name = "author_id"), inverseJoinColumns = @JoinColumn (name = "book_id"))
-    private Set<Book> books;
+    private List<Book> books;
     
     public Author () {
     	
@@ -52,7 +56,7 @@ public class Author {
 			@Size(max = 50, min = 3, message = "Le nom doit contenir entre 3 et 50 charactères.") @NotEmpty(message = "Merci de rentrer un prénom") String lastName,
 			@Size(max = 50, min = 3, message = "Le prénom doit contenir entre 3 et 50 charactères.") @NotEmpty(message = "Merci de rentrer un nom") String firstName,
 			@Size(max = 1000, message = "La description ne doit pas dépasser 1000 charactères.") String description,
-			String image, Set<Book> books) {
+			String image, List<Book> books) {
 		super();
 		this.id = id;
 		this.lastName = lastName;
@@ -102,11 +106,11 @@ public class Author {
 		this.image = image;
 	}
 
-	public Set<Book> getBooks() {
+	public List<Book> getBooks() {
 		return books;
 	}
 
-	public void setBooks(Set<Book> books) {
+	public void setBooks(List<Book> books) {
 		this.books = books;
 	}
 

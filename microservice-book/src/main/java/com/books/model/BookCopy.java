@@ -14,8 +14,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.books.serializer.BookCopySerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity
 @Table (name="bookcopies")
+@JsonSerialize(using = BookCopySerializer.class)
 public class BookCopy {
 	
 	@Id

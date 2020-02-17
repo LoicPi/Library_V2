@@ -1,6 +1,6 @@
 package com.books.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +12,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.books.serializer.BookTypeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity
 @Table(name="booktypes")
+@JsonSerialize(using = BookTypeSerializer.class)
 public class BookType {
 
 	@Id
@@ -27,7 +31,7 @@ public class BookType {
 	private String type;
 	
 	@OneToMany(mappedBy = "bookType")
-	private Set<Book> books;
+	private List<Book> books;
 	
 	public BookType() {
 		
@@ -35,7 +39,7 @@ public class BookType {
 
 	public BookType(Integer id,
 			@Size(max = 50, min = 3, message = "L'ISBN doit contenir entre 3 et 50 charactères.") @NotEmpty(message = "Merci de rentrer un type de livre") String type,
-			Set<Book> books) {
+			List<Book> books) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -58,11 +62,11 @@ public class BookType {
 		this.type = type;
 	}
 
-	public Set<Book> getBooks() {
+	public List<Book> getBooks() {
 		return books;
 	}
 
-	public void setBooks(Set<Book> books) {
+	public void setBooks(List<Book> books) {
 		this.books = books;
 	}
 
