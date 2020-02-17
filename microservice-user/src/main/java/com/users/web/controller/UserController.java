@@ -51,7 +51,7 @@ public class UserController {
 	@GetMapping("/comptes")
 	public List<User> listUsers() {
 		
-		List<User> users = userDao.findAll();
+		List<User> users = userDao.findAllOrderByDateRegistration();
 		
 		if(users.isEmpty()) throw  new UserNotFoundException("Aucun utilisateur ne s'est inscrit");
 	
