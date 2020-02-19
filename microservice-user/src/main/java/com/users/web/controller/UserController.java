@@ -1,12 +1,12 @@
 package com.users.web.controller;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +71,28 @@ public class UserController {
 		user.setPassword(PasswordEncryptor.hashPassword(user.getPassword()));
 		
 		user.setRole(Role.Utilisateur);
+		
+		int cardNumber = 0;
+		
+		List<User> users = userDao.findAllOrderByDateRegistration();
+		
+		if(users.size() == 0) {
+			cardNumber = 1;
+		} else {
+			for (User userS : users) {
+				if(cardNumber <= userS.getCardNumber()) {
+					cardNumber = userS.getCardNumber()+1;
+				}
+			}
+		}
+		
+		User userMail = userDao.findByEmail(user.getEmail());
+		
+		if(!(Objects.isNull(userMail))) throw new UserNotFoundException("Le mail est déjà utilisé pour un autre compte.");
+		
+		user.setCardNumber(cardNumber);
+		
+		user.setDateRegistration(new Date());
 		
 		User newUser = userDao.save(user);
 		
@@ -151,21 +173,21 @@ public class UserController {
 	 * @param id id of the delete-user
 	 */
 	@DeleteMapping("/compte/{id}/delete-user")
-	public Map<String, Boolean> deleteUser (@PathVariable int id) {
+	public Response deleteUser (@PathVariable int id) {
 		
 		Optional<User> user = userDao.findById(id);
 		
 		if(!user.isPresent()) throw new UserNotFoundException("UserException02");
 		
 	    User userToDelete = user.get();
+	    
+	    String userD = userToDelete.toString();
 
 	    userDao.delete(userToDelete);
+	    
+	    log.info("Suppression de l'utilisateur : " + userD);
 
-	    Map<String, Boolean> response = new HashMap<>();
-
-	    response.put("deleted", Boolean.TRUE);
-
-	    return response;
+	    return Response.status(200).entity("User is deleted").build();
 	    
 	}
 
@@ -182,7 +204,16 @@ public class UserController {
 		
 		if(!user.isPresent()) throw new UserNotFoundException("UserException02");
 		
-		User userToUpdate = userDao.findUserById(id);
+		User userToUpdate = user.get();
+		
+		if (updatePasswordUser.getOldPassword() == null || updatePasswordUser.getNewPassword() == null || updatePasswordUser.getConfirmPassword() == null)
+			throw new PasswordDoesNotMatchException("UpdatePasswordException01");
+		
+		if (!(updatePasswordUser.getNewPassword().equals(updatePasswordUser.getConfirmPassword())))
+			throw new PasswordDoesNotMatchException("UpdatePasswordException02");
+				
+		if(!PasswordEncryptor.checkPassword(updatePasswordUser.getOldPassword(), userToUpdate.getPassword())) 
+			throw new PasswordDoesNotMatchException("UpdatePasswordException03");
 		
 		userToUpdate.setPassword(PasswordEncryptor.hashPassword(updatePasswordUser.getNewPassword()));
 		
