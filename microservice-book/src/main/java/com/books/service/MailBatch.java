@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ import com.books.proxies.MicroserviceUserProxy;
 @Component
 public class MailBatch {
 	
-	Logger log = LoggerFactory.getLogger(this.getClass());
+	final static Logger log = LogManager.getLogger();
 	
 	@Autowired
 	private BorrowingDao borrowingDao;
@@ -98,7 +98,7 @@ public class MailBatch {
 	 * Function Batch to cancel a booking when user don't come to borrow the book who is booking
 	 * and send a mail to the next user who is booking the book in the list
 	 */
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "*/60 * * * * *")
 	public void sendBookingMail () {
 		
 		List<Booking> bookingList = bookingDao.findBookingBySendMailAndState(true, State.EnAttente);
